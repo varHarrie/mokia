@@ -1,0 +1,26 @@
+{
+  "extends": [
+    "tslint:latest",
+    "tslint-config-standard"
+  ],
+  "rules": {
+    "ban-types": false,
+    "indent": [true, "spaces", 2],
+    "interface-name": [true, "never-prefix"],
+    "max-classes-per-file": true,
+    "max-line-length": false,
+    "member-ordering": [true, {"order": ["static-field", "static-method", "instance-field", "constructor", "instance-method"]}],
+    "no-any": false,
+    "no-console": false,
+    "no-empty-interface": false,
+    "no-floating-promises": false,
+    "no-implicit-dependencies": false,
+    "no-shadowed-variable": true,
+    "no-string-literal": true,
+    "no-submodule-imports": false,
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "switch-default": true,
+    "unified-signatures": false
+  }
+}

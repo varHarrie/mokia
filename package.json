@@ -1,0 +1,46 @@
+{
+  "name": "mokia",
+  "version": "0.0.1",
+  "description": "A simple mock server.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "build": "rimraf ./lib && tsc",
+    "test": "cross-env DEBUG=mokia:* mocha -r ts-node/register test/*.test.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/varHarrie/mokia.git"
+  },
+  "keywords": [
+    "mock",
+    "server"
+  ],
+  "author": "varharrie <varharrie@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/varHarrie/mokia/issues"
+  },
+  "homepage": "https://github.com/varHarrie/mokia#readme",
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "chai": "^4.2.0",
+    "cross-env": "^5.2.0",
+    "mocha": "^5.2.0",
+    "rimraf": "^2.6.2",
+    "tslint": "^5.11.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.2.1"
+  },
+  "dependencies": {
+    "@types/debug": "0.0.31",
+    "@types/node": "^10.12.12",
+    "chalk": "^2.4.1",
+    "commander": "^2.19.0",
+    "dayjs": "^1.7.7",
+    "debug": "^4.1.0",
+    "lodash": "^4.17.11",
+    "ts-node": "^7.0.1"
+  }
+}
