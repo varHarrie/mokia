@@ -24,31 +24,65 @@ export function isClass (target: any): target is new (...args: any[]) => any {
     && /^class\s/.test(Function.prototype.toString.call(target))
 }
 
+/**
+ * Checks if `func` is a Function
+ *
+ * @example
+ *
+ * isFunction(function foo () { })
+ * // => true
+ *
+ * isFunction(class Foo { })
+ * // => false
+ *
+ * isFunction('')
+ * // => false
+ */
 export function isFunction (func: any): func is Func {
   return typeof func === 'function' && !isClass(func)
 }
 
 /**
- * Returns a number from any type or default value
+ * Returns an integer from any type
  *
  * @example
  *
- * ensureNumber(12)
+ * ensureInteger(12)
  * // => 12
  *
- * ensureNumber(null)
+ * ensureInteger(2.5)
+ * // => 2
+ *
+ * ensureInteger(null)
  * // => 0
  *
- * ensureNumber(null, 1)
+ * ensureInteger(null, 1)
  * // => 1
  */
-export function ensureNumber (value: any, defaultValue: number = 0): number {
+export function ensureInteger (value: any, defaultValue: number = 0): number {
   const num = parseInt(value, 10)
   return isNaN(num) ? defaultValue : num
 }
 
+/**
+ * Returns a natural number from any type
+ *
+ * @example
+ *
+ * ensureNatural(12)
+ * // => 12
+ *
+ * ensureNatural(2.5)
+ * // => 2
+ *
+ * ensureNatural(-1)
+ * // => 0
+ *
+ * ensureInteger(null)
+ * // => 0
+ */
 export function ensureNatural (value: any, defaultValue: number = 0): number {
-  const num = ensureNumber(value, defaultValue)
+  const num = ensureInteger(value, defaultValue)
   return num < 0 ? 0 : num
 }
 

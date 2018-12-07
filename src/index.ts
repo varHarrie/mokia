@@ -1,4 +1,2 @@
-import { decorators, mock } from './mock'
-import { Request, Response } from './server'
-
-export { mock, decorators, Request, Response }
+export * from './mock'
+export * from './server'

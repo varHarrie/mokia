@@ -17,7 +17,8 @@ export function start (config: Config) {
     const {
       [PORT]: port = '8080',
       [PREFIX]: prefix = '',
-      ...routes } = config
+      ...routes
+    } = config
 
     const app = express()
       .use(cors())

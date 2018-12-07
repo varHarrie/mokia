@@ -9,16 +9,9 @@ export function createInvoker<T = any, R = any> (fn: Func<R>, args: any[]): Invo
   }
 }
 
-export interface InvokerDecorator {
-  (): any
-  (target: any, propertyKey: string | symbol): void
-}
-
-export function createDecorator (fn: Func, args: any[]): InvokerDecorator {
-  return (target?: any, propertyKey?: string | symbol) => {
+export function createDecorator (fn: Func, args: any[]): PropertyDecorator {
+  return (target: any, propertyKey: string | symbol) => {
     const invoker = createInvoker(fn, args)
-
-    if (!target || !propertyKey) return invoker()
 
     target[MOCKABLE] = target[MOCKABLE]
       ? { ...target[MOCKABLE], [propertyKey]: invoker }

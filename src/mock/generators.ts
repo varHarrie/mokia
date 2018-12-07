@@ -75,7 +75,7 @@ export function integer (max?: number): number
 export function integer (min: number, max: number): number
 export function integer (n1?: any, n2?: any): number {
   if (n2 === undefined) {
-    n2 = utils.ensureNumber(n1, MAX_INTEGER)
+    n2 = utils.ensureInteger(n1, MAX_INTEGER)
     n1 = n1 === undefined ? -MAX_INTEGER : 0
   } else {
     n1 = parseInt(n1, 10)

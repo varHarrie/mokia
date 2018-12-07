@@ -1,114 +1,114 @@
 import * as generators from './generators'
-import { createDecorator, InvokerDecorator } from './invoker'
+import { createDecorator } from './invoker'
 import { DateType } from './utils'
 
-export function boolean (chance?: number, value?: boolean): InvokerDecorator
-export function boolean (...args: any[]): InvokerDecorator {
+export function boolean (chance?: number, value?: boolean): PropertyDecorator
+export function boolean (...args: any[]): PropertyDecorator {
   return createDecorator(generators.boolean, args)
 }
 
-export function integer (max?: number): InvokerDecorator
-export function integer (min: number, max: number): InvokerDecorator
-export function integer (...args: any[]): InvokerDecorator {
+export function integer (max?: number): PropertyDecorator
+export function integer (min: number, max: number): PropertyDecorator
+export function integer (...args: any[]): PropertyDecorator {
   return createDecorator(generators.integer, args)
 }
 
-export function natural (max?: number): InvokerDecorator
-export function natural (min: number, max: number): InvokerDecorator
-export function natural (...args: any[]): InvokerDecorator {
+export function natural (max?: number): PropertyDecorator
+export function natural (min: number, max: number): PropertyDecorator
+export function natural (...args: any[]): PropertyDecorator {
   return createDecorator(generators.natural, args)
 }
 
-export function float (max?: number): InvokerDecorator
-export function float (min: number, max: number): InvokerDecorator
-export function float (min: number, max: number, fixed: number): InvokerDecorator
-export function float (min: number, max: number, dmin: number, dmax: number): InvokerDecorator
-export function float (...args: any[]): InvokerDecorator {
+export function float (max?: number): PropertyDecorator
+export function float (min: number, max: number): PropertyDecorator
+export function float (min: number, max: number, fixed: number): PropertyDecorator
+export function float (min: number, max: number, dmin: number, dmax: number): PropertyDecorator
+export function float (...args: any[]): PropertyDecorator {
   return createDecorator(generators.float, args)
 }
 
-export function char (pool: string): InvokerDecorator
-export function char (...args: any[]): InvokerDecorator {
+export function char (pool: string): PropertyDecorator
+export function char (...args: any[]): PropertyDecorator {
   return createDecorator(generators.char, args)
 }
 
-export function string (pool: string, length?: number): InvokerDecorator
-export function string (pool: string, min: number, max: number): InvokerDecorator
-export function string (...args: any[]): InvokerDecorator {
+export function string (pool: string, length?: number): PropertyDecorator
+export function string (pool: string, min: number, max: number): PropertyDecorator
+export function string (...args: any[]): PropertyDecorator {
   return createDecorator(generators.string, args)
 }
 
-export function datetime (format?: string): InvokerDecorator
-export function datetime (format: string, max: DateType): InvokerDecorator
-export function datetime (format: string, min: DateType, max: DateType): InvokerDecorator
-export function datetime (format?: string, min?: DateType, max?: DateType): InvokerDecorator
-export function datetime (...args: any[]): InvokerDecorator {
+export function datetime (format?: string): PropertyDecorator
+export function datetime (format: string, max: DateType): PropertyDecorator
+export function datetime (format: string, min: DateType, max: DateType): PropertyDecorator
+export function datetime (format?: string, min?: DateType, max?: DateType): PropertyDecorator
+export function datetime (...args: any[]): PropertyDecorator {
   return createDecorator(generators.datetime, args)
 }
 
-export function date (format?: string): InvokerDecorator
-export function date (format: string, max: DateType): InvokerDecorator
-export function date (format: string, min: DateType, max: DateType): InvokerDecorator
-export function date (format?: string, min?: DateType, max?: DateType): InvokerDecorator
-export function date (...args: any[]): InvokerDecorator {
+export function date (format?: string): PropertyDecorator
+export function date (format: string, max: DateType): PropertyDecorator
+export function date (format: string, min: DateType, max: DateType): PropertyDecorator
+export function date (format?: string, min?: DateType, max?: DateType): PropertyDecorator
+export function date (...args: any[]): PropertyDecorator {
   return createDecorator(generators.date, args)
 }
 
-export function time (format?: string): InvokerDecorator
-export function time (format: string, max: DateType): InvokerDecorator
-export function time (format: string, min: DateType, max: DateType): InvokerDecorator
-export function time (format?: string, min?: DateType, max?: DateType): InvokerDecorator
-export function time (...args: any[]): InvokerDecorator {
+export function time (format?: string): PropertyDecorator
+export function time (format: string, max: DateType): PropertyDecorator
+export function time (format: string, min: DateType, max: DateType): PropertyDecorator
+export function time (format?: string, min?: DateType, max?: DateType): PropertyDecorator
+export function time (...args: any[]): PropertyDecorator {
   return createDecorator(generators.time, args)
 }
 
-export function now (format?: string): InvokerDecorator
-export function now (...args: any[]): InvokerDecorator {
+export function now (format?: string): PropertyDecorator
+export function now (...args: any[]): PropertyDecorator {
   return createDecorator(generators.now, args)
 }
 
-export function image (size?: string): InvokerDecorator
-export function image (size: string, text: string): InvokerDecorator
-export function image (size: string, text: string, background: string): InvokerDecorator
-export function image (size: string, text: string, background: string, foreground: string): InvokerDecorator
-export function image (size: string, text: string, background: string, foreground: string, format: 'png' | 'jpg' | 'gif'): InvokerDecorator
-export function image (...args: any[]): InvokerDecorator {
+export function image (size?: string): PropertyDecorator
+export function image (size: string, text: string): PropertyDecorator
+export function image (size: string, text: string, background: string): PropertyDecorator
+export function image (size: string, text: string, background: string, foreground: string): PropertyDecorator
+export function image (size: string, text: string, background: string, foreground: string, format: 'png' | 'jpg' | 'gif'): PropertyDecorator
+export function image (...args: any[]): PropertyDecorator {
   return createDecorator(generators.image, args)
 }
 
-export function dataImage (size?: string): InvokerDecorator
-export function dataImage (size: string, text: string): InvokerDecorator
-export function dataImage (size: string, text: string, background: string): InvokerDecorator
-export function dataImage (size: string, text: string, background: string, foreground: string): InvokerDecorator
-export function dataImage (size: string, text: string, background: string, foreground: string, format: 'png' | 'jpg' | 'gif'): InvokerDecorator
-export function dataImage (...args: any[]): InvokerDecorator {
+export function dataImage (size?: string): PropertyDecorator
+export function dataImage (size: string, text: string): PropertyDecorator
+export function dataImage (size: string, text: string, background: string): PropertyDecorator
+export function dataImage (size: string, text: string, background: string, foreground: string): PropertyDecorator
+export function dataImage (size: string, text: string, background: string, foreground: string, format: 'png' | 'jpg' | 'gif'): PropertyDecorator
+export function dataImage (...args: any[]): PropertyDecorator {
   return createDecorator(generators.dataImage, args)
 }
 
-export function array<T> (proto: T, length?: number): InvokerDecorator
-export function array<T> (proto: T, min: number, max: number): InvokerDecorator
-export function array<T> (proto: T, n1?: number, n2?: number): InvokerDecorator
-export function array (...args: any[]): InvokerDecorator {
+export function array<T> (proto: T, length?: number): PropertyDecorator
+export function array<T> (proto: T, min: number, max: number): PropertyDecorator
+export function array<T> (proto: T, n1?: number, n2?: number): PropertyDecorator
+export function array (...args: any[]): PropertyDecorator {
   return createDecorator(generators.array, args)
 }
 
-export function oneOf<T> (list: T[]): InvokerDecorator
-export function oneOf (...args: any[]): InvokerDecorator {
+export function oneOf<T> (list: T[]): PropertyDecorator
+export function oneOf (...args: any[]): PropertyDecorator {
   return createDecorator(generators.oneOf, args)
 }
 
-export function manyOf<T> (list: T[], length?: number): InvokerDecorator
-export function manyOf<T> (list: T[], min: number, max: number): InvokerDecorator
-export function manyOf<T> (list: T[], n1?: number, n2?: number): InvokerDecorator
-export function manyOf (...args: any[]): InvokerDecorator {
+export function manyOf<T> (list: T[], length?: number): PropertyDecorator
+export function manyOf<T> (list: T[], min: number, max: number): PropertyDecorator
+export function manyOf<T> (list: T[], n1?: number, n2?: number): PropertyDecorator
+export function manyOf (...args: any[]): PropertyDecorator {
   return createDecorator(generators.manyOf, args)
 }
 
-export function pick<T extends object> (proto: T, props?: string): InvokerDecorator
-export function pick<T extends object> (proto: T, props: string[]): InvokerDecorator
-export function pick<T extends object> (proto: T, length?: number): InvokerDecorator
-export function pick<T extends object> (proto: T, min: number, max: number): InvokerDecorator
-export function pick<T extends object> (proto: T, n1?: any, n2?: any): InvokerDecorator
-export function pick (...args: any[]): InvokerDecorator {
+export function pick<T extends object> (proto: T, props?: string): PropertyDecorator
+export function pick<T extends object> (proto: T, props: string[]): PropertyDecorator
+export function pick<T extends object> (proto: T, length?: number): PropertyDecorator
+export function pick<T extends object> (proto: T, min: number, max: number): PropertyDecorator
+export function pick<T extends object> (proto: T, n1?: any, n2?: any): PropertyDecorator
+export function pick (...args: any[]): PropertyDecorator {
   return createDecorator(generators.manyOf, args)
 }
