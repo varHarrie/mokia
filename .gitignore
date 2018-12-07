@@ -1,7 +1,9 @@
 /.idea
 /.vscode
+/.nyc_output
 /node_modules
 /example
+/coverage
 *.d.ts
 *.js
 *.map

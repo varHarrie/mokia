@@ -6,7 +6,8 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "rimraf ./lib && tsc",
-    "test": "cross-env DEBUG=mokia:* mocha -r ts-node/register test/*.test.ts"
+    "test": "cross-env DEBUG=mokia:* nyc mocha",
+    "test:watch": "cross-env DEBUG=mokia:* nyc mocha -w"
   },
   "repository": {
     "type": "git",
@@ -28,10 +29,12 @@
     "chai": "^4.2.0",
     "cross-env": "^5.2.0",
     "mocha": "^5.2.0",
+    "nyc": "^13.1.0",
     "rimraf": "^2.6.2",
+    "source-map-support": "^0.5.9",
     "tslint": "^5.11.0",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.2.1"
+    "typescript": "^3.2.2"
   },
   "dependencies": {
     "@types/debug": "0.0.31",
