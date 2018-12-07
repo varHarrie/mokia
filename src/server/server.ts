@@ -10,7 +10,7 @@ export const PREFIX = Symbol('PREFIX')
 
 export interface Config extends Routes {
   [HOST]?: string
-  [PORT]?: number
+  [PORT]?: string | number
   [PREFIX]?: string
 }
 
@@ -31,7 +31,8 @@ export function start (config: Config) {
 
     app.on('error', reject)
 
-    const server = app.listen(port, host, () => resolve([port, destroy]))
+    const realPort = typeof port === 'string' ? parseInt(port, 10) : port
+    const server = app.listen(realPort, host, () => resolve([realPort, destroy]))
 
     function destroy () {
       if (server) {
