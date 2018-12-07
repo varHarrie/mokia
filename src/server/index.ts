@@ -1,8 +1,4 @@
-import { Request } from './request'
-import { Response } from './response'
+import { start } from './server'
+import { Request, Response, RouteHandler } from './route'
 
-export type RequestHandler = (request: Request, response: Response) => Object | Promise<Object> | void
-
-export interface Routes {
-  [key: string]: RequestHandler
-}
+export { start, Request, Response, RouteHandler }

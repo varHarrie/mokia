@@ -1,6 +1,6 @@
 import { expect } from 'chai'
 
-import mock from '../src'
+import { mock } from '../src'
 import { Person, Superman } from './classes'
 
 describe('mock', () => {
