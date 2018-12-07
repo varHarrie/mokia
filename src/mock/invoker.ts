@@ -1,6 +1,5 @@
 import { MOCKABLE } from './constants'
-
-export type Func<R = any> = (...args: any[]) => R
+import { Func } from './utils'
 
 export type Invoker<T = any, R = any> = (this: T) => R
 

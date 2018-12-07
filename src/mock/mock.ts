@@ -1,6 +1,6 @@
-import * as utils from './utils'
 import { generate } from './generators'
 import { getMockable, Mockable } from './mockable'
+import { pickProps } from './utils'
 
 type Proto<T> = T extends new (...args: any[]) => infer R ? R : T
 
@@ -19,7 +19,7 @@ export function mixin (...protos: any[]): Mockable {
   const mockable = Object.assign({}, ...mockables)
 
   return props
-    ? utils.pickProps(mockable, props)
+    ? pickProps(mockable, props)
     : mockable
 }
 

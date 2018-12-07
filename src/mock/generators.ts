@@ -1,5 +1,3 @@
-import Debug from 'debug'
-
 import * as utils from './utils'
 import { DATE_FORMAT, DATETIME_FORMAT, MAX_INTEGER, POOLS, TIME_FORMAT } from './constants'
 import { getMockable } from './mockable'
@@ -21,6 +19,7 @@ import { getMockable } from './mockable'
  * // => null
  */
 export function generate (mockable: any): any {
+  if (typeof mockable === 'function') return mockable()
   if (!utils.isTrueObject(mockable)) return mockable
 
   const result: any = {}
@@ -299,17 +298,17 @@ export function dataImage (...args: any[]): string {
  * array({ name: cname() }, 2)
  * // => [{ name: '张三' }, { name: '李四' }]
  */
-export function array<T> (proto: T, length?: number): T[]
-export function array<T> (proto: T, min: number, max: number): T[]
-export function array<T> (proto: T, n1?: number, n2?: number): T[] {
+export function array<T> (proto: T, length?: number): T extends (...args: any[]) => infer R ? R[] : T[]
+export function array<T> (proto: T, min: number, max: number): T extends (...args: any[]) => infer R ? R[] : T[]
+export function array<T> (proto: T, n1?: number, n2?: number): T extends (...args: any[]) => infer R ? R[] : T[] {
   const count = n2 === undefined
     ? n1 === undefined
       ? integer(0, 5)
       : utils.ensureNatural(n1)
     : natural(n1 || 0, n2)
 
-  const mockable = getMockable(proto)
-  const results: T[] = []
+  const mockable = utils.isFunction(proto) ? proto : getMockable<any>(proto)
+  const results: any = []
 
   for (let i = 0; i < count; i++) {
     results.push(generate(mockable))

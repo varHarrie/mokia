@@ -1,6 +1,6 @@
-import * as utils from './utils'
 import { MOCKABLE } from './constants'
 import { Invoker } from './invoker'
+import { isClass } from './utils'
 
 export type BaseType = boolean | number | string | null
 
@@ -9,7 +9,7 @@ export type Mockable<T = any> = {
 }
 
 export function getMockable<T> (proto: T): Mockable<T> {
-  if (!utils.isClass(proto)) return proto as any
+  if (!isClass(proto)) return proto as any
 
   const instance = new proto()
   const mockable = (instance as any)[MOCKABLE]

@@ -3,6 +3,8 @@ import dayjs from 'dayjs'
 import { MAX_DATE, MIN_DATE } from './constants'
 import { integer } from './generators'
 
+export type Func<R = any> = (...args: any[]) => R
+
 /**
  * Checks if `target` is a Class
  *
@@ -20,6 +22,10 @@ import { integer } from './generators'
 export function isClass (target: any): target is new (...args: any[]) => any {
   return typeof target === 'function'
     && /^class\s/.test(Function.prototype.toString.call(target))
+}
+
+export function isFunction (func: any): func is Func {
+  return typeof func === 'function' && !isClass(func)
 }
 
 /**
