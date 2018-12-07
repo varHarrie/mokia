@@ -4,18 +4,21 @@ import express from 'express'
 
 import { createRouter, Routes } from './route'
 
+export const HOST = Symbol('HOST')
 export const PORT = Symbol('PORT')
 export const PREFIX = Symbol('PREFIX')
 
 export interface Config extends Routes {
+  [HOST]?: string
   [PORT]?: number
   [PREFIX]?: string
 }
 
 export function start (config: Config) {
-  return new Promise((resolve, reject) => {
+  return new Promise<[number, Function]>((resolve, reject) => {
     const {
-      [PORT]: port = '8080',
+      [HOST]: host = 'localhost',
+      [PORT]: port = 8080,
       [PREFIX]: prefix = '',
       ...routes
     } = config
@@ -28,11 +31,12 @@ export function start (config: Config) {
 
     app.on('error', reject)
 
-    const server = app.listen(port, () => resolve(destroy))
+    const server = app.listen(port, host, () => resolve([port, destroy]))
 
     function destroy () {
-      if (!server) return
-      server.close()
+      if (server) {
+        server.close()
+      }
     }
   })
 }
