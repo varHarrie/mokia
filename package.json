@@ -2,10 +2,11 @@
   "name": "mokia",
   "version": "0.0.1",
   "description": "A simple mock server.",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
-    "build": "rimraf ./lib && tsc",
+    "clean": "rimraf ./cli ./mock ./server ./index.*",
+    "build": "npm run clean && tsc",
     "test": "cross-env DEBUG=mokia:* nyc mocha",
     "test:watch": "cross-env DEBUG=mokia:* nyc mocha -w"
   },
@@ -41,7 +42,9 @@
     "@types/cors": "^2.8.4",
     "@types/debug": "0.0.31",
     "@types/express": "^4.16.0",
+    "@types/meow": "^5.0.0",
     "@types/node": "^10.12.12",
+    "@types/ora": "^1.3.4",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
@@ -50,6 +53,8 @@
     "debug": "^4.1.0",
     "express": "^4.16.4",
     "lodash": "^4.17.11",
+    "meow": "^5.0.0",
+    "ora": "^3.0.0",
     "ts-node": "^7.0.1"
   }
 }

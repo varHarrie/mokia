@@ -4,6 +4,11 @@
 /node_modules
 /example
 /coverage
+
+/mock
+/cli
+/server
+
 *.d.ts
 *.js
 *.map
