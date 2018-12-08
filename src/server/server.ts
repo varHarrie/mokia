@@ -1,8 +1,11 @@
 import bodyParser from 'body-parser'
 import cors from 'cors'
+import Debug from 'debug'
 import express from 'express'
 
 import { createRouter, Routes } from './route'
+
+const debug = Debug('mokia:server')
 
 export const HOST = Symbol('HOST')
 export const PORT = Symbol('PORT')
@@ -23,6 +26,11 @@ export function create (config: ServerConfig) {
       ...routes
     } = config
 
+    debug('host', host)
+    debug('port', port)
+    debug('prefix', prefix)
+    debug('routes', routes)
+
     const app = express()
       .use(cors())
       .use(bodyParser.json())
@@ -31,8 +39,8 @@ export function create (config: ServerConfig) {
 
     app.on('error', reject)
 
-    const realPort = typeof port === 'string' ? parseInt(port, 10) : port
-    const server = app.listen(realPort, host, () => resolve([realPort, destroy]))
+    const intPort = typeof port === 'string' ? parseInt(port, 10) : port
+    const server = app.listen(intPort, host, () => resolve([intPort, destroy]))
 
     function destroy () {
       return new Promise((res, rej) => {

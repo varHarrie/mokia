@@ -12,7 +12,8 @@ const cli = meow(`
     --host       -h     Set host, default to "localhost".
     --port       -p     Set port, default to 8080.
     --prefix            Set route prefix.
-    --watch      -w
+    --watch      -w     Watch input files.
+    --debug             Enable debug mode.
 
   Example
     $ mokia index.ts
@@ -33,6 +34,9 @@ const cli = meow(`
     watch: {
       type: 'boolean',
       alias: 'w'
+    },
+    debug: {
+      type: 'boolean'
     }
   }
 })
