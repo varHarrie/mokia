@@ -9,9 +9,10 @@ const cli = meow(`
     $ mokia <entry-file> [options]
 
   Options
-    --host       -H     Set host, default to "localhost".
-    --port       -P     Set port, default to 8080.
+    --host       -h     Set host, default to "localhost".
+    --port       -p     Set port, default to 8080.
     --prefix            Set route prefix.
+    --watch      -w
 
   Example
     $ mokia index.ts
@@ -20,14 +21,18 @@ const cli = meow(`
   flags: {
     host: {
       type: 'string',
-      alias: 'H'
+      alias: 'h'
     },
     port: {
       type: 'string',
-      alias: 'P'
+      alias: 'p'
     },
     prefix: {
       type: 'string'
+    },
+    watch: {
+      type: 'boolean',
+      alias: 'w'
     }
   }
 })

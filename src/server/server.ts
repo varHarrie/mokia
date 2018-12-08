@@ -8,13 +8,13 @@ export const HOST = Symbol('HOST')
 export const PORT = Symbol('PORT')
 export const PREFIX = Symbol('PREFIX')
 
-export interface Config extends Routes {
+export interface ServerConfig extends Routes {
   [HOST]?: string
   [PORT]?: string | number
   [PREFIX]?: string
 }
 
-export function start (config: Config) {
+export function create (config: ServerConfig) {
   return new Promise<[number, Function]>((resolve, reject) => {
     const {
       [HOST]: host = 'localhost',
@@ -35,9 +35,10 @@ export function start (config: Config) {
     const server = app.listen(realPort, host, () => resolve([realPort, destroy]))
 
     function destroy () {
-      if (server) {
-        server.close()
-      }
+      return new Promise((res, rej) => {
+        if (!server) return res()
+        server.close(() => res())
+      })
     }
   })
 }
