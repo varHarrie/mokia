@@ -1,10 +1,8 @@
-import * as tsNode from 'ts-node'
+import 'ts-node/register'
+
 import meow from 'meow'
 
 import run from './run'
-import config from './tsconfig'
-
-tsNode.register(config)
 
 const cli = meow(`
   Usage
