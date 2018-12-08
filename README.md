@@ -1,43 +1,47 @@
-```ts
-import mock from 'mokia'
+# Mokia
 
-mock({ name: 'Harrie', age: 18 })
+A mock server integrated data simulation and http service.
 
-mock({ name: mock.cname(2, 4), age: mock.integer(1, 100) })
+## Installation
 
-mock({
-  name: mock.cname(2, 4),
-  age: mock.integer(1, 100),
-  friends: mock.array({
-    name: mock.cname(2, 4),
-    age: mock.integer(1, 100),
-  }, 0, 5)
-})
+```bash
+# For npm
+$ npm install mokia --save-dev
 
-class Person {
-
-  @m.cname(2, 4)
-  name: string
-
-  @m.integer(1, 100)
-  age: number
-
-}
-
-mock(Person, {friends: mock.array(Person, 0, 5)})
-
-class Person {
-
-  @m.cname(2, 4)
-  name: string
-
-  @m.integer(1, 100)
-  age: number
-
-  @m.array(Person, 0, 5)
-  friends: Person[]
-
-}
-
-mock(Person, {friends: mock.array(mock.mixin(Person, 'name'))}})
+# For yarn
+$ yarn add mokia --dev
 ```
+
+## Usage
+
+1. Adds a ts file like `mock.ts`:
+
+  ```typescript
+  import { mock, PORT, ServerConfig } from 'mokia'
+
+  const config: ServerConfig = {
+    // Assigns port, default to 8080
+    [PORT]: 3000,
+    // Adds APIs
+    'GET /users': () => {
+      return {
+        users: mock.array({ name: mock.string('abcdefg')}, 0, 5)
+      }
+    },
+    'GET /users/:id': () => {
+      return { name: mock.string('abcdefg')}
+    },
+  }
+
+  export default config
+  ```
+
+2. Runs script:
+
+  ```bash
+  $ npx mokia mock.ts
+  ```
+
+## License
+
+[MIT](./LICENSE)
