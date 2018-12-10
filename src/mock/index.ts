@@ -1,6 +1,7 @@
 import * as decorators from './decorators'
 import * as generators from './generators'
 import mockFn from './mock'
+import { POOLS as pools } from './constants'
 
 type Mock = typeof mockFn & typeof generators
 
@@ -11,4 +12,4 @@ Object.keys(generators).forEach((key) => {
   mockAny[key] = (generators as any)[key]
 })
 
-export { decorators, generators, mock }
+export { decorators, generators, mock, pools }

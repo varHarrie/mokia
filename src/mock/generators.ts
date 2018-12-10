@@ -195,6 +195,92 @@ export function string (pool: any, min?: any, max?: any): string {
 }
 
 /**
+ * Returns a word
+ *
+ * @example
+ *
+ * word()
+ * // => aywivh
+ *
+ * word(5)
+ * // => krqmh
+ *
+ * word(3, 10)
+ * // => rivpau
+ */
+export function word (length?: number): string
+export function word (min: number, max: number): string
+export function word (n1: any = 2, n2: any = 8): string {
+  return string(POOLS.lower, n1, n2)
+}
+
+/**
+ * Returns a title
+ *
+ * @example
+ *
+ * title()
+ * // => Himgi
+ *
+ * title(5)
+ * // => Ymxgw
+ *
+ * title(3, 10)
+ * // => Pkfqif
+ */
+export function title (length?: number): string
+export function title (min: number, max: number): string
+export function title (n1: any = 1, n2: any = 7): string {
+  return char(POOLS.upper) + string(POOLS.lower, n1, n2)
+}
+
+/**
+ * Returns a sentence
+ *
+ * @example
+ *
+ * sentence()
+ * // => Lnoq kfuwmzi pdura.
+ *
+ * sentence(5)
+ * // => Skvp qkfvpd fhre zloqjbn uekgr.
+ *
+ * sentence(3, 10)
+ * // => Vkriw kbuq lgonza wurmg.
+ */
+export function sentence (length?: number): string
+export function sentence (min: number, max: number): string
+export function sentence (n1: any = 5, n2: any = 18): string {
+  return title(1) + Array
+    .from({ length: natural(n1, n2) })
+    .map(() => word())
+    .join(' ') + '.'
+}
+
+/**
+ * Returns a paragraph
+ *
+ * @example
+ *
+ * paragraph()
+ * // => ...\n...\n...
+ *
+ * paragraph(2)
+ * // => ...\n...\n
+ *
+ * paragraph(2, 4)
+ * // => ...\n...\n...\n...
+ */
+export function paragraph (length?: number): string
+export function paragraph (min: number, max: number): string
+export function paragraph (n1: any = 1, n2: any = 12): string {
+  return Array
+    .from({ length: natural(n1, n2) })
+    .map(() => Array.from({ length: integer(2, 10) }).map(() => sentence()).join(''))
+    .join('\n')
+}
+
+/**
  * Returns a datetime string
  *
  * @example
