@@ -126,15 +126,15 @@ export function float (min: number, max: number): number
 export function float (min: number, max: number, fixed: number): number
 export function float (min: number, max: number, dmin: number, dmax: number): number
 export function float (n1?: any, n2?: any, n3?: any, n4?: any): number {
-  n3 = n3 === undefined ? 2 : n3
-  n4 = n4 === undefined ? n3 : n4
-  n2 = n2 === undefined ? n1 === undefined ? 100 : n1 : n2
-  n1 = n1 === undefined ? 0 : n1
 
-  const decLen = integer(n3, n4)
+  const min = utils.defaultBy(n2, utils.defaultTo(n1, 0), 0)
+  const max = utils.defaultTo(n2, utils.defaultTo(n1, 100))
+  const dmin = utils.defaultTo(n3, 1)
+  const dmax = utils.defaultTo(n4, utils.defaultTo(n3, 3))
 
-  const int = integer(n1, n2)
-  const dec = decLen ? string('number', decLen - 1) + char('positive') : ''
+  const decLen = integer(dmin, dmax)
+  const int = integer(min, max)
+  const dec = decLen > 0 ? string(POOLS.number, decLen - 1) + char(POOLS.positive) : ''
 
   return parseFloat(`${int}.${dec}`)
 }
@@ -341,8 +341,6 @@ export function now (format?: string): string {
  *
  * image('64x64')
  * // => http://dummyimage.com/64x64
- *
- * image()
  */
 export function image (size?: string): string
 export function image (size: string, text: string): string
@@ -355,6 +353,14 @@ export function image (...args: any[]): string {
 
 /**
  * Returns a base64 image string
+ *
+ * @example
+ *
+ * dataImage()
+ * // => data:image/...
+ *
+ * dataImage('64x64')
+ * // => data:image/...
  */
 export function dataImage (size?: string): string
 export function dataImage (size: string, text: string): string

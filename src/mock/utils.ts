@@ -43,6 +43,50 @@ export function isFunction (func: any): func is Func {
 }
 
 /**
+ * Returns value that determined by original value
+ *
+ * @example
+ *
+ * defaultTo(1, 2)
+ * // => 1
+ *
+ * defaultTo(undefined, 10)
+ * // => 10
+ *
+ * defaultTo(NaN, 10)
+ * // => 10
+ *
+ * defaultTo(null, 10)
+ * // => 10
+ */
+export function defaultTo<T> (value: any, defaultValue: T): T {
+  return (value === undefined || value === null || isNaN(value))
+    ? defaultValue : value
+}
+
+/**
+ * Returns value that determined by original value
+ *
+ * @example
+ *
+ * defaultBy(1, 2, 3)
+ * // => 2
+ *
+ * defaultBy(undefined, 10, 20)
+ * // => 20
+ *
+ * defaultBy(NaN, 10, 20)
+ * // => 20
+ *
+ * defaultBy(null, 10, 20)
+ * // => 20
+ */
+export function defaultBy<T> (value: any, trueValue: any, falseValue: any) {
+  return (value === undefined || value === null || isNaN(value))
+    ? falseValue : trueValue
+}
+
+/**
  * Returns an integer from any type
  *
  * @example

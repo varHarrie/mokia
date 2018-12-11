@@ -10,7 +10,8 @@ const BASE_POOLS = {
   upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 }
 
-export const POOLS: {[key: string]: string} = {
+export const POOLS = {
+  ...BASE_POOLS,
   letter: BASE_POOLS.lower + BASE_POOLS.upper,
   word:  BASE_POOLS.lower + BASE_POOLS.upper + BASE_POOLS.number,
   all: BASE_POOLS.lower + BASE_POOLS.upper + BASE_POOLS.number + BASE_POOLS.symbol,
