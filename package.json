@@ -7,8 +7,9 @@
   "scripts": {
     "clean": "rimraf ./cli ./mock ./server ./index.*",
     "build": "npm run clean && tsc",
-    "test": "cross-env DEBUG=mokia:* nyc mocha",
-    "test:watch": "cross-env DEBUG=mokia:* nyc mocha -w"
+    "test": "cross-env DEBUG=mokia:* mocha",
+    "test:watch": "cross-env DEBUG=mokia:* nyc mocha -w",
+    "test:nyc": "cross-env DEBUG=mokia:* nyc mocha"
   },
   "repository": {
     "type": "git",
