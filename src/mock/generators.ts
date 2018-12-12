@@ -170,19 +170,9 @@ export function char (pool: string): string {
  */
 export function string (pool: string, length?: number): string
 export function string (pool: string, min: number, max: number): string
-export function string (pool: any, min?: any, max?: any): string {
-  if (pool === undefined) {
-    min = max = 10
-    pool = 'all'
-  } else if (typeof pool === 'number') {
-    max = min === undefined ? pool : min
-    min = pool
-    pool = 'all'
-  } else {
-    pool = String(pool)
-    min = min === undefined ? 10 : parseInt(min, 10)
-    max = max === undefined ? min : parseInt(max, 10)
-  }
+export function string (pool: any, n1?: any, n2?: any): string {
+  const max = utils.defaultTo(n2, utils.defaultTo(n1, 10))
+  const min = utils.defaultTo(n1, 0)
 
   const len = natural(min, max)
   let text = ''
@@ -210,8 +200,11 @@ export function string (pool: any, min?: any, max?: any): string {
  */
 export function word (length?: number): string
 export function word (min: number, max: number): string
-export function word (n1: any = 2, n2: any = 8): string {
-  return string(POOLS.lower, n1, n2)
+export function word (n1?: any, n2?: any): string {
+  const max = utils.defaultTo(n2, utils.defaultTo(n1, 8))
+  const min = utils.defaultTo(n1, 1)
+
+  return string(POOLS.lower, min, max)
 }
 
 /**
@@ -220,18 +213,24 @@ export function word (n1: any = 2, n2: any = 8): string {
  * @example
  *
  * title()
- * // => Himgi
+ * // => Himgi Krpv Aicgw
  *
  * title(5)
- * // => Ymxgw
+ * // => Ymxgw Qkv Jmy Tlfsun Kiewcg"
  *
  * title(3, 10)
- * // => Pkfqif
+ * // => Pkfqif Hipr Jvsm Oqkkk
  */
 export function title (length?: number): string
 export function title (min: number, max: number): string
-export function title (n1: any = 1, n2: any = 7): string {
-  return char(POOLS.upper) + string(POOLS.lower, n1, n2)
+export function title (n1?: any, n2?: any): string {
+  const max = utils.defaultTo(n2, utils.defaultTo(n1, 5))
+  const min = utils.defaultTo(n1, 1)
+
+  return Array
+    .from({ length: integer(min, max) })
+    .map(() => utils.capitalize(word()))
+    .join(' ')
 }
 
 /**
@@ -250,11 +249,16 @@ export function title (n1: any = 1, n2: any = 7): string {
  */
 export function sentence (length?: number): string
 export function sentence (min: number, max: number): string
-export function sentence (n1: any = 5, n2: any = 18): string {
-  return title(1) + Array
-    .from({ length: natural(n1, n2) })
-    .map(() => word())
-    .join(' ') + '.'
+export function sentence (n1?: any, n2?: any): string {
+  const max = utils.defaultTo(n2, utils.defaultTo(n1, 15))
+  const min = utils.defaultTo(n1, 5)
+
+  const str = Array
+  .from({ length: integer(min, max) })
+  .map(() => word())
+  .join(' ') + '.'
+
+  return utils.capitalize(str)
 }
 
 /**
@@ -263,20 +267,49 @@ export function sentence (n1: any = 5, n2: any = 18): string {
  * @example
  *
  * paragraph()
- * // => ...\n...\n...
+ * // => xxx. xxx. xxx.
  *
  * paragraph(2)
- * // => ...\n...\n
+ * // => xxx. xxx.
  *
  * paragraph(2, 4)
- * // => ...\n...\n...\n...
+ * // => xxx. xxx.xxx. xxx.
  */
 export function paragraph (length?: number): string
 export function paragraph (min: number, max: number): string
-export function paragraph (n1: any = 1, n2: any = 12): string {
+export function paragraph (n1?: any, n2?: any): string {
+  const max = utils.defaultTo(n2, utils.defaultTo(n1, 5))
+  const min = utils.defaultTo(n1, 2)
+
   return Array
-    .from({ length: natural(n1, n2) })
-    .map(() => Array.from({ length: integer(2, 10) }).map(() => sentence()).join(''))
+    .from({ length: integer(min, max) })
+    .map(() => sentence())
+    .join(' ')
+}
+
+/**
+ * Returns a passage
+ *
+ * @example
+ *
+ * passage()
+ * // => ...\n...\n...
+ *
+ * passage(2)
+ * // => ...\n...\n
+ *
+ * passage(2, 4)
+ * // => ...\n...\n...\n...
+ */
+export function passage (length?: number): string
+export function passage (min: number, max: number): string
+export function passage (n1?: any, n2?: any): string {
+  const max = utils.defaultTo(n2, utils.defaultTo(n1, 5))
+  const min = utils.defaultTo(n1, 2)
+
+  return Array
+    .from({ length: integer(min, max) })
+    .map(() => paragraph())
     .join('\n')
 }
 
@@ -300,8 +333,8 @@ export function paragraph (n1: any = 1, n2: any = 12): string {
 export function datetime (format?: string): string
 export function datetime (format: string, max: utils.DateType): string
 export function datetime (format: string, min: utils.DateType, max: utils.DateType): string
-export function datetime (format?: string, min?: any, max?: any): string {
-  return utils.formatDate(utils.randomDate(min, max), format || DATETIME_FORMAT)
+export function datetime (format?: string, n1?: any, n2?: any): string {
+  return utils.formatDate(utils.randomDate(n1, n2), format || DATETIME_FORMAT)
 }
 
 /**
@@ -374,7 +407,7 @@ export function dataImage (...args: any[]): string {
 /**
  * Returns an array with random length
  *
- * example
+ * @example
  *
  * array('a')
  * // => ['a']
@@ -391,11 +424,9 @@ export function dataImage (...args: any[]): string {
 export function array<T> (proto: T, length?: number): T extends (...args: any[]) => infer R ? R[] : T[]
 export function array<T> (proto: T, min: number, max: number): T extends (...args: any[]) => infer R ? R[] : T[]
 export function array<T> (proto: T, n1?: number, n2?: number): T extends (...args: any[]) => infer R ? R[] : T[] {
-  const count = n2 === undefined
-    ? n1 === undefined
-      ? integer(0, 5)
-      : utils.ensureNatural(n1)
-    : natural(n1 || 0, n2)
+  const max = utils.defaultTo(n2, utils.defaultTo(n1, 5))
+  const min = utils.defaultTo(n1, 2)
+  const count = integer(min, max)
 
   const mockable = utils.isFunction(proto) ? proto : getMockable<any>(proto)
   const results: any = []
@@ -438,11 +469,9 @@ export function oneOf<T> (list: T[]): T {
 export function manyOf<T> (list: T[], length?: number): T[]
 export function manyOf<T> (list: T[], min: number, max: number): T[]
 export function manyOf<T> (list: T[], n1?: number, n2?: number): T[] {
-  const count = n2 === undefined
-    ? n1 === undefined
-      ? integer(0, 5)
-      : utils.ensureNatural(n1)
-    : natural(n1 || 0, n2)
+  const max = utils.defaultTo(n2, utils.defaultTo(n1, list.length))
+  const min = utils.defaultTo(n1, 0)
+  const count = integer(min, max)
 
   return utils.pickItems(list, count)
 }
@@ -464,19 +493,18 @@ export function manyOf<T> (list: T[], n1?: number, n2?: number): T[] {
  * pick({ name: 'Harrie', age: 18, gender: 'male' }, 1, 2)
  * // => ({ age: 18, gender: 'male' }
  */
-export function pick<T extends object> (proto: T, props?: string): Partial<T> | null
-export function pick<T extends object> (proto: T, props: string[]): Partial<T> | null
-export function pick<T extends object> (proto: T, length?: number): Partial<T> | null
-export function pick<T extends object> (proto: T, min: number, max: number): Partial<T> | null
-export function pick<T extends object> (proto: T, n1?: any, n2?: any): Partial<T> | null {
-  if (!proto || typeof proto !== 'object') return null
+export function pick<T> (proto: T, length?: number): T extends Object ? Partial<T> : null
+export function pick<T> (proto: T, props: string | string[]): T extends Object ? Partial<T> : null
+export function pick<T> (proto: T, min: number, max: number): T extends Object ? Partial<T> : null
+export function pick<T> (proto: T, n1?: any, n2?: any): T extends Object ? Partial<T> : null {
+  if (!utils.isTrueObject(proto)) return null as any
 
   const mockable = getMockable(proto)
   const result = generate(mockable)
 
-  const keys = typeof n1 === 'number'
-    ? manyOf(Object.keys(result), n1, n2)
-    : n1
+  const keys = n1 === undefined || typeof n1 === 'number'
+  ? manyOf(Object.keys(result), n1, n2)
+  : n1
 
-  return utils.pickProps(result, keys)
+  return utils.pickProps(result, keys) as any
 }

@@ -130,6 +130,18 @@ export function ensureNatural (value: any, defaultValue: number = 0): number {
   return num < 0 ? 0 : num
 }
 
+/**
+ * Returns a string with capital first letter
+ *
+ * @example
+ *
+ * capitalize('abc')
+ * // => 'Abc'
+ */
+export function capitalize (value: string) {
+  return value.substring(0, 1).toUpperCase() + value.substring(1)
+}
+
 export type DateType = number | string | Date
 
 /**
@@ -168,7 +180,7 @@ export function randomDate (): Date
 export function randomDate (max: DateType): Date
 export function randomDate (min: DateType, max: DateType): Date
 export function randomDate (min?: DateType, max?: DateType): Date {
-  const minDate = (max && min) ? new Date(min) : MIN_DATE
+  const minDate = max && min ? new Date(min) : MIN_DATE
   const maxDate = max ? new Date(max) : min ? new Date(min) : MAX_DATE
 
   return new Date(integer(minDate.getTime(), maxDate.getTime()))
