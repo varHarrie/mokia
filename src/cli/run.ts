@@ -5,12 +5,13 @@ import meow from 'meow'
 import ora from 'ora'
 import path from 'path'
 
-import { create, HOST, PORT, PREFIX, ServerConfig } from '..'
 import { debounce } from '../mock/utils'
+import { create, HOST, PORT, PREFIX, ServerConfig } from '../server'
 
 const debug = Debug('mokia:cli')
 const cwd = process.cwd()
 const spinner = ora()
+const noop = () => {/* */}
 
 export default async function run (cli: meow.Result) {
   const { input, flags } = cli
@@ -29,10 +30,10 @@ export default async function run (cli: meow.Result) {
     if (flags.watch) {
       fs.watch(configPath, debounce(async (event: string, file: string) => {
         debug('file change', file)
-        console.log(`${chalk.yellow('*')} Server is restarting...`)
+        spinner.start(`Server is restarting...`)
 
         await destroy()
-        delete require.cache[configPath]
+        cleanCache(configPath)
         destroy = await start(configPath, flags)
       }, 500))
     }
@@ -48,8 +49,16 @@ export default async function run (cli: meow.Result) {
 async function start (configPath: string, options: any) {
   spinner.start('Loading...')
 
-  let config = await import(configPath)
-  if (config && config.default) config = config.default
+  let config: ServerConfig
+
+  try {
+    config = await import(configPath)
+    if (config && config.default) config = (config as any).default
+  } catch (error) {
+    debug('error', error)
+    spinner.fail(`Could not load: ${configPath}, waiting for change...`)
+    return noop
+  }
 
   if (options.host) config[HOST] = options.host
   if (options.port) config[PORT] = options.port
@@ -62,3 +71,19 @@ async function start (configPath: string, options: any) {
 
   return destroy
 }
+
+function cleanCache (configPath: string) {
+  const module = require.cache[configPath]
+  const siblings = module && module.parent && module.parent.children
+
+  if (siblings) {
+    const index = siblings.indexOf(module)
+    siblings.splice(index, 1)
+  }
+
+  require.cache[configPath] = null
+}
+
+process.on('unhandledRejection', (err) => {
+  debug('unhandled rejection', err)
+})

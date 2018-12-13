@@ -1,6 +1,6 @@
-import * as generators from './generators'
-import { createDecorator } from './invoker'
-import { DateType } from './utils'
+import * as generators from '../generators'
+import { createDecorator } from '../invoker'
+import { DateType } from '../utils'
 
 export function boolean (chance?: number, value?: boolean): PropertyDecorator
 export function boolean (...args: any[]): PropertyDecorator {

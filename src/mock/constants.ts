@@ -14,8 +14,7 @@ export const POOLS = {
   ...BASE_POOLS,
   letter: BASE_POOLS.lower + BASE_POOLS.upper,
   word:  BASE_POOLS.lower + BASE_POOLS.upper + BASE_POOLS.number,
-  all: BASE_POOLS.lower + BASE_POOLS.upper + BASE_POOLS.number + BASE_POOLS.symbol,
-  ['undefined']: BASE_POOLS.lower + BASE_POOLS.upper + BASE_POOLS.number + BASE_POOLS.symbol
+  all: BASE_POOLS.lower + BASE_POOLS.upper + BASE_POOLS.number + BASE_POOLS.symbol
 }
 
 export const DATETIME_FORMAT = 'YYYY-MM-DD HH:mm:ss'
