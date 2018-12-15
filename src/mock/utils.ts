@@ -187,48 +187,6 @@ export function randomDate (min?: DateType, max?: DateType): Date {
 }
 
 /**
- * Return image url
- *
- * @candidates
- *
- * http://dummyimage.com
- * http://dn-placeholder.qbox.me
- * https://placeholder.com
- * http://fpoimg.com
- * http://placekitten.com
- * http://placeimg.com
- * http://uifaces.com
- */
-export function createUrlImage (
-  size: string = '100x100',
-  text: string = '',
-  background: string = '000',
-  foreground: string = 'fff',
-  format: 'png' | 'jpg' | 'gif' = 'png'
-): string {
-  const host = 'http://dummyimage.com'
-  return `${host}/${size}/${background}/${foreground}/${format}?text=${text}`
-}
-
-/**
- * Return Base64 image
- *
- * @candidates
- *
- * https://github.com/Automattic/node-canvas
- */
-export function createBase64Image (
-  size: string = '100x100',
-  text: string = '',
-  background: string = '000',
-  foreground: string = 'fff',
-  format: 'png' | 'jpg' | 'gif' = 'png'
-): string {
-  // todo:
-  return ''
-}
-
-/**
  * Checks if `obj` is a true object
  *
  * @example

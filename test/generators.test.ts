@@ -437,7 +437,7 @@ describe('generator:dataImage', () => {
   it('dataImage()', () => {
     const r = mock.dataImage()
 
-    expect(r).is.a('string')
+    expect(r).is.a('string').satisfy((rr: string) => rr.startsWith('data:image/'))
   })
 
 })
