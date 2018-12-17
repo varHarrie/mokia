@@ -8,13 +8,13 @@ import { POOLS } from '../constants'
  * @example
  *
  * word()
- * // => aywivh
+ * // => 'aywivh'
  *
  * word(5)
- * // => krqmh
+ * // => 'krqmh'
  *
  * word(3, 10)
- * // => rivpau
+ * // => 'rivpau'
  */
 export function word (length?: number): string
 export function word (min: number, max: number): string
@@ -31,13 +31,13 @@ export function word (n1?: any, n2?: any): string {
  * @example
  *
  * title()
- * // => Himgi Krpv Aicgw
+ * // => 'Himgi Krpv Aicgw'
  *
  * title(5)
- * // => Ymxgw Qkv Jmy Tlfsun Kiewcg"
+ * // => 'Ymxgw Qkv Jmy Tlfsun Kiewcg'
  *
  * title(3, 10)
- * // => Pkfqif Hipr Jvsm Oqkkk
+ * // => 'Pkfqif Hipr Jvsm Oqkkk'
  */
 export function title (length?: number): string
 export function title (min: number, max: number): string
@@ -57,13 +57,13 @@ export function title (n1?: any, n2?: any): string {
  * @example
  *
  * sentence()
- * // => Lnoq kfuwmzi pdura.
+ * // => 'Lnoq kfuwmzi pdura.'
  *
  * sentence(5)
- * // => Skvp qkfvpd fhre zloqjbn uekgr.
+ * // => 'Skvp qkfvpd fhre zloqjbn uekgr.'
  *
  * sentence(3, 10)
- * // => Vkriw kbuq lgonza wurmg.
+ * // => 'Vkriw kbuq lgonza wurmg.'
  */
 export function sentence (length?: number): string
 export function sentence (min: number, max: number): string
@@ -85,13 +85,13 @@ export function sentence (n1?: any, n2?: any): string {
  * @example
  *
  * paragraph()
- * // => xxx. xxx. xxx.
+ * // => 'xxx. xxx. xxx.'
  *
  * paragraph(2)
- * // => xxx. xxx.
+ * // => 'xxx. xxx.'
  *
  * paragraph(2, 4)
- * // => xxx. xxx.xxx. xxx.
+ * // => 'xxx. xxx.xxx. xxx.'
  */
 export function paragraph (length?: number): string
 export function paragraph (min: number, max: number): string
@@ -111,13 +111,13 @@ export function paragraph (n1?: any, n2?: any): string {
  * @example
  *
  * passage()
- * // => ...\n...\n...
+ * // => '...\n...\n...'
  *
  * passage(2)
- * // => ...\n...\n
+ * // => '...\n...\n'
  *
  * passage(2, 4)
- * // => ...\n...\n...\n...
+ * // => '...\n...\n...\n...'
  */
 export function passage (length?: number): string
 export function passage (min: number, max: number): string

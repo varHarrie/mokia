@@ -9,6 +9,6 @@
 /cli
 /server
 
-*.d.ts
-*.js
-*.map
+/*.d.ts
+/*.js
+/*.map

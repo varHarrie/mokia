@@ -7,16 +7,16 @@ import { DATE_FORMAT, DATETIME_FORMAT, TIME_FORMAT } from '../constants'
  * @example
  *
  * datetime()
- * // => 2007-03-27 18:23:14
+ * // => '2007-03-27 18:23:14'
  *
  * datetime('YYYY-MM')
- * // => 2001-05
+ * // => '2001-05'
  *
  * datetime('YYYY-MM-DD', '2018-12-31')
- * // => 2014-06-03
+ * // => '2014-06-03'
  *
  * datetime('YYYY-MM-DD', '2018-12-01', '2018-12-31')
- * // => 2018-12-26
+ * // => '2018-12-26'
  */
 export function datetime (format?: string): string
 export function datetime (format: string, max: utils.DateType): string

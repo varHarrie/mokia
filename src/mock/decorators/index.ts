@@ -1,4 +1,4 @@
-import * as zh from './locals/zh'
+import * as zh from './locales/zh'
 
 export * from './common'
 export { zh }

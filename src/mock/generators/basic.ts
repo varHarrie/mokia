@@ -111,10 +111,10 @@ export function float (n1?: any, n2?: any, n3?: any, n4?: any): number {
  * @example
  *
  * char()
- * // => [any char]
+ * // => 'v'
  *
  * char('0123456789')
- * // => [any char from pool]
+ * // => '6'
  */
 export function char (pool: string): string {
   return pool.charAt(natural(pool.length - 1))
@@ -126,13 +126,13 @@ export function char (pool: string): string {
  * @example
  *
  * string('abcd')
- * // => baddcdabac
+ * // => 'baddcdabac'
  *
  * string('abcd', 5)
- * // => cadbd
+ * // => 'cadbd'
  *
  * string('abcd', 3, 10)
- * // => bdabcc
+ * // => 'bdabcc'
  */
 export function string (pool: string, length?: number): string
 export function string (pool: string, min: number, max: number): string
