@@ -442,6 +442,36 @@ describe('generator:dataImage', () => {
 
 })
 
+describe('generator:uuid', () => {
+
+  it('uuid()', () => {
+    const r = mock.uuid()
+
+    expect(r).is.a('string').match(/[a-z]{8}-[a-z]{4}-4[a-z]{3}-[a-z]{4}-[a-z]{12}/)
+  })
+
+})
+
+describe('generator:increment', () => {
+
+  it('increment()', () => {
+    const r1 = mock.increment()
+    const r2 = mock.increment()
+
+    expect(r1).is.a('number')
+    expect(r2).is.a('number').equal(r1 + 1)
+  })
+
+  it('increment(step)', () => {
+    const r1 = mock.increment()
+    const r2 = mock.increment(10)
+
+    expect(r1).is.a('number')
+    expect(r2).is.a('number').equal(r1 + 10)
+  })
+
+})
+
 describe('generator:array', () => {
 
   it('array(proto)', () => {
