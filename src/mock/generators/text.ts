@@ -1,6 +1,6 @@
 import * as utils from '../utils'
 import { integer, string } from './basic'
-import { POOLS } from '../constants'
+import { pools } from '../constants'
 
 /**
  * Returns a word
@@ -22,7 +22,7 @@ export function word (n1?: any, n2?: any): string {
   const max = utils.defaultTo(n2, utils.defaultTo(n1, 8))
   const min = utils.defaultTo(n1, 1)
 
-  return string(POOLS.lower, min, max)
+  return string(pools.lower, min, max)
 }
 
 /**

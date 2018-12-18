@@ -1,7 +1,7 @@
 import * as decorators from './decorators'
 import * as generators from './generators'
 import mockFn from './mock'
-import { POOLS as pools } from './constants'
+import { pools } from './constants'
 
 type Mock = typeof mockFn & typeof generators
 

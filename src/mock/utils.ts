@@ -131,6 +131,27 @@ export function ensureNatural (value: any, defaultValue: number = 0): number {
 }
 
 /**
+ * Returns a number within lower and upper bounds
+ *
+ * @example
+ *
+ * clamp(5, 0, 10)
+ * // => 5
+ *
+ * clamp(-3, 0, 10)
+ * // => 0
+ *
+ * clamp(18, 0, 10)
+ * // => 10
+ */
+export function clamp (value: number, lower: number, upper: number) {
+  const min = Math.min(lower, upper)
+  const max = Math.max(lower, upper)
+
+  return value < min ? min : value > max ? max : value
+}
+
+/**
  * Returns a string with capital first letter
  *
  * @example
@@ -264,4 +285,31 @@ export function debounce<T extends Function> (fn: T, delay: number): T {
       fn.apply(this, args)
     }, delay)
   } as any
+}
+
+/**
+ * Converts hsl to rgb
+ *
+ * @reference
+ *
+ * https://www.w3.org/TR/css-color-3/#hsl-color
+ *
+ * @example
+ *
+ * hslToRgb(0, 1, 0.5)
+ * // => [1, 0, 0]
+ */
+export function hslToRgb (h: number, s: number, l: number): number[] {
+  const q = l < 0.5 ? l * (s + 1) : l + s - l * s
+  const p = l * 2 - q
+
+  return [h + 1 / 3, h, h - 1 / 3]
+    .map((v) => {
+      if (v < 0) v += 1
+      if (v > 1) v -= 1
+      if (v < 1 / 6) return p + (q - p) * 6 * v
+      if (v < 1 / 2) return q
+      if (v < 2 / 3) return p + (q - p) * (2 / 3 - v) * 6
+      return p
+    })
 }

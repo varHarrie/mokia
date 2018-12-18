@@ -1,5 +1,5 @@
 import * as utils from '../utils'
-import { MAX_INTEGER, POOLS } from '../constants'
+import { MAX_INTEGER, pools } from '../constants'
 
 /**
  * Returns boolean value
@@ -100,7 +100,7 @@ export function float (n1?: any, n2?: any, n3?: any, n4?: any): number {
 
   const decLen = integer(dmin, dmax)
   const int = integer(min, max)
-  const dec = decLen > 0 ? string(POOLS.number, decLen - 1) + char(POOLS.positive) : ''
+  const dec = decLen > 0 ? string(pools.number, decLen - 1) + char(pools.positive) : ''
 
   return parseFloat(`${int}.${dec}`)
 }
