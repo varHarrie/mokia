@@ -4,6 +4,7 @@
   "description": "A simple mock server.",
   "main": "index.js",
   "types": "index.d.ts",
+  "bin": "bin/cli.js",
   "scripts": {
     "clean": "rimraf ./cli ./mock ./server ./index.*",
     "build": "npm run clean && tsc",
