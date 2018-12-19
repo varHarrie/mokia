@@ -1,5 +1,5 @@
-import * as utils from '../utils'
 import { MAX_INTEGER, pools } from '../constants'
+import { defaultTo, defaultBy, ensureInteger, ensureNatural } from '../utils'
 
 /**
  * Returns boolean value
@@ -39,7 +39,7 @@ export function integer (max?: number): number
 export function integer (min: number, max: number): number
 export function integer (n1?: any, n2?: any): number {
   if (n2 === undefined) {
-    n2 = utils.ensureInteger(n1, MAX_INTEGER)
+    n2 = ensureInteger(n1, MAX_INTEGER)
     n1 = n1 === undefined ? -MAX_INTEGER : 0
   } else {
     n1 = parseInt(n1, 10)
@@ -70,11 +70,11 @@ export function natural (max?: number): number
 export function natural (min: number, max: number): number
 export function natural (n1?: any, n2?: any): number {
   if (n2 === undefined) {
-    n2 = utils.ensureNatural(n1, MAX_INTEGER)
+    n2 = ensureNatural(n1, MAX_INTEGER)
     n1 = 0
   } else {
-    n1 = utils.ensureNatural(n1)
-    n2 = utils.ensureNatural(n2)
+    n1 = ensureNatural(n1)
+    n2 = ensureNatural(n2)
   }
 
   const min = Math.min(n1, n2)
@@ -93,10 +93,10 @@ export function float (min: number, max: number, fixed: number): number
 export function float (min: number, max: number, dmin: number, dmax: number): number
 export function float (n1?: any, n2?: any, n3?: any, n4?: any): number {
 
-  const min = utils.defaultBy(n2, utils.defaultTo(n1, 0), 0)
-  const max = utils.defaultTo(n2, utils.defaultTo(n1, 100))
-  const dmin = utils.defaultTo(n3, 1)
-  const dmax = utils.defaultTo(n4, utils.defaultTo(n3, 3))
+  const min = defaultBy(n2, defaultTo(n1, 0), 0)
+  const max = defaultTo(n2, defaultTo(n1, 100))
+  const dmin = defaultTo(n3, 1)
+  const dmax = defaultTo(n4, defaultTo(n3, 3))
 
   const decLen = integer(dmin, dmax)
   const int = integer(min, max)
@@ -137,8 +137,8 @@ export function char (pool: string): string {
 export function string (pool: string, length?: number): string
 export function string (pool: string, min: number, max: number): string
 export function string (pool: any, n1?: any, n2?: any): string {
-  const max = utils.defaultTo(n2, utils.defaultTo(n1, 10))
-  const min = utils.defaultTo(n1, 0)
+  const max = defaultTo(n2, defaultTo(n1, 10))
+  const min = defaultTo(n1, 0)
 
   const len = natural(min, max)
   let text = ''

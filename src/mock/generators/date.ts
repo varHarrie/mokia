@@ -1,5 +1,5 @@
-import * as utils from '../utils'
 import { DATE_FORMAT, DATETIME_FORMAT, TIME_FORMAT } from '../constants'
+import { DateType, formatDate, randomDate } from '../utils'
 
 /**
  * Returns a datetime string
@@ -19,18 +19,18 @@ import { DATE_FORMAT, DATETIME_FORMAT, TIME_FORMAT } from '../constants'
  * // => '2018-12-26'
  */
 export function datetime (format?: string): string
-export function datetime (format: string, max: utils.DateType): string
-export function datetime (format: string, min: utils.DateType, max: utils.DateType): string
+export function datetime (format: string, max: DateType): string
+export function datetime (format: string, min: DateType, max: DateType): string
 export function datetime (format?: string, n1?: any, n2?: any): string {
-  return utils.formatDate(utils.randomDate(n1, n2), format || DATETIME_FORMAT)
+  return formatDate(randomDate(n1, n2), format || DATETIME_FORMAT)
 }
 
 /**
  * Returns date string
  */
 export function date (format?: string): string
-export function date (format: string, max: utils.DateType): string
-export function date (format: string, min: utils.DateType, max: utils.DateType): string
+export function date (format: string, max: DateType): string
+export function date (format: string, min: DateType, max: DateType): string
 export function date (format?: string, min?: any, max?: any): string {
   return datetime(format || DATE_FORMAT, min, max)
 }
@@ -39,8 +39,8 @@ export function date (format?: string, min?: any, max?: any): string {
  * Returns date string
  */
 export function time (format?: string): string
-export function time (format: string, max: utils.DateType): string
-export function time (format: string, min: utils.DateType, max: utils.DateType): string
+export function time (format: string, max: DateType): string
+export function time (format: string, min: DateType, max: DateType): string
 export function time (format?: string, min?: any, max?: any): string {
   return datetime(format || TIME_FORMAT, min, max)
 }
@@ -49,5 +49,5 @@ export function time (format?: string, min?: any, max?: any): string {
  * Return current datetime string
  */
 export function now (format?: string): string {
-  return utils.formatDate(new Date(), format || DATETIME_FORMAT)
+  return formatDate(new Date(), format || DATETIME_FORMAT)
 }

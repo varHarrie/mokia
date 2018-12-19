@@ -15,7 +15,7 @@ function randomHue () {
  * hex()
  * // => '#79f2e1'
  */
-export function hex () {
+export function hex (): string {
   const values = hslToRgb(randomHue(), 0.5, 0.6)
     .map((v) => Math.round(v * 255).toString(16).padStart(2, '0'))
     .join('')
@@ -31,7 +31,7 @@ export function hex () {
  * rgb()
  * // => 'rgb(228, 242, 124)'
  */
-export function rgb () {
+export function rgb (): string {
   const values = hslToRgb(randomHue(), 0.5, 0.6)
     .map((v) => Math.round(v * 255))
     .join(', ')
@@ -47,7 +47,7 @@ export function rgb () {
  * rgba()
  * // => 'rgba(242, 149, 121, 0.51)'
  */
-export function rgba () {
+export function rgba (): string {
   const values = hslToRgb(randomHue(), 0.5, 0.6)
     .map((v) => Math.round(v * 255))
     .join(', ')
@@ -63,7 +63,7 @@ export function rgba () {
  * hsl()
  * // => 'hsl(58, 50%, 60%)'
  */
-export function hsl () {
+export function hsl (): string {
   const h = randomHue() * 360
 
   return 'hsl(' + h + ', 50%, 60%)'
@@ -77,6 +77,6 @@ export function hsl () {
  * color()
  * // => '#79f2e1'
  */
-export function color () {
+export function color (): string {
   return hex()
 }
