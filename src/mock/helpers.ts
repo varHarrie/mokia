@@ -23,14 +23,12 @@ export function mixin (...protos: any[]): Mockable {
     : mockable
 }
 
-export default function mock<P> (proto: P): Proto<P>
-export default function mock<P1, P2> (p1: P1, p2: P2): Proto<P1> & Proto<P2>
-export default function mock<P1, P2, P3> (p1: P1, p2: P2, p3: P3): Proto<P1> & Proto<P2> & Proto<P3>
-export default function mock<P1, P2, P3, P4> (p1: P1, p2: P2, p3: P3, p4: P4): Proto<P1> & Proto<P2> & Proto<P3> & Proto<P4>
-export default function mock (...protos: any[]): any
-export default function mock (...protos: any[]): any {
+export function execute<P> (proto: P, props: string | string[]): Proto<P>
+export function execute<P1, P2> (p1: P1, p2: P2, props: string | string[]): Proto<P1> & Proto<P2>
+export function execute<P1, P2, P3> (p1: P1, p2: P2, p3: P3, props: string | string[]): Proto<P1> & Proto<P2> & Proto<P3>
+export function execute<P1, P2, P3, P4> (p1: P1, p2: P2, p3: P3, p4: P4, props: string | string[]): Proto<P1> & Proto<P2> & Proto<P3> & Proto<P4>
+export function execute (...protos: any[]): any
+export function execute (...protos: any[]): any {
   const mockable = mixin(...protos)
   return generate(mockable)
 }
-
-mock.mixin = mixin

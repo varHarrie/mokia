@@ -1,4 +1,13 @@
 import * as zh from './locales/zh'
 
-export * from './common'
+export * from './basic'
+export * from './color'
+export * from './complex'
+export * from './date'
+export * from './id'
+export * from './image'
+export * from './person'
+export * from './text'
+export * from './web'
+
 export { zh }
