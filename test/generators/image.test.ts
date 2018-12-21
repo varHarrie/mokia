@@ -10,6 +10,12 @@ describe('generator:image', () => {
     expect(r).is.a('string')
   })
 
+  it('image(size, text)', () => {
+    const r = mock.image('10x10', 'Hello')
+
+    expect(r).is.a('string').match(/\?text=Hello$/)
+  })
+
 })
 
 describe('generator:dataImage', () => {
