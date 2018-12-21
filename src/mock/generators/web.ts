@@ -101,7 +101,7 @@ export function domain (_tld?: string) {
 export function pathname (length?: number) {
   length = defaultTo(length, integer(1, 6))
 
-  return Array
+  return '/' + Array
     .from({ length })
     .map(() => string(pools.letter + pools.number, 1, 8))
     .join('/')

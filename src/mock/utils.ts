@@ -60,8 +60,13 @@ export function isFunction (func: any): func is Func {
  * // => 10
  */
 export function defaultTo<T> (value: any, defaultValue: T): T {
-  return (value === undefined || value === null || isNaN(value))
-    ? defaultValue : value
+  return (
+    value === undefined
+      || value === null
+      || typeof defaultValue === 'number' && isNaN(value)
+  )
+    ? defaultValue
+    : value
 }
 
 /**

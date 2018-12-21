@@ -52,7 +52,7 @@ export function rgba (): string {
     .map((v) => Math.round(v * 255))
     .join(', ')
 
-  return 'rgb(' + values + ', ' + Math.random().toFixed(2) + ')'
+  return 'rgba(' + values + ', ' + Math.random().toFixed(2) + ')'
 }
 
 /**
@@ -64,7 +64,7 @@ export function rgba (): string {
  * // => 'hsl(58, 50%, 60%)'
  */
 export function hsl (): string {
-  const h = randomHue() * 360
+  const h = Math.round(randomHue() * 360)
 
   return 'hsl(' + h + ', 50%, 60%)'
 }

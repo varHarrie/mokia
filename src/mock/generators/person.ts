@@ -18,13 +18,13 @@ export function age (min?: number, max?: number): number {
 }
 
 /**
- * Returns a name
+ * Returns a full name
  *
  * @example
- * name()
+ * fullName()
  * // => 'Ronnie Howard'
  */
-export function name () {
+export function fullName () {
   return firstName() + ' ' + lastName()
 }
 
