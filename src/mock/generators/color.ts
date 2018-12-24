@@ -3,7 +3,7 @@ import { GOLDEN_RATIO_CONJUGATE } from '../constants'
 
 let hue = Math.random()
 
-function randomHue () {
+function randomHue (): number {
   return hue = (hue + GOLDEN_RATIO_CONJUGATE) % 1
 }
 

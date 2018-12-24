@@ -1,5 +1,6 @@
-import { mock } from '../../src'
 import { expect } from 'chai'
+
+import { mock } from '../../src'
 
 describe('generator:word', () => {
 

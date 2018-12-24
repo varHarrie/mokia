@@ -13,7 +13,7 @@
  * uuid()
  * // => 'c0f7e803-1b82-47fe-a43d-3265d31f53af'
  */
-export function uuid () {
+export function uuid (): string {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
     const r = Math.random() * 16 | 0
     const v = c === 'x' ? r : (r & 0x3 | 0x8)
@@ -35,6 +35,6 @@ let AUTO_INCREMENT_ID = 0
  * // => 101
  *
  */
-export function increment (step: number = 1) {
+export function increment (step: number = 1): number {
   return AUTO_INCREMENT_ID += step
 }

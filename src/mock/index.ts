@@ -1,5 +1,5 @@
-import * as decorators from './decorators'
 import * as generators from './generators'
+import * as decorators from './decorators'
 import * as helpers from './helpers'
 import { pools } from './constants'
 

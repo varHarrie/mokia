@@ -1,5 +1,5 @@
 import { MAX_INTEGER, pools } from '../constants'
-import { defaultTo, defaultBy, ensureInteger, ensureNatural } from '../utils'
+import { defaultBy, defaultTo, ensureInteger, ensureNatural } from '../utils'
 
 /**
  * Returns boolean value

@@ -91,7 +91,7 @@ export function sentence (n1?: any, n2?: any): string {
  * // => 'xxx. xxx.'
  *
  * paragraph(2, 4)
- * // => 'xxx. xxx.xxx. xxx.'
+ * // => 'xxx. xxx. xxx. xxx.'
  */
 export function paragraph (length?: number): string
 export function paragraph (min: number, max: number): string

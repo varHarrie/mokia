@@ -1,5 +1,6 @@
-import { mock } from '../../src'
 import { expect } from 'chai'
+
+import { mock } from '../../src'
 
 describe('generator:age', () => {
 
@@ -19,6 +20,22 @@ describe('generator:age', () => {
     const r = mock.age(18, 30)
 
     expect(r).is.a('number').within(18, 30)
+  })
+
+})
+
+describe('generator:birthday', () => {
+
+  it('birthday()', () => {
+    const r = mock.birthday()
+
+    expect(r).is.a('string').match(/^\d{4}-\d{2}-\d{2}$/)
+  })
+
+  it('birthday(format)', () => {
+    const r = mock.birthday('DD/MM/YYYY')
+
+    expect(r).is.a('string').match(/^\d{2}\/\d{2}\/\d{4}$/)
   })
 
 })

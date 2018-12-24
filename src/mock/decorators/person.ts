@@ -6,8 +6,8 @@ export function age (...args: any[]): PropertyDecorator {
   return createDecorator(generators.age, args)
 }
 
-export function name (): PropertyDecorator {
-  return createDecorator(generators.name, [])
+export function fullName (): PropertyDecorator {
+  return createDecorator(generators.fullName, [])
 }
 
 export function firstName (): PropertyDecorator {

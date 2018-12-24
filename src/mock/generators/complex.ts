@@ -10,7 +10,7 @@ import { defaultTo, isFunction, isTrueObject, pickItems, pickProps } from '../ut
  * generate({ name: 'Harrie' })
  * // => { name: 'Harrie' }
  *
- * generate({ name: cname() })
+ * generate({ name: fullName() })
  * // => { name: '张三' }
  *
  * generate(() => 'Harrie')
@@ -52,7 +52,7 @@ export function generate (mockable: any): any {
  * array('a', 3, 5)
  * // => ['a', 'a', 'a', 'a']
  *
- * array({ name: cname() }, 2)
+ * array({ name: fullName() }, 2)
  * // => [{ name: '张三' }, { name: '李四' }]
  */
 export function array<T> (proto: T, length?: number): T extends (...args: any[]) => infer R ? R[] : T[]

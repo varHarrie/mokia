@@ -1,7 +1,8 @@
 import { clamp, defaultTo } from '../utils'
 import { integer } from './basic'
 import { oneOf } from './complex'
-import { FIRST_NAMES, LAST_NAMES } from '../constants'
+import { DATE_FORMAT, FIRST_NAMES, LAST_NAMES } from '../constants'
+import { date } from './date'
 
 /**
  * Returns an age
@@ -18,13 +19,24 @@ export function age (min?: number, max?: number): number {
 }
 
 /**
+ * Returns a birthday
+ *
+ * @example
+ * birthday()
+ * // => '1975-05-08'
+ */
+export function birthday (format?: string): string {
+  return date(format || DATE_FORMAT, '1900-01-01', Date.now())
+}
+
+/**
  * Returns a full name
  *
  * @example
  * fullName()
  * // => 'Ronnie Howard'
  */
-export function fullName () {
+export function fullName (): string {
   return firstName() + ' ' + lastName()
 }
 
@@ -35,7 +47,7 @@ export function fullName () {
  * firstName()
  * // => 'Evie'
  */
-export function firstName () {
+export function firstName (): string {
   return oneOf(FIRST_NAMES)
 }
 
@@ -46,6 +58,6 @@ export function firstName () {
  * lastName()
  * // => 'Parker'
  */
-export function lastName () {
+export function lastName (): string {
   return oneOf(LAST_NAMES)
 }

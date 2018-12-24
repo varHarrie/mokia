@@ -84,7 +84,7 @@ export function port (min?: number, max?: number): number {
  * domain('hk')
  * // => 'voewpzn.hk'
  */
-export function domain (_tld?: string) {
+export function domain (_tld?: string): string {
   return word() + '.' + (_tld || tld())
 }
 
@@ -98,7 +98,7 @@ export function domain (_tld?: string) {
  * pathname(2)
  * // => '/qutmva/flq2'
  */
-export function pathname (length?: number) {
+export function pathname (length?: number): string {
   length = defaultTo(length, integer(1, 6))
 
   return '/' + Array
@@ -138,12 +138,12 @@ export function url (_protocol?: string, host?: string, prefix?: string): string
  * @example
  *
  * email()
- * // => 'rih.zqgll'
+ * // => 'rih.zqgll@owk.cn'
  *
  * email('gmail.com')
  * // => 'bqignwo.qzu@gmail.com'
  */
-export function email (_domain?: string) {
+export function email (_domain?: string): string {
   const head = Array
       .from({ length: integer(1, 2) })
       .map(() => string(pools.username, 1, 8))
