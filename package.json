@@ -5,6 +5,9 @@
   "main": "index.js",
   "types": "index.d.ts",
   "bin": "bin/cli.js",
+  "engines": {
+    "node": ">=8.9"
+  },
   "scripts": {
     "clean": "rimraf ./cli ./mock ./server ./index.*",
     "build": "npm run clean && tsc",
@@ -12,6 +15,14 @@
     "test:watch": "cross-env DEBUG=mokia:* nyc mocha -w",
     "test:nyc": "cross-env DEBUG=mokia:* nyc mocha"
   },
+  "files": [
+    "/bin",
+    "/cli",
+    "/mock",
+    "/server",
+    "index.d.ts",
+    "index.js"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/varHarrie/mokia.git"
