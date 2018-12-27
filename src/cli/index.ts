@@ -1,5 +1,3 @@
-import 'ts-node/register'
-
 import meow from 'meow'
 
 import run from './run'
