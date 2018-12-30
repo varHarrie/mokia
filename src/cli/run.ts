@@ -5,8 +5,8 @@ import meow from 'meow'
 import ora from 'ora'
 import path from 'path'
 
-import { debounce } from '../mock/utils'
 import { create, HOST, PORT, PREFIX, ServerConfig } from '../server'
+import { debounce, log } from '../utils'
 
 const debug = Debug('mokia:cli')
 const cwd = process.cwd()
@@ -30,7 +30,8 @@ export default async function run (cli: meow.Result) {
     if (flags.watch) {
       fs.watch(configPath, debounce(async (event: string, file: string) => {
         debug('file change', file)
-        spinner.start(`Server is restarting...`)
+        log(chalk.yellow('*'), `Server is restarting...`)
+        spinner.start('Loading...')
 
         await destroy()
         cleanCache(configPath)

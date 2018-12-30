@@ -62,6 +62,7 @@
     "./cli",
     "./mock",
     "./server",
-    "./index.d.ts"
+    "./index.d.ts",
+    "./utils.d.ts"
   ]
 }

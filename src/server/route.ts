@@ -1,4 +1,7 @@
+import chalk from 'chalk'
 import express from 'express'
+
+import { log } from '../utils'
 
 export type Request = express.Request
 
@@ -10,15 +13,19 @@ export interface Routes {
   [key: string]: RouteHandler
 }
 
-export function createRouter (routes: Routes) {
+export function createRouter (routes: Routes, silent: boolean) {
   const router = express.Router()
+
+  if (!silent) {
+    router.use(logHandler)
+  }
 
   for (const key in routes) {
     if (routes.hasOwnProperty(key)) {
       const [method, url] = parseRoute(key)
       const handler = createRequestHandler(routes[key])
 
-      if (method && url) {
+      if (isValidMethod(method) && url) {
         router[method](url, handler)
       }
     }
@@ -27,19 +34,26 @@ export function createRouter (routes: Routes) {
   return router
 }
 
-type Method = 'get' | 'post' | 'put' | 'patch' | 'delete'
+type Method = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'options'
 
-const methods: {[key: string]: Method} = {
-  get: 'get',
-  post: 'post',
-  put: 'put',
-  patch: 'patch',
-  delete: 'delete'
+const methods = ['get', 'post', 'put', 'patch', 'delete', 'options']
+
+const colors: {[key: string]: Function} = {
+  GET: chalk.green,
+  POST: chalk.blue,
+  PUT: chalk.yellow,
+  PATCH: chalk.magenta,
+  DELETE: chalk.red,
+  OPTIONS: chalk.gray
 }
 
-function parseRoute (key: string): [Method, string] {
+function parseRoute (key: string): [string, string] {
   const [method, url] = key.split(' ')
-  return [methods[method.toLowerCase()], url]
+  return [method.toLowerCase(), url]
+}
+
+function isValidMethod (method: string): method is Method {
+  return methods.includes(method)
 }
 
 function createRequestHandler (route: RouteHandler): express.RequestHandler {
@@ -47,4 +61,12 @@ function createRequestHandler (route: RouteHandler): express.RequestHandler {
     const data = route(request, response)
     if (data) response.json(data)
   }
+}
+
+function logHandler (req: Request, res: Response, next: () => void) {
+  const method = req.method
+  const url = req.url
+
+  log('- ', colors[method](method), url)
+  next()
 }

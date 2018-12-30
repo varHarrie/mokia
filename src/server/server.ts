@@ -10,11 +10,13 @@ const debug = Debug('mokia:server')
 export const HOST = Symbol('HOST')
 export const PORT = Symbol('PORT')
 export const PREFIX = Symbol('PREFIX')
+export const SILENT = Symbol('SILENT')
 
 export interface ServerConfig extends Routes {
   [HOST]?: string
   [PORT]?: string | number
   [PREFIX]?: string
+  [SILENT]?: boolean
 }
 
 export function create (config: ServerConfig) {
@@ -23,19 +25,21 @@ export function create (config: ServerConfig) {
       [HOST]: host = 'localhost',
       [PORT]: port = 8080,
       [PREFIX]: prefix = '',
+      [SILENT]: silent = false,
       ...routes
     } = config
 
     debug('host', host)
     debug('port', port)
     debug('prefix', prefix)
+    debug('silent', silent)
     debug('routes', routes)
 
     const app = express()
       .use(cors())
       .use(bodyParser.json())
       .use(bodyParser.urlencoded({ extended: false }))
-      .use(prefix, createRouter(routes))
+      .use(prefix, createRouter(routes, silent))
 
     app.on('error', reject)
 

@@ -9,7 +9,7 @@
     "node": ">=8.9"
   },
   "scripts": {
-    "clean": "rimraf ./cli ./mock ./server ./index.*",
+    "clean": "rimraf ./cli ./mock ./server ./index.* ./utils.*",
     "build": "npm run clean && tsc",
     "test": "cross-env DEBUG=mokia:* mocha",
     "test:watch": "cross-env DEBUG=mokia:* nyc mocha -w",
@@ -21,7 +21,9 @@
     "/mock",
     "/server",
     "index.d.ts",
-    "index.js"
+    "index.js",
+    "utils.d.ts",
+    "utils.js"
   ],
   "repository": {
     "type": "git",
