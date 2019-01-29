@@ -1,3 +1,5 @@
+import regions from './constant-regions'
+
 // @references
 // https://baike.baidu.com/item/%E5%B8%B8%E7%94%A8%E5%AD%97
 // http://www.gov.cn/zwgk/2013-08/19/content_2469793.htm
@@ -111,7 +113,7 @@ export const LAST_NAMES =
   '棋 芹 萍 幻 露 灵 含 雅 伊 伶 佳 依 俞 俪 倩 偲 琼 冰 姗 姝 珂 珊 彩 心' +
   '嘉 囡 女 如 妃 妍 妙 妮 漪 漫 澜 灵 玥 玫 环 玲 瑶 珍 谷 荷 画 巧 希 彤'
 
-// @referces
+// @references
 // https://baike.baidu.com/item/手机号码/1417348
 export const PHONE_PREFIX =
   '130 131 132 133 134 135 136 137 138 139 145 147 149 150 151 152 153 155' +

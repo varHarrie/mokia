@@ -1,5 +1,5 @@
 import { FIRST_NAMES, LAST_NAMES, PHONE_PREFIX } from './constants'
-import { char, integer, string } from '../../basic'
+import { char, string } from '../../basic'
 import { NUMBERS, pools } from '../../../constants'
 import { birthday } from '../../person'
 import { oneOf } from '../../complex'
