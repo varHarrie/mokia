@@ -5,22 +5,22 @@ import { mock, decorators } from '../../src'
 class Test {
 
   @decorators.boolean()
-  public boolean: any
+  public boolean: boolean
 
   @decorators.integer()
-  public integer: any
+  public integer: number
 
   @decorators.natural()
-  public natural: any
+  public natural: number
 
   @decorators.float()
-  public float: any
+  public float: number
 
   @decorators.char('abc')
-  public char: any
+  public char: string
 
   @decorators.string('abc')
-  public string: any
+  public string: string
 
 }
 

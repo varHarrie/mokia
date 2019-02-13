@@ -37,7 +37,7 @@ describe('generator:ipv6', () => {
   it('ipv6()', () => {
     const r = mock.ipv6()
 
-    expect(r).is.a('string').match(/^([0-9a-z]{1,4}:){7}([0-9a-z]{4})$/)
+    expect(r).is.a('string').match(/^([0-9a-z]{1,4}:){7}([0-9a-z]{1,4})$/)
   })
 
 })
