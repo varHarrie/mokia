@@ -1,26 +1,24 @@
 # Mokia
 
-A mock server integrated data simulation and http service.
+一个集成了数据模拟和HTTP服务的Mock工具。
 
-[中文文档](./README.zh-cn.md)
+## 特性
 
-## Features
+- 🤟 简单易用
+- 🔄 模型可复用
+- 💎 支持TypeScript
 
-- 🤟 Easy to use
-- 🔄 Reusable model
-- 💎 Support TypeScript
-
-## Installation
+## 安装
 
 ```bash
 $ npm install mokia --save-dev
-# Or
+# 或者
 $ yarn add mokia --dev
 ```
 
-## Basic Usage
+## 基本用法
 
-1. Adds a ts file like `mock.ts`:
+1. 添加一个文件，比如“mock.ts”：
 
   ```typescript
   import { mock, PORT, ServerConfig } from 'mokia'
@@ -46,15 +44,15 @@ $ yarn add mokia --dev
   export default config
   ```
 
-2. Runs script to start server:
+2. 运行脚本启动服务器：
 
   ```bash
   $ npx mokia mock.ts
   ```
 
-## Advanced Usage
+## 进阶用法
 
-To reduce duplicated code and keep reusability, we recommend to use class style:
+为了较少重复代码和保持代码复用性，我们推荐使用JS类风格书写：
 
 ```typescript
 import { decorators, mock, PORT, ServerConfig } from 'mokia'
@@ -84,14 +82,14 @@ export default config
 
 ## APIs
 
-### Server Config
+### 服务器配置参数：
 
-  - `HOST` Server host, default to `'localhost'`
-  - `PORT` Server port, default to `8080`
-  - `PREFIX` URL prefix, default to `''`
-  - `SILENT` whether to hide request logs, default to `false`
+  - `HOST` 服务器主机，默认为`'localhost'`
+  - `PORT` 服务器端口号，默认为`8080`
+  - `PREFIX` URL前缀，默认为`''`
+  - `SILENT` 是否隐藏请求日志，默认为`false`
 
-  Note: All of those parameters are `Symbol`, instead of `string`, so you should import they from `mokia`.
+  注意：这些参数传入时都不是字符串，而是`Symbol`，你应该从`mokia`包中引入。
 
   ```typescript
   import { PORT } from 'mokia'
@@ -105,11 +103,11 @@ export default config
   }
   ```
 
-### Generators
+### 生成器
 
-  All generators can be use as `function` or `decorator`.
+  所有生成器都可以作为函数或装饰器直接使用。
 
-- Basic
+- 基础
   - boolean(chance?: number, value?: boolean): boolean
   - integer(max?: number): number
   - integer(min: number, max: number): number
@@ -122,7 +120,7 @@ export default config
   - string(pool: string, length?: number): string
   - string(pool: string, min: number, max: number): string
 
-- Complex
+- 复合
   - generate(mockable: Object | Function): any
   - array(proto: any, length?: number): any[]
   - array(proto: any, min: number, max: number): any[]
@@ -133,7 +131,7 @@ export default config
   - pick(proto: Object, props: string | string[]): Object
   - pick(proto: Object, min: number, max: number): Object
 
-- Date
+- 日期
   - datetime(format?: string): string
   - datetime(format: string, max: DateType): string
   - datetime(format: string, min: DateType, max: DateType): string
@@ -145,11 +143,11 @@ export default config
   - time(format: string, min: DateType, max: DateType): string
   - now(format?: string): string
 
-- Image
+- 图片
   - image(size?: string, text?: string, background?: string, foreground?: string, format?: string): string
   - dataImage(size?: string, text?: string, background?: string, foreground?: string, format?: string): string
 
-- Text
+- 文本
   - word(length?: number): string
   - word(min: number, max: number): string
   - title(length?: number): string
@@ -171,7 +169,7 @@ export default config
   - zh.passage(length?: number): string
   - zh.passage(min: number, max: number): string
 
-- Color
+- 颜色
   - color(): string
   - rgb(): string
   - rgba(): string
@@ -188,7 +186,7 @@ export default config
   - url(protocol?: string, host?: string, prefix?: string): string
   - email(domain?: string)
 
-- Person
+- 人物
   - age(min?: number, max?: number): number
   - birthday(format?: string): string
   - fullName(): string
@@ -200,7 +198,7 @@ export default config
   - zh.phone(): string
   - zh.idNumber(): string
 
-- Region
+- 地区
   - zh.region(): { code: string, name: string }
   - zh.regionName(): string
   - zh.province(): { code: string, name: string }
