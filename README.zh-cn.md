@@ -8,17 +8,17 @@
 - 🔄 模型可复用
 - 💎 支持TypeScript
 
-## 安装
-
-```bash
-$ npm install mokia --save-dev
-# 或者
-$ yarn add mokia --dev
-```
-
 ## 基本用法
 
-1. 添加一个文件，比如“mock.ts”：
+1. 安装`mokia`：
+
+  ```bash
+  $ npm install mokia --save-dev
+  # 或者
+  $ yarn add mokia --dev
+  ```
+
+2. 添加一个文件，比如“mock.ts”：
 
   ```typescript
   import { mock, PORT, ServerConfig } from 'mokia'
@@ -44,11 +44,15 @@ $ yarn add mokia --dev
   export default config
   ```
 
-2. 运行脚本启动服务器：
+3. 添加运行脚本到`package.json`：
 
-  ```bash
-  $ npx mokia mock.ts
+  ```json
+  "scripts": {
+    "mock": "mokia mock.ts",
+  }
   ```
+
+4. 运行脚本`npm run mock`。
 
 ## 进阶用法
 

@@ -10,17 +10,17 @@ A mock server integrated data simulation and http service.
 - 🔄 Reusable model
 - 💎 Support TypeScript
 
-## Installation
-
-```bash
-$ npm install mokia --save-dev
-# Or
-$ yarn add mokia --dev
-```
-
 ## Basic Usage
 
-1. Adds a ts file like `mock.ts`:
+1. Install mokia
+
+  ```bash
+  $ npm install mokia --save-dev
+  # Or
+  $ yarn add mokia --dev
+  ```
+
+2. Adds a ts file like `mock.ts`:
 
   ```typescript
   import { mock, PORT, ServerConfig } from 'mokia'
@@ -46,11 +46,15 @@ $ yarn add mokia --dev
   export default config
   ```
 
-2. Runs script to start server:
+3. Add script to `package.json`:
 
-  ```bash
-  $ npx mokia mock.ts
+  ```json
+  "scripts": {
+    "mock": "mokia mock.ts",
+  }
   ```
+
+4. Run script `npm run mock`.
 
 ## Advanced Usage
 
