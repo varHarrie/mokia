@@ -1,6 +1,6 @@
 {
   "name": "mokia",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A simple mock server.",
   "main": "index.js",
   "types": "index.d.ts",
@@ -71,6 +71,7 @@
     "lodash": "^4.17.11",
     "meow": "^5.0.0",
     "ora": "^3.0.0",
-    "ts-node": "^7.0.1"
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.0"
   }
 }
