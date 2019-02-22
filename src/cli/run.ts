@@ -13,6 +13,21 @@ const cwd = process.cwd()
 const spinner = ora()
 const noop = () => {/* */}
 
+const tsOptions = {
+  compilerOptions: {
+    target: 'es6',
+    module: 'commonjs',
+    lib: ['dom', 'es2016', 'es2017'],
+    strictPropertyInitialization: false,
+    noUnusedLocals: false,
+    moduleResolution: 'node',
+    allowSyntheticDefaultImports: true,
+    esModuleInterop: true,
+    experimentalDecorators: true,
+    emitDecoratorMetadata: true
+  }
+}
+
 export default async function run (cli: meow.Result) {
   const { input, flags } = cli
   const configPath = path.join(cwd, input[0] || 'index.ts')
@@ -23,6 +38,11 @@ export default async function run (cli: meow.Result) {
 
   debug('configPath', configPath)
   debug('flags', flags)
+
+  if (/\.ts$/.test(configPath)) {
+    debug('enable TypeScript...')
+    require('ts-node').register(tsOptions)
+  }
 
   try {
     let destroy: Function = await start(configPath, flags)
