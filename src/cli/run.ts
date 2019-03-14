@@ -5,13 +5,15 @@ import meow from 'meow'
 import ora from 'ora'
 import path from 'path'
 
-import { create, HOST, PORT, PREFIX, ServerConfig } from '../server'
+import { create, HOST, PORT, PREFIX, ServerConfig, SILENT } from '../server'
 import { debounce, log } from '../utils'
 
 const debug = Debug('mokia:cli')
 const cwd = process.cwd()
 const spinner = ora()
-const noop = () => {/* */}
+const noop = () => {
+  /* */
+}
 
 const tsOptions = {
   compilerOptions: {
@@ -37,7 +39,7 @@ export default async function run (cli: meow.Result) {
   }
 
   debug('configPath', configPath)
-  debug('flags', flags)
+  debug('flag ', flags)
 
   if (/\.ts$/.test(configPath)) {
     debug('enable TypeScript...')
@@ -48,15 +50,18 @@ export default async function run (cli: meow.Result) {
     let destroy: Function = await start(configPath, flags)
 
     if (flags.watch) {
-      fs.watch(configPath, debounce(async (event: string, file: string) => {
-        debug('file change', file)
-        log(chalk.yellow('*'), `Server is restarting...`)
-        spinner.start('Loading...')
+      fs.watch(
+        configPath,
+        debounce(async (event: string, file: string) => {
+          debug('file change', file)
+          log(chalk.yellow('*'), `Server is restarting...`)
+          spinner.start('Loading...')
 
-        await destroy()
-        cleanCache(configPath)
-        destroy = await start(configPath, flags)
-      }, 500))
+          await destroy()
+          cleanCache(configPath)
+          destroy = await start(configPath, flags)
+        }, 500)
+      )
     }
   } catch (error) {
     spinner.fail(error.message)
@@ -84,11 +89,14 @@ async function start (configPath: string, options: any) {
   if (options.host) config[HOST] = options.host
   if (options.port) config[PORT] = options.port
   if (options.prefix) config[PREFIX] = options.prefix
+  if (options.silent) config[SILENT] = options.silent
 
   debug('config', config)
 
   const [port, destroy] = await create(config)
-  spinner.succeed(`Server is listening on port ${chalk.green(port.toString())}.`)
+  spinner.succeed(
+    `Server is listening on port ${chalk.green(port.toString())}.`
+  )
 
   return destroy
 }

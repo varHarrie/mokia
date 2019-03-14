@@ -11,6 +11,7 @@ const cli = meow(`
     --port       -p     Set port, default to 8080.
     --prefix            Set route prefix.
     --watch      -w     Watch input files.
+    --silent     -s     Hide request logs.
     --debug             Enable debug mode.
 
   Example
@@ -32,6 +33,10 @@ const cli = meow(`
     watch: {
       type: 'boolean',
       alias: 'w'
+    },
+    silent: {
+      type: 'boolean',
+      alias: 's'
     },
     debug: {
       type: 'boolean'
