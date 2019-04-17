@@ -1,13 +1,15 @@
-import chalk from 'chalk'
 import express from 'express'
 
-import { log } from '../utils'
+import { colors, log } from '../utils'
 
 export type Request = express.Request
 
 export type Response = express.Response
 
-export type RouteHandler = (request: Request, response: Response) => Object | Promise<Object> | void
+export type RouteHandler = (
+  request: Request,
+  response: Response
+) => Object | Promise<Object> | void
 
 export interface Routes {
   [key: string]: RouteHandler
@@ -37,15 +39,6 @@ export function createRouter (routes: Routes, silent: boolean) {
 type Method = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'options'
 
 const methods = ['get', 'post', 'put', 'patch', 'delete', 'options']
-
-const colors: {[key: string]: Function} = {
-  GET: chalk.green,
-  POST: chalk.blue,
-  PUT: chalk.yellow,
-  PATCH: chalk.magenta,
-  DELETE: chalk.red,
-  OPTIONS: chalk.gray
-}
 
 function parseRoute (key: string): [string, string] {
   const [method, url] = key.split(' ')

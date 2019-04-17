@@ -5,7 +5,7 @@ import meow from 'meow'
 import ora from 'ora'
 import path from 'path'
 
-import { create, HOST, PORT, PREFIX, ServerConfig, SILENT } from '../server'
+import { create, HOST, PORT, PREFIX, PRIORITY, ServerConfig, SILENT } from '../server'
 import { debounce, log } from '../utils'
 
 const debug = Debug('mokia:cli')
@@ -90,6 +90,7 @@ async function start (configPath: string, options: any) {
   if (options.port) config[PORT] = options.port
   if (options.prefix) config[PREFIX] = options.prefix
   if (options.silent) config[SILENT] = options.silent
+  if (options.priority) config[PRIORITY] = options.priority
 
   debug('config', config)
 

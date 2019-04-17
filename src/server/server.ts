@@ -4,6 +4,7 @@ import Debug from 'debug'
 import express from 'express'
 
 import { createRouter, Routes } from './route'
+import { priorityHandler } from './middlewares'
 
 const debug = Debug('mokia:server')
 
@@ -11,12 +12,14 @@ export const HOST = Symbol('HOST')
 export const PORT = Symbol('PORT')
 export const PREFIX = Symbol('PREFIX')
 export const SILENT = Symbol('SILENT')
+export const PRIORITY = Symbol('PRIORITY')
 
 export interface ServerConfig extends Routes {
   [HOST]?: string
   [PORT]?: string | number
   [PREFIX]?: string
   [SILENT]?: boolean
+  [PRIORITY]?: string
 }
 
 export function create (config: ServerConfig) {
@@ -26,6 +29,7 @@ export function create (config: ServerConfig) {
       [PORT]: port = 8080,
       [PREFIX]: prefix = '',
       [SILENT]: silent = false,
+      [PRIORITY]: priority = '',
       ...routes
     } = config
 
@@ -39,8 +43,10 @@ export function create (config: ServerConfig) {
       .use(cors())
       .use(bodyParser.json())
       .use(bodyParser.urlencoded({ extended: false }))
-      .use(prefix, createRouter(routes, silent))
 
+    if (priority) app.use(priorityHandler(priority))
+
+    app.use(prefix, createRouter(routes, silent))
     app.on('error', reject)
 
     const intPort = typeof port === 'string' ? parseInt(port, 10) : port
