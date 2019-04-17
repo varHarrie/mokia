@@ -67,7 +67,7 @@ export function dataImage (...args: any[]): string {
 
   const [width, height] = size.split('x').map((v) => parseInt(v, 10))
   const canvas = createCanvas(width, height)
-  const ctx = canvas.getContext('2d')!
+  const ctx = canvas.getContext('2d')
 
   ctx.fillStyle = background
   ctx.fillRect(0, 0, width, height)
@@ -78,5 +78,5 @@ export function dataImage (...args: any[]): string {
   ctx.fillStyle = foreground
   ctx.fillText(text, width / 2, height / 2, width)
 
-  return canvas.toDataURL('image/' + format)
+  return canvas.toDataURL('image/' + format as any)
 }

@@ -1,15 +1,23 @@
 {
-  "extends": [
-    "tslint:latest",
-    "tslint-config-standard"
-  ],
+  "extends": ["tslint:latest", "tslint-config-standard"],
   "rules": {
     "ban-types": false,
     "indent": [true, "spaces", 2],
     "interface-name": [true, "never-prefix"],
     "max-classes-per-file": true,
     "max-line-length": false,
-    "member-ordering": [true, {"order": ["static-field", "static-method", "instance-field", "constructor", "instance-method"]}],
+    "member-ordering": [
+      true,
+      {
+        "order": [
+          "static-field",
+          "static-method",
+          "instance-field",
+          "constructor",
+          "instance-method"
+        ]
+      }
+    ],
     "no-any": false,
     "no-console": false,
     "no-empty-interface": false,

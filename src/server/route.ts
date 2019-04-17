@@ -6,10 +6,7 @@ export type Request = express.Request
 
 export type Response = express.Response
 
-export type RouteHandler = (
-  request: Request,
-  response: Response
-) => Object | Promise<Object> | void
+export type RouteHandler = (request: Request, response: Response) => Object | Promise<Object> | void
 
 export interface Routes {
   [key: string]: RouteHandler

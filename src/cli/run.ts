@@ -95,9 +95,7 @@ async function start (configPath: string, options: any) {
   debug('config', config)
 
   const [port, destroy] = await create(config)
-  spinner.succeed(
-    `Server is listening on port ${chalk.green(port.toString())}.`
-  )
+  spinner.succeed(`Server is listening on port ${chalk.green(port.toString())}.`)
 
   return destroy
 }
