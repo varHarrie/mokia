@@ -56,16 +56,16 @@
 
 ## 进阶用法
 
-为了较少重复代码和保持代码复用性，我们推荐使用JS类风格书写：
+为了较少重复代码和保持代码复用性，我们推荐使用Class风格书写：
 
 ```typescript
 import { decorators, mock, PORT, ServerConfig } from 'mokia'
 
 class User {
-  decorators.uuid()
+  @decorators.uuid()
   id: string
 
-  decorators.fullName()
+  @decorators.fullName()
   name: string
 }
 
@@ -91,17 +91,19 @@ export default config
   - `HOST` 服务器主机，默认为`'localhost'`
   - `PORT` 服务器端口号，默认为`8080`
   - `PREFIX` URL前缀，默认为`''`
+  - `PRIORITY` 首选地址，所有请求会优先重定向到该地址，默认为`''`
   - `SILENT` 是否隐藏请求日志，默认为`false`
 
   注意：这些参数传入时都不是字符串，而是`Symbol`，你应该从`mokia`包中引入。
 
   ```typescript
-  import { PORT } from 'mokia'
+  import { HOST, PORT, PREFIX, PRIORITY, SILENT } from 'mokia'
 
   export default {
     [HOST]: 'localhost',
     [PORT]: 3000,
     [PREFIX]: '/apis',
+    [PRIORITY]: 'http://another.domain.com',
     [SILENT]: true,
     // ...
   }

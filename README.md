@@ -64,10 +64,10 @@ To reduce duplicated code and keep reusability, we recommend to use class style:
 import { decorators, mock, PORT, ServerConfig } from 'mokia'
 
 class User {
-  decorators.uuid()
+  @decorators.uuid()
   id: string
 
-  decorators.fullName()
+  @decorators.fullName()
   name: string
 }
 
@@ -93,17 +93,19 @@ export default config
   - `HOST` Server host, default to `'localhost'`
   - `PORT` Server port, default to `8080`
   - `PREFIX` URL prefix, default to `''`
+  - `PRIORITY` priority url，all requests are redirected to this address first, default to`''`
   - `SILENT` whether to hide request logs, default to `false`
 
   Note: All of those parameters are `Symbol`, instead of `string`, so you should import they from `mokia`.
 
   ```typescript
-  import { PORT } from 'mokia'
+  import { HOST, PORT, PREFIX, PRIORITY, SILENT } from 'mokia'
 
   export default {
     [HOST]: 'localhost',
     [PORT]: 3000,
     [PREFIX]: '/apis',
+    [PRIORITY]: 'http://another.domain.com',
     [SILENT]: true,
     // ...
   }
