@@ -1,5 +1,10 @@
 # Change Log
 
+## [0.2.1] - 2019-05-13
+
+- Add silent option
+- Add priority option
+
 ## [0.1.1] - 2019-02-22
 
 - Support JavaScript config file
