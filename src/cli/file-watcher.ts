@@ -34,6 +34,7 @@ export default class FileWatcher {
   public clear = () => {
     const fileNames = Object.keys(this.watchers)
     this.remove(fileNames)
+    return this
   }
 
   public on = (event: 'change', listener: (filename: string) => any) => {

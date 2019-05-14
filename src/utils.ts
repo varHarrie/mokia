@@ -55,10 +55,10 @@ export function getDependencies (rootPath: string, ignore?: RegExp) {
   const module = require.cache[path.resolve(rootPath)]
   const modules = new Set<string>()
 
-  const loopModule = (module: any) => {
-    if ((ignore && ignore.test(module.filename)) || modules.has(module.filename)) return
+  const loopModule = (m: any) => {
+    if ((ignore && ignore.test(m.filename)) || modules.has(m.filename)) return
 
-    modules.add(module.filename)
+    modules.add(m.filename)
     module.children.forEach(loopModule)
   }
 

@@ -59,10 +59,11 @@ export default async function run (cli: meow.Result) {
         'change',
         debounce(async (file: string) => {
           debug('file change', file)
-          log(chalk.yellow('*'), `Server is restarting...` + file)
-          spinner.start('Loading...')
+          log(chalk.yellow('*'), `Server is restarting...`)
+          spinner.start('Loading...\n')
 
           await destroy()
+          debug('destroyed')
           dependencies.forEach((dep) => cleanCache(dep))
           watcher.clear()
 
