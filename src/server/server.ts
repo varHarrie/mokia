@@ -2,6 +2,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors'
 import Debug from 'debug'
 import express from 'express'
+import { Socket } from 'net'
 
 import { createRouter, Routes } from './route'
 import { priorityHandler } from './middlewares'
@@ -51,10 +52,17 @@ export function create (config: ServerConfig) {
 
     const intPort = typeof port === 'string' ? parseInt(port, 10) : port
     const server = app.listen(intPort, host, () => resolve([intPort, destroy]))
+    const connections = new Set<Socket>()
+
+    server.on('connection', (conn) => {
+      connections.add(conn)
+      conn.on('close', () => connections.delete(conn))
+    })
 
     function destroy () {
       return new Promise((res, rej) => {
         if (!server) return res()
+        connections.forEach((conn) => conn.destroy())
         server.close(() => res())
       })
     }
