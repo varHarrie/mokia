@@ -5,4 +5,7 @@
 /node_modules
 /example
 /coverage
+
 /libs
+/types
+package-lock.json
