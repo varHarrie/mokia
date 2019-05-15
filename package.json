@@ -56,7 +56,6 @@
     "@types/express": "^4.16.1",
     "@types/meow": "^5.0.0",
     "@types/node": "^11.13.4",
-    "@types/ora": "^3.2.0",
     "body-parser": "^1.18.3",
     "canvas": "^2.4.1",
     "chalk": "^2.4.2",
