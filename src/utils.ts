@@ -1,4 +1,5 @@
 import chalk from 'chalk'
+import path from 'path'
 
 export const log = console.log
 
@@ -40,4 +41,27 @@ export function debounce<T extends Function> (fn: T, delay: number): T {
  */
 export function concatUrls (...urls: string[]) {
   return urls.map((u, i) => (i > 0 && u[0] !== '/' ? '/' + u : u)).join('')
+}
+
+/**
+ * Get all dependencies.
+ *
+ * @example
+ *
+ * getDependencies('./index.js')
+ * // => []
+ */
+export function getDependencies (rootPath: string, ignore?: RegExp) {
+  const module = require.cache[path.resolve(rootPath)]
+  const modules = new Set<string>()
+
+  const loopModule = (m: any) => {
+    if ((ignore && ignore.test(m.filename)) || modules.has(m.filename)) return
+
+    modules.add(m.filename)
+    module.children.forEach(loopModule)
+  }
+
+  loopModule(module)
+  return [...modules]
 }
