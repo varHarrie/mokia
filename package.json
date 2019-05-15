@@ -9,7 +9,7 @@
     "node": ">=8.9"
   },
   "scripts": {
-    "clean": "rimraf ./libs",
+    "clean": "rimraf ./libs/**",
     "build": "npm run clean && tsc",
     "test": "cross-env DEBUG=mokia:* mocha",
     "test:watch": "cross-env DEBUG=mokia:* nyc mocha -w",

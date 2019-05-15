@@ -1,12 +1,12 @@
 import chalk from 'chalk'
 import Debug from 'debug'
-import fs from 'fs'
 import meow from 'meow'
 import ora from 'ora'
 import path from 'path'
 
 import { create, HOST, PORT, PREFIX, PRIORITY, ServerConfig, SILENT } from '../server'
-import { debounce, log } from '../utils'
+import { debounce, log, getDependencies } from '../utils'
+import FileWatcher from './file-watcher'
 
 const debug = Debug('mokia:cli')
 const cwd = process.cwd()
@@ -47,19 +47,31 @@ export default async function run (cli: meow.Result) {
   }
 
   try {
-    let destroy: Function = await start(configPath, flags)
+    let destroy = await start(configPath, flags)
+    let dependencies = getDependencies(configPath, /node_modules/)
+    debug('dependencies', dependencies)
 
     if (flags.watch) {
-      fs.watch(
-        configPath,
-        debounce(async (event: string, file: string) => {
+      const watcher = new FileWatcher()
+      watcher.add(dependencies)
+
+      watcher.on(
+        'change',
+        debounce(async (file: string) => {
           debug('file change', file)
           log(chalk.yellow('*'), `Server is restarting...`)
-          spinner.start('Loading...')
+          spinner.start('Loading...\n')
 
           await destroy()
-          cleanCache(configPath)
+          debug('destroyed')
+          dependencies.forEach((dep) => cleanCache(dep))
+          watcher.clear()
+
           destroy = await start(configPath, flags)
+          dependencies = getDependencies(configPath, /node_modules/)
+          watcher.add(dependencies)
+
+          debug('dependencies', dependencies)
         }, 500)
       )
     }
