@@ -1,9 +1,12 @@
 import dayjs from 'dayjs'
+import advancedFormat from 'dayjs/plugin/advancedFormat'
 
 import { MAX_DATE, MIN_DATE } from './constants'
 import { integer } from './generators'
 
 export type Func<R = any> = (...args: any[]) => R
+
+dayjs.extend(advancedFormat)
 
 /**
  * Checks if `target` is a Class

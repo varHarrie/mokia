@@ -1,5 +1,5 @@
-import { DATE_FORMAT, DATETIME_FORMAT, TIME_FORMAT } from '../constants'
-import { DateType, formatDate, randomDate } from '../utils'
+import { DATE_FORMAT, DATETIME_FORMAT, TIME_FORMAT, TIMESTAMP_MILLISECOND } from '../constants'
+import { DateType, formatDate, randomDate, ensureInteger } from '../utils'
 
 /**
  * Returns a datetime string
@@ -46,8 +46,18 @@ export function time (format?: string, min?: any, max?: any): string {
 }
 
 /**
- * Return current datetime string
+ * Returns current datetime string
  */
 export function now (format?: string): string {
   return formatDate(new Date(), format || DATETIME_FORMAT)
+}
+
+/**
+ * Returns timestamp string
+ */
+export function timestamp (): number
+export function timestamp (max: DateType): number
+export function timestamp (min: DateType, max: DateType): number
+export function timestamp (n1?: any, n2?: any): number {
+  return ensureInteger(formatDate(randomDate(n1, n2), TIMESTAMP_MILLISECOND), 10)
 }
