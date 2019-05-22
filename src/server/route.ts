@@ -9,10 +9,10 @@ export type Response = express.Response
 export type RouteHandler = (request: Request, response: Response) => Object | Promise<Object> | void
 
 export interface Routes {
-  [key: string]: RouteHandler
+  [key: string]: RouteHandler | Object
 }
 
-export function createRouter (routes: Routes, silent: boolean) {
+export function createRouter (routes: Routes, payloadKey: string, silent: boolean) {
   const router = express.Router()
 
   if (!silent) {
@@ -22,7 +22,8 @@ export function createRouter (routes: Routes, silent: boolean) {
   for (const key in routes) {
     if (routes.hasOwnProperty(key)) {
       const [method, url] = parseRoute(key)
-      const handler = createRequestHandler(routes[key])
+      const route = ensureRoute(routes[key])
+      const handler = createRequestHandler(route, payloadKey)
 
       if (isValidMethod(method) && url) {
         router[method](url, handler)
@@ -42,14 +43,19 @@ function parseRoute (key: string): [string, string] {
   return [method.toLowerCase(), url]
 }
 
+function ensureRoute (route: RouteHandler | Object): RouteHandler {
+  return typeof route === 'object' ? () => route : route
+}
+
 function isValidMethod (method: string): method is Method {
   return methods.includes(method)
 }
 
-function createRequestHandler (route: RouteHandler): express.RequestHandler {
-  return (request, response) => {
+function createRequestHandler (route: RouteHandler, payloadKey: string): express.RequestHandler {
+  return (request, response, next) => {
     const data = route(request, response)
-    if (data) response.json(data)
+    if (data) response.locals[payloadKey] = data
+    next()
   }
 }
 

@@ -26,3 +26,14 @@ export function priorityHandler (url: string) {
     request.end()
   }
 }
+
+export type InterceptorHandler = (req: Request, res: Response, data: any) => any
+
+export function interceptor (handler: InterceptorHandler, payloadKey: string) {
+  return (req: Request, res: Response, next: () => void) => {
+    const payload = res.locals[payloadKey]
+    res.locals[payloadKey] = handler(req, res, payload)
+
+    next()
+  }
+}
