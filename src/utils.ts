@@ -59,7 +59,7 @@ export function getDependencies (rootPath: string, ignore?: RegExp) {
     if ((ignore && ignore.test(m.filename)) || modules.has(m.filename)) return
 
     modules.add(m.filename)
-    module.children.forEach(loopModule)
+    m.children.forEach(loopModule)
   }
 
   loopModule(module)

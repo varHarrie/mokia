@@ -30,3 +30,11 @@ export function now (format?: string): PropertyDecorator
 export function now (...args: any[]): PropertyDecorator {
   return createDecorator(generators.now, args)
 }
+
+export function timestamp (): PropertyDecorator
+export function timestamp (max: DateType): PropertyDecorator
+export function timestamp (min: DateType, max: DateType): PropertyDecorator
+export function timestamp (min?: DateType, max?: DateType): PropertyDecorator
+export function timestamp (...args: any[]): PropertyDecorator {
+  return createDecorator(generators.timestamp, args)
+}

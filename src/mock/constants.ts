@@ -9,6 +9,8 @@ export const GOLDEN_RATIO_CONJUGATE = 0.618033988749895
 export const DATETIME_FORMAT = 'YYYY-MM-DD HH:mm:ss'
 export const DATE_FORMAT = 'YYYY-MM-DD'
 export const TIME_FORMAT = 'HH:mm:ss'
+export const TIMESTAMP_SECOND = 'X'
+export const TIMESTAMP_MILLISECOND = 'x'
 export const MIN_DATE = new Date(0) // 1970-01-01
 export const MAX_DATE = dayjs().add(10, 'year').toDate() // 10 years later
 

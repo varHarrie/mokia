@@ -1,5 +1,9 @@
 # Change Log
 
+## [0.3.1] - 2019-05-15
+
+- Fix wrong build
+
 ## [0.3.0] - 2019-05-15
 
 - Now `--watch` will watch all relative files

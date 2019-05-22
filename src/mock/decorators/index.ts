@@ -1,6 +1,7 @@
 import * as zh from './locales/zh'
 
 export * from './basic'
+export * from './by'
 export * from './color'
 export * from './complex'
 export * from './date'
