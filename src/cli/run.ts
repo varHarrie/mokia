@@ -8,6 +8,8 @@ import { create, HOST, PORT, PREFIX, PRIORITY, ServerConfig, SILENT } from '../s
 import { debounce, log, getDependencies } from '../utils'
 import FileWatcher from './file-watcher'
 
+const isDev = process.env.NODE_ENV === 'development'
+
 const debug = Debug('mokia:cli')
 const cwd = process.cwd()
 const spinner = ora()
@@ -38,6 +40,7 @@ export default async function run (cli: meow.Result) {
     Debug.enable('mokia:*')
   }
 
+  debug('isDev', isDev)
   debug('configPath', configPath)
   debug('flag ', flags)
 
@@ -46,9 +49,11 @@ export default async function run (cli: meow.Result) {
     require('ts-node').register(tsOptions)
   }
 
+  const ignoreRegExp = isDev ? /node_modules|mokia/ : /node_modules/
+
   try {
     let destroy = await start(configPath, flags)
-    let dependencies = getDependencies(configPath, /node_modules/)
+    let dependencies = getDependencies(configPath, ignoreRegExp)
     debug('dependencies', dependencies)
 
     if (flags.watch) {
@@ -68,7 +73,7 @@ export default async function run (cli: meow.Result) {
           watcher.clear()
 
           destroy = await start(configPath, flags)
-          dependencies = getDependencies(configPath, /node_modules/)
+          dependencies = getDependencies(configPath, ignoreRegExp)
           watcher.add(dependencies)
 
           debug('dependencies', dependencies)
@@ -103,8 +108,6 @@ async function start (configPath: string, options: any) {
   if (options.prefix) config[PREFIX] = options.prefix
   if (options.silent) config[SILENT] = options.silent
   if (options.priority) config[PRIORITY] = options.priority
-
-  debug('config', config)
 
   const [port, destroy] = await create(config)
   spinner.succeed(`Server is listening on port ${chalk.green(port.toString())}.`)

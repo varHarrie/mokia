@@ -14,8 +14,8 @@
     "test": "cross-env DEBUG=mokia:* mocha",
     "test:watch": "cross-env DEBUG=mokia:* nyc mocha -w",
     "test:nyc": "cross-env DEBUG=mokia:* nyc mocha",
-    "demo:ts": "node ./bin/cli ./example/index.ts",
-    "demo:js": "node ./bin/cli ./example/index.js"
+    "demo:ts": "cross-env NODE_ENV=development node ./bin/cli ./example/index.ts",
+    "demo:js": "cross-env NODE_ENV=development node ./bin/cli ./example/index.js"
   },
   "files": [
     "/bin",
