@@ -1,5 +1,12 @@
 # Change Log
 
+## [0.4.0] - unreleased
+
+- Add support for interceptors
+- Add `by` decorator
+- Add `timestamp` generator
+- Fix getDependencies that fail to list all relative files
+
 ## [0.3.1] - 2019-05-15
 
 - Fix wrong build
