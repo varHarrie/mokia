@@ -52,7 +52,7 @@
   }
   ```
 
-4. 运行脚本`npm run mock`。
+4. 运行脚本`npm run mock`，启用http服务器。
 
 ## 进阶用法
 
@@ -93,11 +93,12 @@ export default config
   - `PREFIX` URL前缀，默认为`''`
   - `PRIORITY` 首选地址，所有请求会优先重定向到该地址，默认为`''`
   - `SILENT` 是否隐藏请求日志，默认为`false`
+  - `INTERCEPTORS` 路由拦截器，默认为`{}`
 
-  注意：这些参数传入时都不是字符串，而是`Symbol`，你应该从`mokia`包中引入。
+  注意：这些参数的键值是`Symbol`，而不是`string`，所以你应该从`mokia`包中导入。
 
   ```typescript
-  import { HOST, PORT, PREFIX, PRIORITY, SILENT } from 'mokia'
+  import { HOST, PORT, PREFIX, PRIORITY, SILENT, INTERCEPTORS } from 'mokia'
 
   export default {
     [HOST]: 'localhost',
@@ -105,119 +106,164 @@ export default config
     [PREFIX]: '/apis',
     [PRIORITY]: 'http://another.domain.com',
     [SILENT]: true,
-    // ...
+    [INTERCEPTORS]: {
+      request: (req, res) => {
+        console.log('before')
+      },
+      response: (req, res, data) => {
+        console.log('after')
+
+        return {
+          code: 200,
+          data
+        }
+      }
+    }
   }
+  ```
+
+### 特殊装饰器
+
+  这些装饰器没有与之对应的生成器。
+
+  - `by`(generator: () => any): Decorator
+
+  ```typescript
+    import { decorators, generators } from 'mokia'
+
+    class Person {
+      @decorators.by(() => generators.firstName() + generators.integer())
+      username: string
+    }
   ```
 
 ### 生成器
 
   所有生成器都可以作为函数或装饰器直接使用。
 
+  ```typescript
+  import { generators, decorators, mock } from 'mokia'
+
+  // 作为装饰器
+  class User {
+    @decorators.boolean()
+    isAdmin: boolean
+  }
+
+  // 或者一个普通函数
+  const bool = generators.boolean()
+
+  // 等价于
+  const bool = mock.boolean()
+  ```
+
 - 基础
-  - boolean(chance?: number, value?: boolean): boolean
-  - integer(max?: number): number
-  - integer(min: number, max: number): number
-  - natural(max?: number): number
-  - natural(min: number, max: number): number
-  - float(max?: number): number
-  - float(min: number, max, fixed?): number
-  - float(min: number, max, dmin: number, dmax: number): number
-  - char(pool: string): string
-  - string(pool: string, length?: number): string
-  - string(pool: string, min: number, max: number): string
+  - `boolean`(chance?: number, value?: boolean): boolean
+  - `integer`(max?: number): number
+  - `integer`(min: number, max: number): number
+  - `natural`(max?: number): number
+  - `natural`(min: number, max: number): number
+  - `float`(max?: number): number
+  - `float`(min: number, max, fixed?): number
+  - `float`(min: number, max, dmin: number, dmax: number): number
+  - `char`(pool: string): string
+  - `string`(pool: string, length?: number): string
+  - `string`(pool: string, min: number, max: number): string
 
 - 复合
-  - generate(mockable: Object | Function): any
-  - array(proto: any, length?: number): any[]
-  - array(proto: any, min: number, max: number): any[]
-  - oneOf(list: any[]): any
-  - manyOf(list: any[], length?: number): any[]
-  - manyOf(list: any[], min: number, max: number): any[]
-  - pick(proto: Object, length?: number): Object
-  - pick(proto: Object, props: string | string[]): Object
-  - pick(proto: Object, min: number, max: number): Object
+  - `generate`(mockable: Object | Function): any
+  - `array`(proto: any, length?: number): any[]
+  - `array`(proto: any, min: number, max: number): any[]
+  - `oneOf`(list: any[]): any
+  - `manyOf`(list: any[], length?: number): any[]
+  - `manyOf`(list: any[], min: number, max: number): any[]
+  - `pick`(proto: Object, length?: number): Object
+  - `pick`(proto: Object, props: string | string[]): Object
+  - `pick`(proto: Object, min: number, max: number): Object
 
 - 日期
-  - datetime(format?: string): string
-  - datetime(format: string, max: DateType): string
-  - datetime(format: string, min: DateType, max: DateType): string
-  - date(format?: string): string
-  - date(format: string, max: DateType): string
-  - date(format: string, min: DateType, max: DateType): string
-  - time(format?: string): string
-  - time(format: string, max: DateType): string
-  - time(format: string, min: DateType, max: DateType): string
-  - now(format?: string): string
+  - `datetime`(format?: string): string
+  - `datetime`(format: string, max: DateType): string
+  - `datetime`(format: string, min: DateType, max: DateType): string
+  - `date`(format?: string): string
+  - `date`(format: string, max: DateType): string
+  - `date`(format: string, min: DateType, max: DateType): string
+  - `time`(format?: string): string
+  - `time`(format: string, max: DateType): string
+  - `time`(format: string, min: DateType, max: DateType): string
+  - `timestamp`(max?: DateType): string
+  - `timestamp`(min: DateType, max: DateType): string
+  - `now`(format?: string): string
 
 - 图片
-  - image(size?: string, text?: string, background?: string, foreground?: string, format?: string): string
-  - dataImage(size?: string, text?: string, background?: string, foreground?: string, format?: string): string
+  - `image`(size?: string, text?: string, background?: string, foreground?: string, format?: string): string
+  - `dataImage`(size?: string, text?: string, background?: string, foreground?: string, format?: string): string
 
 - 文本
-  - word(length?: number): string
-  - word(min: number, max: number): string
-  - title(length?: number): string
-  - title(min: number, max: number): string
-  - sentence(length?: number): string
-  - sentence(min: number, max: number): string
-  - paragraph(length?: number): string
-  - paragraph(min: number, max: number): string
-  - passage(length?: number): string
-  - passage(min: number, max: number): string
-  - zh.word(length?: number): string
-  - zh.word(min: number, max: number): string
-  - zh.title(length?: number): string
-  - zh.title(min: number, max: number): string
-  - zh.sentence(length?: number): string
-  - zh.sentence(min: number, max: number): string
-  - zh.paragraph(length?: number): string
-  - zh.paragraph(min: number, max: number): string
-  - zh.passage(length?: number): string
-  - zh.passage(min: number, max: number): string
+  - `word`(length?: number): string
+  - `word`(min: number, max: number): string
+  - `title`(length?: number): string
+  - `title`(min: number, max: number): string
+  - `sentence`(length?: number): string
+  - `sentence`(min: number, max: number): string
+  - `paragraph`(length?: number): string
+  - `paragraph`(min: number, max: number): string
+  - `passage`(length?: number): string
+  - `passage`(min: number, max: number): string
+  - `zh.word`(length?: number): string
+  - `zh.word`(min: number, max: number): string
+  - `zh.title`(length?: number): string
+  - `zh.title`(min: number, max: number): string
+  - `zh.sentence`(length?: number): string
+  - `zh.sentence`(min: number, max: number): string
+  - `zh.paragraph`(length?: number): string
+  - `zh.paragraph`(min: number, max: number): string
+  - `zh.passage`(length?: number): string
+  - `zh.passage`(min: number, max: number): string
 
 - 颜色
-  - color(): string
-  - rgb(): string
-  - rgba(): string
-  - hex(): string
-  - hsl(): string
+  - `color`(): string
+  - `rgb`(): string
+  - `rgba`(): string
+  - `hex`(): string
+  - `hsl`(): string
 
 - Web
-  - protocol(): string
-  - tld(): string
-  - ip(): string
-  - ipv6(): string
-  - port(min?: number, max?: number): number
-  - domain(tld?: string): string
-  - url(protocol?: string, host?: string, prefix?: string): string
-  - email(domain?: string)
+  - `protocol`(): string
+  - `tld`(): string
+  - `ip`(): string
+  - `ipv6`(): string
+  - `port`(min?: number, max?: number): number
+  - `domain`(tld?: string): string
+  - `url`(protocol?: string, host?: string, prefix?: string): string
+  - `email`(domain?: string)
 
 - 人物
-  - age(min?: number, max?: number): number
-  - birthday(format?: string): string
-  - fullName(): string
-  - firstName(): string
-  - lastName(): string
-  - zh.fullName(): string
-  - zh.firstName(): string
-  - zh.lastName(): string
-  - zh.phone(): string
-  - zh.idNumber(): string
+  - `age`(min?: number, max?: number): number
+  - `birthday`(format?: string): string
+  - `fullName`(): string
+  - `firstName`(): string
+  - `lastName`(): string
+  - `zh.fullName`(): string
+  - `zh.firstName`(): string
+  - `zh.lastName`(): string
+  - `zh.phone`(): string
+  - `zh.idNumber`(): string
 
 - 地区
-  - zh.region(): { code: string, name: string }
-  - zh.regionName(): string
-  - zh.province(): { code: string, name: string }
-  - zh.provinceName(): string
-  - zh.city(): { code: string, name: string }
-  - zh.cityName(): string
-  - zh.county(): { code: string, name: string }
-  - zh.countyName(): string
-  - zh.zipCode(): string
+  - `zh.region`(): { code: string, name: string }
+  - `zh.regionName`(): string
+  - `zh.province`(): { code: string, name: string }
+  - `zh.provinceName`(): string
+  - `zh.city`(): { code: string, name: string }
+  - `zh.cityName`(): string
+  - `zh.county`(): { code: string, name: string }
+  - `zh.countyName`(): string
+  - `zh.zipCode`(): string
 
 - Id
-  - uuid(): string
-  - increment(step: number): number
+  - `uuid`(): string
+  - `increment`(step: number): number
 
 ## License
 
