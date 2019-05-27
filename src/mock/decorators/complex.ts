@@ -1,6 +1,10 @@
 import * as generators from '../generators'
 import { createDecorator } from '../invoker'
 
+export function generate (mockable: Function | Object): PropertyDecorator {
+  return createDecorator(generators.generate, [mockable])
+}
+
 export function array<T> (proto: T, length?: number): PropertyDecorator
 export function array<T> (proto: T, min: number, max: number): PropertyDecorator
 export function array<T> (proto: T, n1?: number, n2?: number): PropertyDecorator

@@ -122,27 +122,12 @@ export default config
   }
   ```
 
-### 特殊装饰器
-
-  这些装饰器没有与之对应的生成器。
-
-  - `by`(generator: () => any): Decorator
-
-  ```typescript
-    import { decorators, generators } from 'mokia'
-
-    class Person {
-      @decorators.by(() => generators.firstName() + generators.integer())
-      username: string
-    }
-  ```
-
 ### 生成器
 
   所有生成器都可以作为函数或装饰器直接使用。
 
   ```typescript
-  import { generators, decorators, mock } from 'mokia'
+  import { decorators, generators, mock } from 'mokia'
 
   // 作为装饰器
   class User {

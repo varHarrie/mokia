@@ -125,27 +125,12 @@ export default config
   }
   ```
 
-### Special Decorators
-
-  There is no equivalent `generators` for those `decorators`.
-
-  - `by`(generator: () => any): Decorator
-
-  ```typescript
-    import { decorators, generators } from 'mokia'
-
-    class Person {
-      @decorators.by(() => generators.firstName() + generators.integer())
-      username: string
-    }
-  ```
-
 ### Generators
 
   All generators can be use as `function` or `decorator`.
 
   ```typescript
-  import { generators, decorators, mock } from 'mokia'
+  import { decorators, generators, mock } from 'mokia'
 
   // As decorator
   class User {

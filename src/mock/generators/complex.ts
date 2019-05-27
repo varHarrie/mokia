@@ -19,7 +19,7 @@ import { defaultTo, isFunction, isTrueObject, pickItems, pickProps } from '../ut
  * generate(null)
  * // => null
  */
-export function generate (mockable: any): any {
+export function generate (mockable: Function | Object): any {
   if (typeof mockable === 'function') return mockable()
   if (!isTrueObject(mockable)) return mockable
 
@@ -27,7 +27,7 @@ export function generate (mockable: any): any {
 
   for (const key in mockable) {
     if (mockable.hasOwnProperty(key)) {
-      const invoker = mockable[key]
+      const invoker = (mockable as any)[key]
 
       result[key] = typeof invoker === 'function'
         ? invoker.call(result)
