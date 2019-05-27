@@ -49,7 +49,7 @@ export default async function run (cli: meow.Result) {
     require('ts-node').register(tsOptions)
   }
 
-  const ignoreRegExp = isDev ? /node_modules|mokia/ : /node_modules/
+  const ignoreRegExp = isDev ? /node_modules|mokia[\/\\]+libs/ : /node_modules/
 
   try {
     let destroy = await start(configPath, flags)
