@@ -14,5 +14,5 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
-  "exclude": ["./example", "./test", "./libs", "./types"]
+  "exclude": ["./example", "./test", "./libs", "./types", "./web"]
 }
