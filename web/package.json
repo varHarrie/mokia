@@ -1,0 +1,24 @@
+{
+  "name": "mokia-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "prestart": "node ./scripts/build-markdown.js",
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "keywords": [],
+  "author": "varharrie <varharrie@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "less": "^3.9.0",
+    "marked": "^0.6.2",
+    "parcel-bundler": "^1.12.3",
+    "prismjs": "^1.16.0"
+  },
+  "dependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  }
+}
