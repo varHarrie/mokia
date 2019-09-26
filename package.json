@@ -1,6 +1,6 @@
 {
   "name": "mokia",
-  "version": "0.4.0-alpha.0",
+  "version": "0.4.0",
   "description": "A simple mock server.",
   "main": "libs/index.js",
   "types": "types/index.d.ts",
