@@ -1,0 +1,21 @@
+{
+  "env": {
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "airbnb-base",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript",
+    "prettier",
+    "prettier/@typescript-eslint"
+  ],
+  "rules": {
+    "no-param-reassign": "off",
+    "no-shadow": "off",
+    "no-restricted-globals": "off",
+    "import/extensions": "off",
+    "import/export": "off",
+    "@typescript-eslint/no-shadow": ["error"]
+  }
+}
