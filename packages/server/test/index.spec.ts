@@ -1,6 +1,6 @@
 import 'mocha';
 import request from 'supertest';
-import express from 'express';
+import http from 'http';
 import { createServer, ServerConfig } from '../src';
 
 const config: any = {
@@ -11,7 +11,7 @@ const config: any = {
 };
 
 describe('GET /user', function () {
-  let app: express.Express;
+  let app: http.Server;
   let destroy: () => void;
 
   before(async () => {
