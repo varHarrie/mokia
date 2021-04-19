@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
+    "test": "echo \"No test specified\" && exit 0",
     "clean": "rimraf lib",
     "build": "npm run clean && tsc -p tsconfig.build.json"
   },
@@ -19,8 +20,8 @@
     "url": "https://github.com/varHarrie/mokia/issues"
   },
   "dependencies": {
-    "@mokia/decorator": "file:../decorator",
-    "@mokia/producer": "file:../producer",
+    "@mokia/decorator": "^1.0.0",
+    "@mokia/producer": "^1.0.0",
     "@types/lodash": "^4.14.168",
     "lodash": "^4.17.21"
   },

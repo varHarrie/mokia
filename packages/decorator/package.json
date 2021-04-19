@@ -5,6 +5,7 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
+    "test": "echo \"No test specified\" && exit 0",
     "clean": "rimraf lib",
     "prebuild": "ts-node ./scripts/generate.ts",
     "build": "npm run clean && tsc -p tsconfig.build.json"
@@ -20,7 +21,7 @@
     "url": "https://github.com/varHarrie/mokia/issues"
   },
   "dependencies": {
-    "@mokia/producer": "file:../producer"
+    "@mokia/producer": "^1.0.0"
   },
   "devDependencies": {
     "rimraf": "^3.0.2"
