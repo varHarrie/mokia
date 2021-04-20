@@ -63,14 +63,6 @@ async function release() {
   const releaseVersion = semver.valid(response.value);
   if (!releaseVersion || !response.confirm) return;
 
-  // ----- Run tests -----
-
-  spinner.start('Running tests...\n');
-
-  await execa('npm', ['run', 'test', '--workspaces']);
-
-  spinner.succeed('Tests passed');
-
   // ----- Update package versions and dependencies -----
 
   spinner.start('Updating package versions...\n');
@@ -87,6 +79,14 @@ async function release() {
   await execa('npm', ['run', 'build', '--workspaces']);
 
   spinner.succeed('packages built');
+
+  // ----- Run tests -----
+
+  spinner.start('Running tests...\n');
+
+  await execa('npm', ['run', 'test', '--workspaces']);
+
+  spinner.succeed('Tests passed');
 
   // ----- Generate changelog -----
 
