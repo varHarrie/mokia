@@ -7,4 +7,4 @@ const mock = <T>(schema: T) => generate(schema);
 
 const mokia: Mokia = Object.assign(mock, decorator);
 
-export default mokia;
+export = mokia;
