@@ -2,8 +2,9 @@ import ora from 'ora';
 import chalk from 'chalk';
 import http from 'http';
 import { AddressInfo } from 'net';
-import { createServer, ServerConfig } from '@mokia/server';
 import { addHook } from 'pirates';
+import { createServer, ServerConfig } from '@mokia/server';
+import { generate } from '@mokia/producer';
 
 type CliOptions = ServerConfig & {
   watch?: boolean;
@@ -59,6 +60,8 @@ async function start(): Promise<(() => Promise<void>) | undefined> {
   if (options.preferredUrl) config.preferredUrl = options.preferredUrl;
   if (options.fallbackUrl) config.fallbackUrl = options.fallbackUrl;
   if (options.silent) config.silent = options.silent;
+
+  config.bodyWrapper = options.bodyWrapper || generate;
 
   try {
     [app, destroy] = await createServer(config);
