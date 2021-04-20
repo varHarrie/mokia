@@ -1,0 +1,30 @@
+{
+  "name": "@mokia/decorator",
+  "version": "0.4.0",
+  "description": "@mokia/decorator",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 0",
+    "clean": "rimraf lib",
+    "prebuild": "ts-node ./scripts/generate.ts",
+    "build": "npm run clean && tsc -p tsconfig.build.json"
+  },
+  "homepage": "https://github.com/varHarrie/mokia#readme",
+  "author": "varharrie <varharrie@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/varHarrie/mokia.git"
+  },
+  "bugs": {
+    "url": "https://github.com/varHarrie/mokia/issues"
+  },
+  "dependencies": {
+    "@mokia/producer": "0.4.0"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "typescript": "^4.2.4"
+  }
+}

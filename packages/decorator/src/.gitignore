@@ -1,0 +1,4 @@
+*.ts
+!index.ts
+!types.ts
+!utils.ts

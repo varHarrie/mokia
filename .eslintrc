@@ -1,0 +1,36 @@
+{
+  "env": {
+    "node": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "airbnb-base",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "prettier"
+  ],
+  "rules": {
+    "consistent-return": "off",
+    "no-bitwise": "off",
+    "no-console": "off",
+    "no-param-reassign": "off",
+    "no-restricted-globals": "off",
+    "no-shadow": "off",
+    "no-use-before-define": "off",
+    "import/extensions": "off",
+    "import/export": "off",
+    "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/no-inferrable-types": "off"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.js", "**/scripts/*.ts"],
+      "rules": {
+        "@typescript-eslint/no-var-requires": "off",
+        "import/no-extraneous-dependencies": "off"
+      }
+    }
+  ]
+}
