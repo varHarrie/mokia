@@ -1,6 +1,6 @@
 {
   "name": "@mokia/decorator",
-  "version": "0.4.0",
+  "version": "0.5.0-alpha.0",
   "description": "@mokia/decorator",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -21,7 +21,7 @@
     "url": "https://github.com/varHarrie/mokia/issues"
   },
   "dependencies": {
-    "@mokia/producer": "0.4.0"
+    "@mokia/producer": "0.5.0-alpha.0"
   },
   "devDependencies": {
     "rimraf": "^3.0.2",
