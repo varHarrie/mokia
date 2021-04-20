@@ -144,7 +144,7 @@ async function publishPackage(pkgRoot, version, tag) {
 
   spinner.start(`Publishing ${chalk.yellow(`${pkg.name}@${version}`)} on ${chalk.yellow(tag)}`);
 
-  await execa('npm', ['publish', '--tag', tag], { cwd: pkgRoot });
+  await execa('npm', ['publish', '--access', 'public', '--tag', tag], { cwd: pkgRoot });
 
   spinner.succeed(`Successfully published ${chalk.yellow(`${pkg.name}@${version}`)} on ${chalk.yellow(tag)}`);
 }
