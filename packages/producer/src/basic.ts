@@ -1,10 +1,11 @@
 import { clamp } from 'lodash';
 import { NUMBERS, POSITIVE_NUMBERS, CHARS } from './constants';
 import { defaultTo } from './utils';
+
 /**
  * Make sure to return an integer
  */
-function ensureInteger(value: unknown, defaultValue: number = 0) {
+function ensureInteger(value: unknown, defaultValue: number = 0): number {
   const num = Number(value);
   return Math.floor(isNaN(num) ? defaultValue : num);
 }
@@ -12,7 +13,7 @@ function ensureInteger(value: unknown, defaultValue: number = 0) {
 /**
  * Make sure to return an natural
  */
-function ensureNatural(value: unknown, defaultValue: number = 0) {
+function ensureNatural(value: unknown, defaultValue: number = 0): number {
   const num = ensureInteger(value, defaultValue);
   return num < 0 ? 0 : num;
 }
@@ -20,7 +21,7 @@ function ensureNatural(value: unknown, defaultValue: number = 0) {
 /**
  * Returns an boolean value
  */
-export function boolean(chance?: number) {
+export function boolean(chance?: number): boolean {
   return Math.random() < clamp(chance ?? 0.5, 0, 1);
 }
 
@@ -130,7 +131,7 @@ export function string(arg: unknown, n1?: number, n2?: number): string {
   const len = natural(min, max);
   let text = '';
 
-  for (let i = 0; i < len; i++) {
+  for (let i = 0; i < len; i += 1) {
     text += char(pool);
   }
 

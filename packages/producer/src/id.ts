@@ -15,5 +15,6 @@ let AUTO_INCREMENT_ID = 0;
  * Returns an auto increment id
  */
 export function increment(step?: number): number {
-  return (AUTO_INCREMENT_ID += step ?? 1);
+  AUTO_INCREMENT_ID += step ?? 1;
+  return AUTO_INCREMENT_ID;
 }

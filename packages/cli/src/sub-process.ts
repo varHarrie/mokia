@@ -40,7 +40,7 @@ function watch() {
   );
 }
 
-async function start() {
+async function start(): Promise<(() => Promise<void>) | undefined> {
   spinner.start('Loading...');
 
   let config: ServerConfig;
@@ -50,7 +50,7 @@ async function start() {
     config = configModule?.default ?? configModule;
   } catch (error) {
     spinner.fail(`Failed to load: ${entry}: ${error.message}`);
-    return;
+    return undefined;
   }
 
   if (options.host) config.host = options.host;
@@ -62,12 +62,12 @@ async function start() {
 
   try {
     [app, destroy] = await createServer(config);
-    const port = (app.address() as AddressInfo).port;
+    const { port } = app.address() as AddressInfo;
     spinner.succeed(`Server is listening on port ${chalk.green(port.toString())}`);
     return destroy;
   } catch (error) {
     spinner.fail(`Failed to create server: ${error.message}`);
   }
 
-  return;
+  return undefined;
 }

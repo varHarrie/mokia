@@ -44,5 +44,5 @@ export function lastName(): string {
  * Returns a full name
  */
 export function fullName(): string {
-  return firstName() + ' ' + lastName();
+  return `${firstName()} ${lastName()}`;
 }

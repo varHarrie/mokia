@@ -5,7 +5,8 @@ const GOLDEN_RATIO_CONJUGATE = 0.618033988749895;
  * Returns a hue value
  */
 function randomHue(): number {
-  return (hue = (hue + GOLDEN_RATIO_CONJUGATE) % 1);
+  hue = (hue + GOLDEN_RATIO_CONJUGATE) % 1;
+  return hue;
 }
 
 type RgbTuple = [r: number, g: number, b: number];
@@ -39,7 +40,7 @@ export function hex(): string {
     )
     .join('');
 
-  return '#' + values;
+  return `#${values}`;
 }
 
 /**
@@ -50,7 +51,7 @@ export function rgb(): string {
     .map((v) => Math.round(v * 255))
     .join(', ');
 
-  return 'rgb(' + values + ')';
+  return `rgb(${values})`;
 }
 
 /**
@@ -61,7 +62,7 @@ export function rgba(): string {
     .map((v) => Math.round(v * 255))
     .join(', ');
 
-  return 'rgba(' + values + ', ' + Math.random().toFixed(2) + ')';
+  return `rgba(${values}, ${Math.random().toFixed(2)})`;
 }
 
 /**
@@ -70,5 +71,5 @@ export function rgba(): string {
 export function hsl(): string {
   const h = Math.round(randomHue() * 360);
 
-  return 'hsl(' + h + ', 50%, 60%)';
+  return `hsl(${h}, 50%, 60%)`;
 }

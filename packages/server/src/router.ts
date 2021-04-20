@@ -29,14 +29,13 @@ function isValidMethod(method: string): method is Method {
 function createRouteHandler(route: RouteValue, bodyWrapper: BodyWrapper): express.RequestHandler {
   const fn = typeof route === 'function' ? route : () => route;
 
-  return (request, response, next) => {
-    return Promise.resolve(fn(request, response))
+  return (request, response, next) =>
+    Promise.resolve(fn(request, response))
       .then((body) => response.json(bodyWrapper(body)))
       .catch(next);
-  };
 }
 
-export function createRouter(routes: Routes, bodyWrapper: BodyWrapper = defaultBodyWrapper) {
+export function createRouter(routes: Routes, bodyWrapper: BodyWrapper = defaultBodyWrapper): express.Router {
   const router = express.Router();
 
   Object.keys(routes).forEach((key) => {

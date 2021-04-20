@@ -51,7 +51,7 @@ export function port(min?: number, max?: number): number {
  * Returns a domain. eg: "xfoekq.cn"
  */
 export function domain(_tld?: string): string {
-  return word() + '.' + (_tld || tld());
+  return `${word()}.${_tld || tld()}`;
 }
 
 /**
@@ -60,12 +60,9 @@ export function domain(_tld?: string): string {
 export function pathname(length?: number): string {
   length = defaultTo(length, integer(1, 6));
 
-  return (
-    '/' +
-    Array.from({ length })
-      .map(() => string(LOWERCASE_LETTERS + NUMBERS, 1, 8))
-      .join('/')
-  );
+  return `/${Array.from({ length })
+    .map(() => string(LOWERCASE_LETTERS + NUMBERS, 1, 8))
+    .join('/')}`;
 }
 
 /**
@@ -76,7 +73,7 @@ export function url(prot?: string, host?: string, prefix?: string): string {
   host = defaultTo(host, domain());
   const path = defaultTo(prefix, '') + pathname();
 
-  return prot + '://' + host + path;
+  return `${prot}://${host}${path}`;
 }
 
 /**
@@ -87,5 +84,5 @@ export function email(_domain?: string): string {
     .map(() => string(NUMBERS + LETTERS, 1, 8))
     .join('.');
 
-  return head + '@' + (_domain || domain());
+  return `${head}@${_domain || domain()}`;
 }

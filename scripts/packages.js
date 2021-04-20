@@ -3,8 +3,8 @@ const path = require('path');
 const pkg = require('../package.json');
 
 function getPackageName(pkgPath) {
-  const pkg = fs.readFileSync(path.resolve(pkgPath, 'package.json'), 'utf-8');
-  return JSON.parse(pkg).name;
+  const json = fs.readFileSync(path.resolve(pkgPath, 'package.json'), 'utf-8');
+  return JSON.parse(json).name;
 }
 
 const packages = pkg.workspaces.map((dir) => {

@@ -9,7 +9,7 @@ export function iterate<T>(iterator: AnyFunction<T>, n1?: number, n2?: number): 
   const count = integer(defaultTo(n1, 0), defaultTo(n2, n1, 10));
   const result: T[] = [];
 
-  for (let i = 0; i < count; i++) {
+  for (let i = 0; i < count; i += 1) {
     result.push(iterator(i));
   }
 

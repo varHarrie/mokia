@@ -10,7 +10,9 @@ const printer = ts.createPrinter();
 
 if (!fs.existsSync(dest)) fs.mkdirSync(dest);
 
-const producerFiles = getProducerFiles(program.getSourceFile(path.join(src, 'index.ts'))!);
+const indexFile = program.getSourceFile(path.join(src, 'index.ts'));
+if (!indexFile) throw new Error('Missing index.ts');
+const producerFiles = getProducerFiles(indexFile);
 
 producerFiles.forEach((file) => {
   const result = ts.transform(file, [decoratorTransformer, importTransformer]);
@@ -23,7 +25,7 @@ function getProducerFiles(entryFile: ts.SourceFile) {
   function visitor(node: ts.Node) {
     if (ts.isExportDeclaration(node) && node.moduleSpecifier && ts.isStringLiteral(node.moduleSpecifier)) {
       const fileName = node.moduleSpecifier.text;
-      const file = program.getSourceFile(path.join(src, fileName + '.ts'));
+      const file = program.getSourceFile(path.join(src, `${fileName}.ts`));
       if (file) files.push(file);
     }
 
@@ -73,7 +75,7 @@ function decoratorTransformer(context: ts.TransformationContext) {
               [
                 ts.factory.createReturnStatement(
                   ts.factory.createCallExpression(ts.factory.createIdentifier('createDecorator'), undefined, [
-                    ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier('producer'), node.name!),
+                    ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier('producer'), node.name || ''),
                     ts.factory.createIdentifier('args'),
                   ]),
                 ),

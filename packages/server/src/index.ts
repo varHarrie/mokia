@@ -1,14 +1,12 @@
 import http from 'http';
 import cors from 'cors';
 import Debug from 'debug';
-import express, { Request, Response, RequestHandler, ErrorRequestHandler } from 'express';
+import express, { RequestHandler, ErrorRequestHandler } from 'express';
 import { Socket } from 'net';
 import { BodyWrapper, createRouter, Routes, RouteValue } from './router';
 import { fallbackMiddleware, logMiddleware, preferredMiddleware } from './middlewares';
 
 const debug = Debug('mokia:server');
-
-export type InterceptorHandler = (req: Request, res: Response, data: any) => any;
 
 export type BaseConfig = {
   host?: string;
@@ -28,7 +26,7 @@ export type RouteConfig = {
 
 export type ServerConfig = BaseConfig | RouteConfig;
 
-export function createServer(config: ServerConfig) {
+export function createServer(config: ServerConfig): Promise<[server: http.Server, destroy: () => Promise<void>]> {
   return new Promise<[http.Server, () => Promise<void>]>((resolve, reject) => {
     const {
       host = 'localhost',

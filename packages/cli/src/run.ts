@@ -30,7 +30,7 @@ type CliOptions = ServerConfig & {
 
 type MessageData = { fileName?: string; error?: boolean };
 
-export default async function run(entry: string | undefined, options: CliOptions) {
+export default async function run(entry: string, options: CliOptions): Promise<void> {
   entry = path.join(process.cwd(), entry || 'index.js');
 
   const { debug, ...config } = options;
@@ -55,7 +55,7 @@ export default async function run(entry: string | undefined, options: CliOptions
 
     log('Starting sub process');
     const modulePath = path.join(__dirname, 'sub-process.js');
-    const args = [entry!, JSON.stringify(config)];
+    const args = [entry, JSON.stringify(config)];
 
     if (config.watch) {
       watcher = chokidar.watch([]);
