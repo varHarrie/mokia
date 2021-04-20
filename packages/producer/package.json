@@ -1,6 +1,6 @@
 {
   "name": "@mokia/producer",
-  "version": "1.0.0",
+  "version": "0.4.0",
   "description": "@mokia/producer",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
