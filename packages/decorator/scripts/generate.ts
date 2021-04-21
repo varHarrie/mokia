@@ -48,13 +48,13 @@ function decoratorTransformer(context: ts.TransformationContext) {
           node.name,
           node.typeParameters,
           node.parameters,
-          ts.factory.createFunctionTypeNode(undefined, [], node.type ?? ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)),
+          ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Decorator'), undefined),
           undefined,
         );
 
         if (node.body) {
           const anyArgsFunction = ts.factory.createFunctionDeclaration(
-            undefined, // node.decorators,
+            undefined,
             node.modifiers,
             node.asteriskToken,
             node.name,
@@ -70,12 +70,12 @@ function decoratorTransformer(context: ts.TransformationContext) {
                 undefined,
               ),
             ],
-            ts.factory.createFunctionTypeNode(undefined, [], ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)),
+            ts.factory.createTypeReferenceNode(ts.factory.createIdentifier('Decorator'), undefined),
             ts.factory.createBlock(
               [
                 ts.factory.createReturnStatement(
                   ts.factory.createCallExpression(ts.factory.createIdentifier('createDecorator'), undefined, [
-                    ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier('producer'), node.name || ''),
+                    ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier('producer'), node.name!),
                     ts.factory.createIdentifier('args'),
                   ]),
                 ),
@@ -111,7 +111,14 @@ function importTransformer(context: ts.TransformationContext) {
     const utilsImportDeclaration = ts.factory.createImportDeclaration(
       undefined,
       undefined,
-      ts.factory.createImportClause(false, undefined, ts.factory.createNamedImports([ts.factory.createImportSpecifier(undefined, ts.factory.createIdentifier('createDecorator'))])),
+      ts.factory.createImportClause(
+        false,
+        undefined,
+        ts.factory.createNamedImports([
+          ts.factory.createImportSpecifier(undefined, ts.factory.createIdentifier('createDecorator')),
+          ts.factory.createImportSpecifier(undefined, ts.factory.createIdentifier('Decorator')),
+        ]),
+      ),
       ts.factory.createStringLiteral('./utils'),
     );
 

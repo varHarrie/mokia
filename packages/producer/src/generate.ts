@@ -1,7 +1,23 @@
 import { iterate } from './complex';
-import { MockResult } from './types';
+import { isClass } from './utils';
+
+export const GENERATION_SCHEMA = Symbol('GENERATION_SCHEMA');
+
+export type MockResult<T> = T extends (...args: unknown[]) => infer R
+  ? R
+  : T extends Array<infer I>
+  ? Array<MockResult<I>>
+  : T extends Record<string, unknown>
+  ? { [K in keyof T]: MockResult<T[K]> }
+  : T;
 
 export function generate<T>(schema: T): MockResult<T> {
+  if (isClass(schema)) {
+    // eslint-disable-next-line new-cap
+    const instance = new schema() as { [GENERATION_SCHEMA]?: unknown };
+    return generate((instance[GENERATION_SCHEMA] ?? instance) as T);
+  }
+
   if (typeof schema === 'function') {
     return schema();
   }
