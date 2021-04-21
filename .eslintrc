@@ -17,6 +17,8 @@
     "no-console": "off",
     "no-param-reassign": "off",
     "no-restricted-globals": "off",
+    "no-restricted-syntax": "off",
+    "no-await-in-loop": "off",
     "no-shadow": "off",
     "no-use-before-define": "off",
     "import/extensions": "off",
