@@ -4,6 +4,9 @@
   "description": "@mokia/server",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "test": "mocha",
     "coverage": "nyc npm run test",
