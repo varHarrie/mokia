@@ -4,6 +4,9 @@
   "description": "@mokia/cli",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "bin": {
+    "mokia": "bin/index.js"
+  },
   "files": [
     "bin",
     "lib"
