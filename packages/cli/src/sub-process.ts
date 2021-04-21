@@ -2,9 +2,26 @@ import ora from 'ora';
 import chalk from 'chalk';
 import http from 'http';
 import { AddressInfo } from 'net';
+import { register } from 'ts-node';
 import { addHook } from 'pirates';
 import { createServer, ServerConfig } from '@mokia/server';
 import { generate } from '@mokia/producer';
+
+register({
+  compilerOptions: {
+    target: 'es2017',
+    module: 'commonjs',
+    lib: ['dom', 'es2016', 'es2017'],
+    strictPropertyInitialization: false,
+    noUnusedLocals: false,
+    noImplicitAny: false,
+    moduleResolution: 'node',
+    allowSyntheticDefaultImports: true,
+    esModuleInterop: true,
+    experimentalDecorators: true,
+    emitDecoratorMetadata: true,
+  },
+});
 
 type CliOptions = ServerConfig & {
   watch?: boolean;
@@ -61,7 +78,7 @@ async function start(): Promise<(() => Promise<void>) | undefined> {
   if (options.fallbackUrl) config.fallbackUrl = options.fallbackUrl;
   if (options.silent) config.silent = options.silent;
 
-  config.bodyWrapper = options.bodyWrapper || generate;
+  config.bodyWrapper = config.bodyWrapper ?? generate;
 
   try {
     [app, destroy] = await createServer(config);
