@@ -23,6 +23,7 @@
     "no-use-before-define": "off",
     "import/extensions": "off",
     "import/export": "off",
+    "import/prefer-default-export": "off",
     "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/no-inferrable-types": "off"
   },
@@ -30,8 +31,9 @@
     {
       "files": ["**/*.js", "**/scripts/*.ts"],
       "rules": {
-        "@typescript-eslint/no-var-requires": "off",
-        "import/no-extraneous-dependencies": "off"
+        "import/no-extraneous-dependencies": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-var-requires": "off"
       }
     }
   ]
