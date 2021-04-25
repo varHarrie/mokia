@@ -28,15 +28,18 @@ async function release() {
   };
 
   const branch = await realRun('git', ['branch', '--show-current']).then((result) => result.stdout);
-  const releaseTag = branchToTag[branch] || 'alpha';
+  const releaseTag = branchToTag[branch];
   if (!releaseTag) throw new Error('Can only be released on master, alpha or beta branch');
 
   // ----- Ask for release version -----
 
+  const releaseType = (type) => (releaseTag === 'latest' ? type : `pre${type}`);
+
   const presets = {
-    patch: semver.inc(currentVersion, releaseTag === 'latest' ? 'patch' : 'prepatch', releaseTag),
-    minor: semver.inc(currentVersion, releaseTag === 'latest' ? 'minor' : 'preminor', releaseTag),
-    major: semver.inc(currentVersion, releaseTag === 'latest' ? 'major' : 'premajor', releaseTag),
+    prerelease: semver.inc(currentVersion, 'prerelease', releaseTag),
+    patch: semver.inc(currentVersion, releaseType('patch'), releaseTag),
+    minor: semver.inc(currentVersion, releaseType('minor'), releaseTag),
+    major: semver.inc(currentVersion, releaseType('major'), releaseTag),
   };
 
   const response = await prompts([
@@ -45,11 +48,12 @@ async function release() {
       name: 'value',
       message: `Select release type (Current: ${currentVersion}):`,
       choices: [
-        { title: 'patch', value: presets.patch, description: presets.patch },
-        { title: 'minor', value: presets.minor, description: presets.minor },
-        { title: 'major', value: presets.major, description: presets.major },
+        releaseTag !== 'latest' && { title: 'prerelease', value: presets.prerelease, description: presets.prerelease },
+        { title: releaseType('patch'), value: presets.patch, description: presets.patch },
+        { title: releaseType('minor'), value: presets.minor, description: presets.minor },
+        { title: releaseType('major'), value: presets.major, description: presets.major },
         { title: 'custom', value: 'custom', description: 'input' },
-      ],
+      ].filter(Boolean),
     },
     {
       type: (prev) => (prev === 'custom' ? 'text' : false),
