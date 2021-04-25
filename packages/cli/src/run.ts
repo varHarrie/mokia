@@ -42,7 +42,7 @@ export default async function run(entry: string, options: CliOptions): Promise<v
     const args = [entry, JSON.stringify(config)];
 
     if (config.watch) {
-      watcher = chokidar.watch([]);
+      watcher = chokidar.watch([entry]);
 
       watcher.on('change', restart);
       watcher.on('unlink', restart);
