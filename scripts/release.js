@@ -98,21 +98,20 @@ async function release() {
 
   // ----- Generate changelog -----
 
+  spinner.start('Generating changelog...\n');
+
   if (releaseTag === 'latest') {
-    spinner.start('Generating changelog...\n');
-
     await run('npm', ['run', 'changelog']);
-
-    const diff = await run('git', ['diff']).then((result) => result.stdout);
-
-    if (diff) {
-      await run('git', ['add', '-A']);
-      await run('git', ['commit', '--no-verify', '-m', `release: v${releaseVersion}`]);
-    }
-
     spinner.succeed('changelog generated');
   } else {
     spinner.info('Skipped to generate changelog');
+  }
+
+  const diff = await run('git', ['diff']).then((result) => result.stdout);
+
+  if (diff) {
+    await run('git', ['add', '-A']);
+    await run('git', ['commit', '--no-verify', '-m', `release: v${releaseVersion}`]);
   }
 
   // ----- Publish packages -----
@@ -154,7 +153,7 @@ async function publishPackage(pkgRoot, version, tag) {
   const pkg = JSON.parse(fs.readFileSync(path.join(pkgRoot, 'package.json'), 'utf-8'));
   if (pkg.private) return;
 
-  spinner.start(`Publishing ${chalk.yellow(`${pkg.name}@${version}`)} on ${chalk.yellow(tag)}`);
+  spinner.start(`Publishing ${chalk.yellow(`${pkg.name}@${version}`)} on ${chalk.yellow(tag)}\n`);
 
   await run('npm', ['publish', '--access', 'public', '--tag', tag], { cwd: pkgRoot });
 
