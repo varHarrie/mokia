@@ -15,3 +15,10 @@ export function defaultTo(...values: unknown[]): unknown {
     }) ?? fallback
   );
 }
+
+/**
+ * Checks if target is a Class
+ */
+export function isClass(target: unknown): target is new (...args: unknown[]) => unknown {
+  return typeof target === 'function' && /^class\s/.test(Function.prototype.toString.call(target));
+}

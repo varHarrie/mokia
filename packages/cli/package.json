@@ -4,7 +4,13 @@
   "description": "@mokia/cli",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "bin": "bin/index.js",
+  "bin": {
+    "mokia": "bin/index.js"
+  },
+  "files": [
+    "bin",
+    "lib"
+  ],
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
     "clean": "rimraf lib",

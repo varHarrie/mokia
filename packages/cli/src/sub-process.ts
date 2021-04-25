@@ -2,9 +2,40 @@ import ora from 'ora';
 import chalk from 'chalk';
 import http from 'http';
 import { AddressInfo } from 'net';
+import { register } from 'ts-node';
 import { addHook } from 'pirates';
 import { createServer, ServerConfig } from '@mokia/server';
 import { generate } from '@mokia/producer';
+
+register({
+  compilerOptions: {
+    target: 'es2017',
+    module: 'commonjs',
+    lib: ['dom', 'es2016', 'es2017'],
+    strictPropertyInitialization: false,
+    noUnusedLocals: false,
+    noImplicitAny: false,
+    moduleResolution: 'node',
+    allowSyntheticDefaultImports: true,
+    esModuleInterop: true,
+    experimentalDecorators: true,
+    emitDecoratorMetadata: true,
+  },
+});
+
+const catchError = (error: Error) => {
+  spinner.fail(chalk.red('Error occurred:'));
+  console.log(error);
+  process.send?.({ error: true });
+};
+
+process.on('uncaughtException', catchError);
+process.on('unhandledRejection', catchError);
+
+process.on('disconnect', () => {
+  if (destroy) destroy();
+  process.exit(0);
+});
 
 type CliOptions = ServerConfig & {
   watch?: boolean;
@@ -20,17 +51,6 @@ let destroy: () => Promise<void>;
 if (options.watch) watch();
 start();
 
-process.on('uncaughtException', (error) => {
-  spinner.fail(chalk.red('Error occurred:'));
-  console.log(' ', error);
-  process.send?.({ error: true });
-});
-
-process.on('disconnect', () => {
-  if (destroy) destroy();
-  process.exit(0);
-});
-
 function watch() {
   addHook(
     (code, fileName) => {
@@ -44,15 +64,8 @@ function watch() {
 async function start(): Promise<(() => Promise<void>) | undefined> {
   spinner.start('Loading...');
 
-  let config: ServerConfig;
-
-  try {
-    const configModule = await import(entry);
-    config = configModule?.default ?? configModule;
-  } catch (error) {
-    spinner.fail(`Failed to load: ${entry}: ${error.message}`);
-    return undefined;
-  }
+  const configModule = await import(entry);
+  const config = configModule?.default ?? configModule;
 
   if (options.host) config.host = options.host;
   if (options.port) config.port = options.port;
@@ -61,16 +74,10 @@ async function start(): Promise<(() => Promise<void>) | undefined> {
   if (options.fallbackUrl) config.fallbackUrl = options.fallbackUrl;
   if (options.silent) config.silent = options.silent;
 
-  config.bodyWrapper = options.bodyWrapper || generate;
+  config.bodyWrapper = config.bodyWrapper ?? generate;
 
-  try {
-    [app, destroy] = await createServer(config);
-    const { port } = app.address() as AddressInfo;
-    spinner.succeed(`Server is listening on port ${chalk.green(port.toString())}`);
-    return destroy;
-  } catch (error) {
-    spinner.fail(`Failed to create server: ${error.message}`);
-  }
-
-  return undefined;
+  [app, destroy] = await createServer(config);
+  const { port } = app.address() as AddressInfo;
+  spinner.succeed(`Server is listening on port ${chalk.green(port.toString())}`);
+  return destroy;
 }

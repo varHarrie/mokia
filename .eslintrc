@@ -13,14 +13,18 @@
   ],
   "rules": {
     "consistent-return": "off",
+    "no-await-in-loop": "off",
     "no-bitwise": "off",
     "no-console": "off",
     "no-param-reassign": "off",
     "no-restricted-globals": "off",
+    "no-restricted-syntax": "off",
+    "no-return-assign": "off",
     "no-shadow": "off",
     "no-use-before-define": "off",
     "import/extensions": "off",
     "import/export": "off",
+    "import/prefer-default-export": "off",
     "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/no-inferrable-types": "off"
   },
@@ -28,8 +32,9 @@
     {
       "files": ["**/*.js", "**/scripts/*.ts"],
       "rules": {
-        "@typescript-eslint/no-var-requires": "off",
-        "import/no-extraneous-dependencies": "off"
+        "import/no-extraneous-dependencies": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-var-requires": "off"
       }
     }
   ]

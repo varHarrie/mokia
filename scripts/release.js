@@ -8,11 +8,15 @@ const prompts = require('prompts');
 const currentVersion = require('../package.json').version;
 const packages = require('./packages');
 
+const dryRun = (...args) => console.log(chalk.yellow('dry-run'), ...args);
+const realRun = (...args) => execa(...args);
+const run = process.argv.includes('--dry-run') ? dryRun : realRun;
+
 const spinner = ora();
 
 release().catch((error) => {
-  console.log(chalk.red('Error:'), error.message);
-  spinner.fail('Failed to release, read error details above');
+  spinner.fail('Failed to release, please read error details below:');
+  console.log(chalk.red('  Error:'), error.message);
 });
 
 async function release() {
@@ -23,16 +27,19 @@ async function release() {
     beta: 'beta',
   };
 
-  const branch = await execa('git', ['branch', '--show-current']).then((result) => result.stdout);
+  const branch = await realRun('git', ['branch', '--show-current']).then((result) => result.stdout);
   const releaseTag = branchToTag[branch];
-  if (!releaseTag) throw new Error('Can only be released in master, alpha or beta branch');
+  if (!releaseTag) throw new Error('Can only be released on master, alpha or beta branch');
 
   // ----- Ask for release version -----
 
+  const releaseType = (type) => (releaseTag === 'latest' ? type : `pre${type}`);
+
   const presets = {
-    patch: semver.inc(currentVersion, 'patch'),
-    minor: semver.inc(currentVersion, 'minor'),
-    major: semver.inc(currentVersion, 'major'),
+    prerelease: semver.inc(currentVersion, 'prerelease', releaseTag),
+    patch: semver.inc(currentVersion, releaseType('patch'), releaseTag),
+    minor: semver.inc(currentVersion, releaseType('minor'), releaseTag),
+    major: semver.inc(currentVersion, releaseType('major'), releaseTag),
   };
 
   const response = await prompts([
@@ -41,11 +48,12 @@ async function release() {
       name: 'value',
       message: `Select release type (Current: ${currentVersion}):`,
       choices: [
-        { title: 'patch', value: presets.patch, description: presets.patch },
-        { title: 'minor', value: presets.minor, description: presets.minor },
-        { title: 'major', value: presets.major, description: presets.major },
+        releaseTag !== 'latest' && { title: 'prerelease', value: presets.prerelease, description: presets.prerelease },
+        { title: releaseType('patch'), value: presets.patch, description: presets.patch },
+        { title: releaseType('minor'), value: presets.minor, description: presets.minor },
+        { title: releaseType('major'), value: presets.major, description: presets.major },
         { title: 'custom', value: 'custom', description: 'input' },
-      ],
+      ].filter(Boolean),
     },
     {
       type: (prev) => (prev === 'custom' ? 'text' : false),
@@ -76,7 +84,7 @@ async function release() {
 
   spinner.start('Building packages...\n');
 
-  await execa('npm', ['run', 'build', '--workspaces']);
+  await run('npm', ['run', 'build', '--workspaces']);
 
   spinner.succeed('packages built');
 
@@ -84,24 +92,28 @@ async function release() {
 
   spinner.start('Running tests...\n');
 
-  await execa('npm', ['run', 'test', '--workspaces']);
+  await run('npm', ['run', 'test', '--workspaces']);
 
   spinner.succeed('Tests passed');
 
   // ----- Generate changelog -----
 
-  spinner.start('Generating changelog...\n');
+  if (releaseTag === 'latest') {
+    spinner.start('Generating changelog...\n');
 
-  await execa('npm', ['run', 'changelog']);
+    await run('npm', ['run', 'changelog']);
 
-  const diff = await execa('git', ['diff']).then((result) => result.stdout);
+    const diff = await run('git', ['diff']).then((result) => result.stdout);
 
-  if (diff) {
-    await execa('git', ['add', '-A']);
-    await execa('git', ['commit', '--no-verify', '-m', `release: v${releaseVersion}`]);
+    if (diff) {
+      await run('git', ['add', '-A']);
+      await run('git', ['commit', '--no-verify', '-m', `release: v${releaseVersion}`]);
+    }
+
+    spinner.succeed('changelog generated');
+  } else {
+    spinner.info('Skipped to generate changelog');
   }
-
-  spinner.succeed('changelog generated');
 
   // ----- Publish packages -----
 
@@ -109,9 +121,9 @@ async function release() {
 
   // ----- Push to Github -----
 
-  await execa('git', ['tag', `v${releaseVersion}`]);
-  await execa('git', ['push', '--tag']);
-  await execa('git', ['push']);
+  await run('git', ['tag', `v${releaseVersion}`]);
+  await run('git', ['push', '--tag']);
+  await run('git', ['push']);
 
   spinner.succeed(`v${releaseVersion} Released`);
 }
@@ -144,7 +156,7 @@ async function publishPackage(pkgRoot, version, tag) {
 
   spinner.start(`Publishing ${chalk.yellow(`${pkg.name}@${version}`)} on ${chalk.yellow(tag)}`);
 
-  await execa('npm', ['publish', '--access', 'public', '--tag', tag], { cwd: pkgRoot });
+  await run('npm', ['publish', '--access', 'public', '--tag', tag], { cwd: pkgRoot });
 
   spinner.succeed(`Successfully published ${chalk.yellow(`${pkg.name}@${version}`)} on ${chalk.yellow(tag)}`);
 }

@@ -3,25 +3,9 @@ import childProcess from 'child_process';
 import Debug from 'debug';
 import kill from 'tree-kill';
 import chokidar from 'chokidar';
-import { register } from 'ts-node';
 import { ServerConfig } from '@mokia/server';
 
 const log = Debug('mokia:cli');
-
-register({
-  compilerOptions: {
-    target: 'es6',
-    module: 'commonjs',
-    lib: ['dom', 'es2016', 'es2017'],
-    strictPropertyInitialization: false,
-    noUnusedLocals: false,
-    moduleResolution: 'node',
-    allowSyntheticDefaultImports: true,
-    esModuleInterop: true,
-    experimentalDecorators: true,
-    emitDecoratorMetadata: true,
-  },
-});
 
 type CliOptions = ServerConfig & {
   watch?: boolean;
@@ -58,7 +42,7 @@ export default async function run(entry: string, options: CliOptions): Promise<v
     const args = [entry, JSON.stringify(config)];
 
     if (config.watch) {
-      watcher = chokidar.watch([]);
+      watcher = chokidar.watch([entry]);
 
       watcher.on('change', restart);
       watcher.on('unlink', restart);

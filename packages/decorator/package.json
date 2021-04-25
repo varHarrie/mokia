@@ -4,6 +4,9 @@
   "description": "@mokia/decorator",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",
     "clean": "rimraf lib",
