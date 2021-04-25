@@ -1,8 +1,9 @@
 import { iterate } from './complex';
 import { isClass } from './utils';
 
-export const GENERATION_SCHEMA = Symbol('GENERATION_SCHEMA');
-
+/**
+ * Mock result type
+ */
 export type MockResult<T> = T extends (...args: unknown[]) => infer R
   ? R
   : T extends Array<infer I>
@@ -11,11 +12,13 @@ export type MockResult<T> = T extends (...args: unknown[]) => infer R
   ? { [K in keyof T]: MockResult<T[K]> }
   : T;
 
+const create = (Constructor: new (...args: unknown[]) => unknown) => new Constructor();
+
+const hasToJson = <T>(obj: T): obj is T & { toJSON: () => unknown } => 'toJSON' in obj && typeof ((obj as unknown) as { toJSON: unknown }).toJSON === 'function';
+
 export function generate<T>(schema: T): MockResult<T> {
   if (isClass(schema)) {
-    // eslint-disable-next-line new-cap
-    const instance = new schema() as { [GENERATION_SCHEMA]?: unknown };
-    return generate((instance[GENERATION_SCHEMA] ?? instance) as T);
+    return generate(create(schema) as T);
   }
 
   if (typeof schema === 'function') {
@@ -27,6 +30,8 @@ export function generate<T>(schema: T): MockResult<T> {
   }
 
   if (schema && typeof schema === 'object') {
+    if (hasToJson(schema)) return schema.toJSON() as MockResult<T>;
+
     const result: Record<string, unknown> = {};
 
     Object.keys(schema).forEach((key) => {
