@@ -1,6 +1,6 @@
 {
   "name": "mokia",
-  "version": "0.5.0-alpha.1",
+  "version": "0.5.0-alpha.2",
   "description": "mokia",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -23,8 +23,8 @@
     "url": "https://github.com/varHarrie/mokia/issues"
   },
   "dependencies": {
-    "@mokia/decorator": "0.5.0-alpha.1",
-    "@mokia/producer": "0.5.0-alpha.1",
+    "@mokia/decorator": "0.5.0-alpha.2",
+    "@mokia/producer": "0.5.0-alpha.2",
     "@types/lodash": "^4.14.168",
     "lodash": "^4.17.21"
   },
