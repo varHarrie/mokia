@@ -38,6 +38,10 @@
     "ora": "^5.4.0",
     "pirates": "^4.0.1",
     "tree-kill": "^1.2.2",
-    "ts-node": "^9.1.1"
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2"
   }
 }

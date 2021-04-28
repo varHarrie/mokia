@@ -15,7 +15,7 @@ type CliOptions = ServerConfig & {
 type MessageData = { fileName?: string; error?: boolean };
 
 export default async function run(entry: string, options: CliOptions): Promise<void> {
-  entry = path.join(process.cwd(), entry || 'index.js');
+  entry = path.resolve(process.cwd(), entry);
 
   const { debug, ...config } = options;
   if (debug) Debug.enable('mokia:*');

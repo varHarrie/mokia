@@ -4,9 +4,11 @@ import run from './run';
 const cli = meow(
   `
 	Usage
-    $ mokia-cli <entry-file> [options]
+    $ mokia <entry-file> [options]
 
   Options
+    --version       Print version
+    --help          Print help
     --host, -h      Set host, default to "localhost"
     --port, -p      Set port, default to 8080
     --prefix        Set route prefix
@@ -17,8 +19,8 @@ const cli = meow(
     --debug         Enable debug mode
 
   Example
-    $ mokia-cli index.ts
-    $ mokia-cli ./my-project --port 3000
+    $ mokia index.js
+    $ mokia example/index.ts --port 3000
 `,
   {
     flags: {
@@ -34,4 +36,8 @@ const cli = meow(
   },
 );
 
-run(cli.input[0], cli.flags);
+if (cli.input[0]) {
+  run(cli.input[0], cli.flags);
+} else {
+  cli.showHelp();
+}
