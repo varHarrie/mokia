@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     code() {
-      return (this.$slots.default?.[0].text || '').trim();
+      return (this.$slots.default?.[0].children?.[0].text || '').trim();
     },
     codeHighlighted() {
       const html = prism.highlight(this.code, prism.languages.javascript, 'javascript');

@@ -1,3 +1,5 @@
+const demo = require('./plugins/demo');
+
 module.exports = {
   locales: {
     '/': {
@@ -26,4 +28,5 @@ module.exports = {
       },
     },
   },
+  plugins: [['container', demo]],
 };

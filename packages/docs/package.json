@@ -14,7 +14,8 @@
   "devDependencies": {
     "less": "^4.1.1",
     "less-loader": "^7.3.0",
-    "vuepress": "^1.8.2"
+    "vuepress": "^1.8.2",
+    "vuepress-plugin-container": "^2.1.5"
   },
   "dependencies": {
     "@mokia/producer": "file:../producer",
