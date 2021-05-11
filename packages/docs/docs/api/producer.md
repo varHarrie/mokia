@@ -9,72 +9,124 @@ sidebarDepth: 3
 ### boolean 布尔类型
 
 :::demo boolean(chance?: number)
-producer.boolean();
-producer.boolean(1);
+
+```javascript
+boolean();
+boolean(1);
+```
+
 :::
 
 ### integer 整型
 
 :::demo integer(max?: number)
-producer.integer();
-producer.integer(5);
+
+```javascript
+integer();
+integer(5);
+```
+
 :::
 
 :::demo integer(min: number, max: number)
-producer.integer(5, 10);
+
+```javascript
+integer(5, 10);
+```
+
 :::
 
 ### natural 自然数
 
 :::demo natural(max?: number)
-producer.natural();
-producer.natural(5);
+
+```javascript
+natural();
+natural(5);
+```
+
 :::
 
 :::demo natural(min: number, max: number)
-producer.natural(5, 10);
+
+```javascript
+natural(5, 10);
+```
+
 :::
 
 ### float 浮点数
 
 :::demo float(max?: number)
-producer.float();
-producer.float(5);
+
+```javascript
+float();
+float(5);
+```
+
 :::
 
 :::demo float(min: number, max: number)
-producer.float(5, 10);
+
+```javascript
+float(5, 10);
+```
+
 :::
 
 :::demo float(min: number, max: number, fixed: number)
-producer.float(5, 10, 3);
+
+```javascript
+float(5, 10, 3);
+```
+
 :::
 
 :::demo float(min: number, max: number, dMin: number, dMax: number)
-producer.float(5, 10, 3, 5);
+
+```javascript
+float(5, 10, 3, 5);
+```
+
 :::
 
 ### char 字符
 
 :::demo char(pool?: string)
-producer.char();
-producer.char('ABC');
+
+```javascript
+char();
+char('ABC');
+```
+
 :::
 
 ### string 字符串
 
 :::demo string(length?: number)
-producer.string();
-producer.string(5);
+
+```javascript
+string();
+string(5);
+```
+
 :::
 
 :::demo string(pool: string, length?: number)
-producer.string('ABC');
-producer.string('ABC', 5);
+
+```javascript
+string('ABC');
+string('ABC', 5);
+```
+
 :::
 
 :::demo string(pool: string, min: number, max: number)
-producer.string('ABC', 5, 10);
+
+```javascript
+string('ABC', 5, 10);
+```
+
 :::
 
 ## Color
@@ -82,25 +134,41 @@ producer.string('ABC', 5, 10);
 ### hex 十六进制颜色字符串
 
 :::demo hex()
-producer.hex();
+
+```javascript
+hex();
+```
+
 :::
 
 ### rgb RGB 颜色字符串
 
 :::demo rgb()
-producer.rgb();
+
+```javascript
+rgb();
+```
+
 :::
 
 ### rgba RGBA 颜色字符串
 
 :::demo rgba()
-producer.rgba();
+
+```javascript
+rgba();
+```
+
 :::
 
 ### hsl HSL 颜色字符串
 
 :::demo hsl()
-producer.hsl();
+
+```javascript
+hsl();
+```
+
 :::
 
 ## Complex
@@ -108,38 +176,496 @@ producer.hsl();
 ### iterate 迭代器
 
 :::demo iterate(iterator: Function, length?: number)
-producer.iterate(() => Math.random());
-producer.iterate(() => Math.random(), 3);
+
+```javascript
+iterate(() => integer());
+iterate(() => integer(), 3);
+```
+
 :::
 
 ### oneOf 取其中的一个
 
 :::demo oneOf(list: any[])
-producer.oneOf(['male', 'female', 'unknown']);
+
+```javascript
+oneOf(['male', 'female', 'unknown']);
+```
+
 :::
 
 ### manyOf 取其中的多个
 
 :::demo manyOf(list: any[], length?: number)
-producer.manyOf(['apple', 'banana', 'grape', 'orange', 'pear']);
-producer.manyOf(['apple', 'banana', 'grape', 'orange', 'pear'], 3);
+
+```javascript
+manyOf(['apple', 'banana', 'grape', 'orange', 'pear']);
+manyOf(['apple', 'banana', 'grape', 'orange', 'pear'], 3);
+```
+
 :::
 
 :::demo manyOf(list: any[], min: number, max: number)
-producer.manyOf(['apple', 'banana', 'grape', 'orange', 'pear'], 3, 5);
+
+```javascript
+manyOf(['apple', 'banana', 'grape', 'orange', 'pear'], 3, 5);
+```
+
 :::
 
 ### pick 挑选属性
 
 :::demo pick(obj: any, length?: number)
-producer.pick({ a: 1, b: 2, c: 3 });
-producer.pick({ a: 1, b: 2, c: 3 }, 3);
+
+```javascript
+pick({ a: 1, b: 2, c: 3 });
+pick({ a: 1, b: 2, c: 3 }, 3);
+```
+
 :::
 
 :::demo pick(obj: any, props: string[])
-producer.pick({ a: 1, b: 2, c: 3 }, ['a', 'b']);
+
+```javascript
+pick({ a: 1, b: 2, c: 3 }, ['a', 'b']);
+```
+
 :::
 
 :::demo pick(obj: any, min: number, max: number)
-producer.pick({ a: 1, b: 2, c: 3 }, 2, 3);
+
+```javascript
+pick({ a: 1, b: 2, c: 3 }, 2, 3);
+```
+
+:::
+
+## Date
+
+### datetime 日期时间字符串
+
+:::tip
+基于 dayjs，支持格式请查看[这里](https://day.js.org/docs/en/display/format#list-of-all-available-formats)。
+:::
+
+:::demo datetime(format?: string)
+
+```javascript
+datetime();
+datetime('DD/MM/YYYY HH:mm:ss');
+```
+
+:::
+
+:::demo datetime(format: string, min: Date | number | string, max: Date | number | string)
+
+```javascript
+datetime('YYYY-MM-DD', 0, Date.now());
+datetime('YYYY-MM-DD', '2021-01-01', '2021-12-31');
+```
+
+:::
+
+### date 日期字符串
+
+:::demo date(format?: string)
+
+```javascript
+date();
+```
+
+:::
+
+### time 时间字符串
+
+:::demo time(format?: string)
+
+```javascript
+time();
+```
+
+:::
+
+### now 当前时间字符串
+
+:::demo now(format?: string)
+
+```javascript
+now();
+```
+
+:::
+
+### timestamp 当前时间字符串
+
+:::demo timestamp(format?: string)
+
+```javascript
+timestamp();
+```
+
+:::
+
+## Generate
+
+### generate 复合数据
+
+:::demo generate(schema: any)
+
+```javascript
+generate(5);
+generate([1, '2', true]);
+generate({ a: 1, b: '2', c: true });
+```
+
+:::
+
+:::demo generate(schema: any)
+
+```javascript
+generate(() => integer());
+generate([() => integer()]);
+generate({ foo: () => integer() });
+generate({
+  foo: {
+    bar: {
+      baz: () => integer(),
+    },
+  },
+});
+```
+
+:::
+
+:::demo generate(schema: any)
+
+```javascript
+class Person {
+  constructor() {
+    this.name = fullName();
+  }
+}
+
+generate(Person);
+```
+
+:::
+
+### list 列表
+
+:::tip
+等价于 [iterate](#iterate-迭代器) 与 [generate](#generate-复合数据) 的组合。
+:::
+
+:::demo list(schema: any, length?: number)
+
+```javascript
+list({ foo: () => integer() });
+list({ foo: () => integer() }, 3);
+```
+
+:::
+
+:::demo list(schema: any, min: number, max: number)
+
+```javascript
+list({ foo: () => integer() }, 3, 5);
+```
+
+:::
+
+## Id
+
+### uuid UUID 字符串
+
+:::demo uuid()
+
+```javascript
+uuid();
+```
+
+:::
+
+### increment 自增 ID 数字
+
+:::demo increment()
+
+```javascript
+increment();
+```
+
+:::
+
+## Image
+
+### imageDataURL 图片 DataURL
+
+:::demo imageDataURL(size?: string, text?: string, background?: string, foreground?: string)
+
+```html
+<img id="image1" src="" />
+<img id="image2" src="" />
+<img id="image3" src="" />
+<img id="image4" src="" />
+<img id="image5" src="" />
+```
+
+```javascript
+$('#image1').src = imageDataURL();
+$('#image2').src = imageDataURL('128x128');
+$('#image3').src = imageDataURL('200x100', 'Hello World');
+$('#image4').src = imageDataURL('200x100', 'Custom Color', '#499DF2');
+$('#image5').src = imageDataURL('200x100', 'Custom Color', 'white', 'black');
+```
+
+:::
+
+## Person
+
+### age 年龄
+
+:::demo age(min?: number, max?: number)
+
+```javascript
+age();
+age(18);
+age(0, 18);
+```
+
+:::
+
+### birthday 生日
+
+:::demo birthday(format?: string)
+
+```javascript
+birthday();
+birthday('DD/MM/YYYY');
+```
+
+:::
+
+### firstName 名
+
+:::demo firstName()
+
+```javascript
+firstName();
+```
+
+:::
+
+### lastName 姓
+
+:::demo lastName()
+
+```javascript
+lastName();
+```
+
+:::
+
+### fullName 姓名
+
+:::demo fullName()
+
+```javascript
+fullName();
+```
+
+:::
+
+## Text
+
+### word 单词
+
+:::demo word(length?: number)
+
+```javascript
+word();
+word(5);
+```
+
+:::
+
+:::demo word(min: number, max: number)
+
+```javascript
+word(5, 10);
+```
+
+:::
+
+### title 标题
+
+:::demo title(length?: number)
+
+```javascript
+title();
+title(5);
+```
+
+:::
+
+:::demo title(min: number, max: number)
+
+```javascript
+title(2, 5);
+```
+
+:::
+
+### sentence 句子
+
+:::demo sentence(length?: number)
+
+```javascript
+sentence();
+sentence(5);
+```
+
+:::
+
+:::demo sentence(min: number, max: number)
+
+```javascript
+sentence(5, 10);
+```
+
+:::
+
+### paragraph 段落
+
+:::demo paragraph(length?: number)
+
+```javascript
+paragraph();
+paragraph(5);
+```
+
+:::
+
+:::demo paragraph(min: number, max: number)
+
+```javascript
+paragraph(3, 5);
+```
+
+:::
+
+### passage 文章
+
+:::demo passage(length?: number)
+
+```javascript
+passage();
+passage(5);
+```
+
+:::
+
+:::demo passage(min: number, max: number)
+
+```javascript
+passage(3, 5);
+```
+
+:::
+
+## Web
+
+### protocol 协议
+
+:::demo protocol()
+
+```javascript
+protocol();
+```
+
+:::
+
+### tld 顶级域名
+
+:::demo tld()
+
+```javascript
+tld();
+```
+
+:::
+
+### ip IP v4
+
+:::demo ip()
+
+```javascript
+ip();
+```
+
+:::
+
+### ipv6 IP v6
+
+:::demo ipv6()
+
+```javascript
+ipv6();
+```
+
+:::
+
+### port 端口号
+
+:::demo port()
+
+```javascript
+port();
+```
+
+:::
+
+### domain 域名
+
+:::demo domain(tld?: string)
+
+```javascript
+domain();
+domain('com');
+```
+
+:::
+
+### pathname 路径
+
+:::demo pathname(length?: number)
+
+```javascript
+pathname();
+pathname(5);
+```
+
+:::
+
+### url URL
+
+:::demo url(protocol?: string, host?: string, prefix?: string)
+
+```javascript
+url();
+url('https');
+url('https', 'github.com');
+url('https', 'github.com', '/varharrie');
+```
+
+:::
+
+### email 电子邮箱地址
+
+:::demo email(domain?: string)
+
+```javascript
+email();
+email('gmail.com');
+```
+
 :::

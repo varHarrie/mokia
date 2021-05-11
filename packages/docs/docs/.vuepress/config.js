@@ -1,15 +1,13 @@
 const demo = require('./plugins/demo');
 
 module.exports = {
+  port: 3000,
   locales: {
     '/': {
       lang: 'zh-CN',
       title: 'Mokia',
       description: '一个开箱即用的数据模拟工具。',
     },
-  },
-  markdown: {
-    lineNumbers: true,
   },
   themeConfig: {
     locales: {

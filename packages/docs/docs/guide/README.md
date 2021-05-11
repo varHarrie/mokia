@@ -2,15 +2,21 @@
 
 ## 介绍
 
-Mokia 是一个开箱即用的数据模拟工具，提供了一系列的数据模拟函数和一个服务端程序。
+Mokia 是一套开箱即用的数据模拟工具，为前后端分离应用提供一个简单便捷、灵活实用的拟真服务端程序。
 
 ## 特性
 
 - 丰富的数据[生成器（producer）](#生成器-producer)
 - 基于 JS 对象的[模拟数据结构（schema）](#模拟数据结构-schema)
-- 简单但功能丰富的服务端程序（server）
+- 简单灵活的模拟服务端程序（server）
 
 ## 概念
+
+在上手使用之前，需要先了解几个概念：
+
+- 生成器（producer）
+- 装饰器（decorator）
+- 模拟数据结构（schema）
 
 ### 生成器（producer）
 
@@ -59,3 +65,84 @@ console.log(user.name); // 随机的英文名
 ```
 
 ### 模拟数据结构（schema）
+
+对于实际的业务场景，单纯使用生成器来产生模拟数据是远远不够的，真实的接口数据往往由不同的数据嵌套、组合形成，这时我们可以定义模拟数据结构来生成更加复杂的数据。
+
+实际上，模拟数据结构就是普通的 JS 对象，通过传入`generate`生成器，就可以根据对象结构来生成数据：
+
+:::demo generate(schema: any)
+
+```javascript
+const schema = {
+  num: 1,
+  bool: true,
+  str: 'string',
+  foo: () => Math.random(),
+  obj: {
+    foo: () => Math.random(),
+    bar: {
+      baz: () => Math.random(),
+    },
+  },
+  arr: [
+    1,
+    true,
+    'string',
+    () => Math.random(),
+    {
+      foo: () => Math.random(),
+    },
+    [() => Math.random()],
+  ],
+};
+
+producer.generate(schema);
+```
+
+:::
+
+其中，这个 JS 对象的属性值为不同类型时，有不同的生成逻辑：
+
+- 当值为`基本类型`时，返回当前值
+- 当值为`函数`时，返回函数执行结果
+- 当值为`对象`时，执行`generate(obj)`，并返回结果
+- 当值类`数组`时，遍历每一项执行`generate(item)`，并返回结果
+
+正因为 decorator 也是函数，所以可以参与模拟数据结构的定义：
+
+:::demo generate(schema: any)
+
+```javascript
+const user = {
+  name: decorator.fullName(),
+  birthday: decorator.birthday(),
+  email: decorator.email(),
+  homepage: decorator.url(),
+};
+
+producer.generate(user);
+```
+
+:::
+
+### 整合包（mokia）
+
+上面提到的几个概念，虽然技术实现分离到不同的包中， 但在实际使用中，我们通常只需引用一个整合的包——`mokia`：
+
+```diff
++ import mokia from 'mokia';
+- import * as producer from '@mokia/producer';
+- import * as decorator from '@mokia/decorator';
+
+// 调用decorator
+- decorator.boolean();
++ mokia.boolean();
+
+// 调用producer
+- producer.boolean();
++ mokia.producer.boolean();
+
+// 作为函数调用
+- producer.generate({ foo: decorator.boolean() });
++ mokia({ foo: mokia.boolean() });
+```
