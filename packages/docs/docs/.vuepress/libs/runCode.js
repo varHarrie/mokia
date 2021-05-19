@@ -2,6 +2,7 @@ import * as t from '@babel/types';
 import * as parser from '@babel/parser';
 import generate from '@babel/generator';
 import traverse from '@babel/traverse';
+import execute from 'run-my-code';
 
 export default function runCode(source, context) {
   const output = [];
@@ -22,12 +23,10 @@ export default function runCode(source, context) {
   });
 
   const result = generate(ast);
-
   const ctx = Object.assign({}, context, { ____ });
-  const fn = new Function('__ctx__', `with (__ctx__) { ${result.code} }`);
 
   try {
-    fn(ctx);
+    execute(ctx)(result.code);
   } catch (error) {
     console.error(`Error:`, error);
     console.error(`Source Code:`, result.code);
