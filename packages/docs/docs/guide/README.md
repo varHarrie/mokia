@@ -10,9 +10,35 @@ Mokia 是一套开箱即用的数据模拟工具，为前后端分离应用提�
 - 基于 JS 对象的[模拟数据结构（schema）](#模拟数据结构-schema)
 - 简单灵活的模拟服务端程序（server）
 
-## 概念
+## 基本用法
 
-在上手使用之前，需要先了解几个概念：
+安装`mokia`
+
+```bash
+npm install --save mokia
+```
+
+创建入口文件（index.js）：
+
+```javascript
+const mock = require('mokia');
+
+module.exports = {
+  port: 3000,
+  'GET /users': mock.list({ id: mock.uuid(), name: mock.fullName() }),
+  'GET /users/:id': (req) => ({ id: req.params.id, name: mock.fullName() }),
+};
+```
+
+启动服务器
+
+```bash
+npx @mokia/cli index.js
+```
+
+## 深入了解
+
+在此之前，需要先了解几个概念：
 
 - 生成器（producer）
 - 装饰器（decorator）
@@ -33,7 +59,7 @@ producer.date(); // 生成随机日期字符串
 
 通常为了生成特定范围的值，这些生成器函数会有多个重载，如`integer()`、`integer(max)`、`integer(min, max)`。
 
-所有内置的生成器均已拆分至独立的包`@mokia/producer`，你可以在 API 文档中查看。
+所有内置的生成器均已拆分至独立的包`@mokia/producer`，你可以在 [API 文档](/api/producer)中查看。
 
 ### 装饰器（decorator）
 
@@ -55,6 +81,8 @@ const foo = (max) => producer.integer(max);
 除此之外，其返回值也可以当作 TS 属性装饰器使用：
 
 ```typescript
+import * as decorator from '@mokia/decorator';
+
 class User {
   @decorator.fullName()
   name: string;
@@ -73,6 +101,8 @@ console.log(user.name); // 随机的英文名
 :::demo generate(schema: any)
 
 ```javascript
+import * as producer from '@mokia/producer';
+
 const schema = {
   num: 1,
   bool: true,
@@ -113,6 +143,8 @@ producer.generate(schema);
 :::demo generate(schema: any)
 
 ```javascript
+import * as producer from '@mokia/producer';
+
 const user = {
   name: decorator.fullName(),
   birthday: decorator.birthday(),
@@ -125,14 +157,14 @@ producer.generate(user);
 
 :::
 
-### 整合包（mokia）
+## 整合包（mokia）
 
 上面提到的几个概念，虽然技术实现分离到不同的包中， 但在实际使用中，我们通常只需引用一个整合的包——`mokia`：
 
 ```diff
-+ import mokia from 'mokia';
-- import * as producer from '@mokia/producer';
 - import * as decorator from '@mokia/decorator';
+- import * as producer from '@mokia/producer';
++ import mokia from 'mokia';
 
 // 调用decorator
 - decorator.boolean();
@@ -145,4 +177,51 @@ producer.generate(user);
 // 作为函数调用
 - producer.generate({ foo: decorator.boolean() });
 + mokia({ foo: mokia.boolean() });
+```
+
+## 服务端程序（@mokia/server）
+
+我们基于[express](https://expressjs.com/)封装了一个小巧的服务端程序，可以创建一个以 JS 对象为路由配置的 Node 服务端。
+
+```javascript
+import { createServer } from '@mokia/server';
+
+const config = {
+  port: 3000,
+  'GET /hello': () => {
+    message: 'Hello World';
+  },
+};
+
+const [app, destroy] = await createServer(config);
+
+console.log(app); // http.Server实例
+console.log(destroy); // 销毁函数
+```
+
+config 可支持的具体参数查看[createServer](/api/server#createServer)。
+
+## 命令行交互程序（@mokia/cli）
+
+通过命令行交互程序，用户可以完全忽略服务端启动的相关逻辑，只需编写配置文件，就可以快速地创建模拟服务端程序。
+
+创建配置入口文件（index.js）：
+
+```javascript
+module.exports = {
+  port: 3000,
+  'GET /hello': () => {
+    message: 'Hello World';
+  },
+};
+```
+
+通过命令启动服务器：
+
+```bash
+npx @mokia/cli index.js
+
+# 或者使用全局安装的@mokia/cli：
+npm install -g @mokia/cli
+mokia index.js
 ```
