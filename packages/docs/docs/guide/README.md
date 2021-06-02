@@ -59,7 +59,7 @@ producer.date(); // 生成随机日期字符串
 
 通常为了生成特定范围的值，这些生成器函数会有多个重载，如`integer()`、`integer(max)`、`integer(min, max)`。
 
-所有内置的生成器均已拆分至独立的包`@mokia/producer`，你可以在 [API 文档](/api/producer)中查看。
+所有内置的生成器均已拆分至独立的包`@mokia/producer`，你可以在 [API 文档](/mokia/api/producer)中查看。
 
 ### 装饰器（decorator）
 
@@ -199,7 +199,7 @@ console.log(app); // http.Server实例
 console.log(destroy); // 销毁函数
 ```
 
-config 可支持的具体参数查看[createServer](/api/server#createServer)。
+config 可支持的具体参数查看[createServer](/mokia/api/server#ServerConfig)。
 
 ## 命令行交互程序（@mokia/cli）
 

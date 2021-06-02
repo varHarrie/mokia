@@ -1,6 +1,7 @@
 const demo = require('./plugins/demo');
 
 module.exports = {
+  base: '/mokia/',
   port: 3000,
   locales: {
     '/': {
@@ -21,7 +22,7 @@ module.exports = {
         ],
         sidebar: {
           '/guide/': 'auto',
-          '/api/': ['', 'producer'],
+          '/api/': ['', 'producer', 'decorator', 'server', 'mokia'],
         },
       },
     },
