@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>装饰器（@mokia/decorator） | Mokia</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    
+    <meta name="description" content="一个开箱即用的数据模拟工具。">
+    
+    <link rel="preload" href="/mokia/assets/css/0.styles.1304a4e4.css" as="style"><link rel="preload" href="/mokia/assets/js/app.e76958b7.js" as="script"><link rel="preload" href="/mokia/assets/js/3.09b617f5.js" as="script"><link rel="preload" href="/mokia/assets/js/11.816c268e.js" as="script"><link rel="prefetch" href="/mokia/assets/js/10.519c3ec3.js"><link rel="prefetch" href="/mokia/assets/js/12.e9541425.js"><link rel="prefetch" href="/mokia/assets/js/13.68c990b2.js"><link rel="prefetch" href="/mokia/assets/js/14.3ad18d25.js"><link rel="prefetch" href="/mokia/assets/js/15.a3d4b0b9.js"><link rel="prefetch" href="/mokia/assets/js/2.6510160c.js"><link rel="prefetch" href="/mokia/assets/js/4.09a9f25e.js"><link rel="prefetch" href="/mokia/assets/js/5.e4e7af07.js"><link rel="prefetch" href="/mokia/assets/js/6.75f571c1.js"><link rel="prefetch" href="/mokia/assets/js/7.90d9beb0.js"><link rel="prefetch" href="/mokia/assets/js/8.aac89772.js"><link rel="prefetch" href="/mokia/assets/js/9.d6077a87.js">
+    <link rel="stylesheet" href="/mokia/assets/css/0.styles.1304a4e4.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/mokia/" class="home-link router-link-active"><img src="/mokia/logo.png" alt="Mokia" class="logo"> <span class="site-name can-hide">Mokia</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/mokia/guide/" class="nav-link">
+  指南
+</a></div><div class="nav-item"><a href="/mokia/api/" class="nav-link router-link-active">
+  API
+</a></div><div class="nav-item"><a href="https://github.com/varHarrie/mokia/blob/master/CHANGELOG.md" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Changelog
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://github.com/varHarrie/mokia" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/mokia/guide/" class="nav-link">
+  指南
+</a></div><div class="nav-item"><a href="/mokia/api/" class="nav-link router-link-active">
+  API
+</a></div><div class="nav-item"><a href="https://github.com/varHarrie/mokia/blob/master/CHANGELOG.md" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Changelog
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://github.com/varHarrie/mokia" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/mokia/api/" aria-current="page" class="sidebar-link">Packages</a></li><li><a href="/mokia/api/producer.html" class="sidebar-link">生成器（@mokia/producer）</a></li><li><a href="/mokia/api/decorator.html" aria-current="page" class="active sidebar-link">装饰器（@mokia/decorator）</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/mokia/api/decorator.html#decorator" class="sidebar-link">Decorator</a></li></ul></li><li><a href="/mokia/api/server.html" class="sidebar-link">服务器（@mokia/server）</a></li><li><a href="/mokia/api/mokia.html" class="sidebar-link">mokia</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="装饰器-mokia-decorator"><a href="#装饰器-mokia-decorator" class="header-anchor">#</a> 装饰器（@mokia/decorator）</h1> <p>所有装饰器函数都返回<a href="#Decorator"><code>Decorator</code></a>。</p> <p>接收的参数与对应的生成器函数相同，可查阅<a href="/mokia/api/producer">生成器</a>。</p> <h2 id="decorator"><a href="#decorator" class="header-anchor">#</a> Decorator</h2> <p><strong>类型</strong></p> <div class="language-typescript extra-class"><pre class="language-typescript"><code><span class="token keyword">type</span> <span class="token class-name">Decorator</span> <span class="token operator">=</span> <span class="token punctuation">(</span>target<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">unknown</span><span class="token punctuation">,</span> propertyKey<span class="token operator">?</span><span class="token operator">:</span> <span class="token builtin">string</span> <span class="token operator">|</span> <span class="token builtin">symbol</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token builtin">any</span><span class="token punctuation">;</span>
+</code></pre></div><p><strong>示例</strong></p> <p>作为函数使用时，将会返回对应的生成器函数：</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> decorator <span class="token keyword">from</span> <span class="token string">'@mokia/decorator'</span><span class="token punctuation">;</span>
+<span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> producer <span class="token keyword">from</span> <span class="token string">'@mokia/producer'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> foo <span class="token operator">=</span> decorator<span class="token punctuation">.</span><span class="token function">integer</span><span class="token punctuation">(</span>max<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// 等价于</span>
+<span class="token keyword">const</span> <span class="token function-variable function">foo</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">max</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> producer<span class="token punctuation">.</span><span class="token function">integer</span><span class="token punctuation">(</span>max<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>也可以作为 ES 装饰器使用：</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">import</span> <span class="token operator">*</span> <span class="token keyword">as</span> decorator <span class="token keyword">from</span> <span class="token string">'@mokia/decorator'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">User</span> <span class="token punctuation">{</span>
+  @decorator<span class="token punctuation">.</span><span class="token function">fullName</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  name<span class="token operator">:</span> string<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/mokia/api/producer.html" class="prev">
+        生成器（@mokia/producer）
+      </a></span> <span class="next"><a href="/mokia/api/server.html">
+        服务器（@mokia/server）
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/mokia/assets/js/app.e76958b7.js" defer></script><script src="/mokia/assets/js/3.09b617f5.js" defer></script><script src="/mokia/assets/js/11.816c268e.js" defer></script>
+  </body>
+</html>
