@@ -101,8 +101,6 @@ console.log(user.name); // 随机的英文名
 :::demo generate(schema: any)
 
 ```javascript
-import * as producer from '@mokia/producer';
-
 const schema = {
   num: 1,
   bool: true,
@@ -143,8 +141,6 @@ producer.generate(schema);
 :::demo generate(schema: any)
 
 ```javascript
-import * as producer from '@mokia/producer';
-
 const user = {
   name: decorator.fullName(),
   birthday: decorator.birthday(),
