@@ -1,6 +1,29 @@
+<p align="center">
+  <a href="https://varharrie.github.io/mokia/" target="_blank" rel="noopener noreferrer">
+    <img width="180" src="https://raw.githubusercontent.com/varharrie/mokia/master/packages/docs/docs/.vuepress/public/logo.png" alt="logo">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://npmcharts.com/compare/mokia?minimal=true">
+    <img src="https://img.shields.io/npm/dm/mokia.svg" alt="Downloads">
+  </a>
+  <a href="https://www.npmjs.com/package/mokia">
+    <img src="https://img.shields.io/npm/v/mokia.svg" alt="Version">
+  </a>
+  <a href="https://github.com/varharrie/mokia/blob/master/LICENSE">
+    <img src="https://img.shields.io/npm/l/mokia.svg" alt="License">
+  </a>
+  <a href="https://github.com/varHarrie/mokia/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
+    <img src="https://img.shields.io/github/issues/varharrie/mokia.svg" alt="Issues">
+  </a>
+</p>
+
 # Mokia
 
 🐒 A data mocking library.
+
+Documentation: [中文](https://varharrie.github.io/mokia/)
 
 ## Basic Usage
 

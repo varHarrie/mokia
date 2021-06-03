@@ -11,6 +11,7 @@ module.exports = {
     },
   },
   themeConfig: {
+    logo: '/logo.png',
     locales: {
       '/': {
         label: '简体中文',

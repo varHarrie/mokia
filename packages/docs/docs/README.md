@@ -1,5 +1,6 @@
 ---
 home: true
+heroImage: /logo.png
 actionText: 快速上手 →
 actionLink: /guide/
 features:
@@ -11,6 +12,12 @@ features:
     details: 基于JS语法和特性，提供对象组合、类组合方式，方便复用和维护。
 footer: MIT Licensed | Copyright © 2019-present varHarrie
 ---
+
+<style>
+.home .hero img {
+  width: 100px;
+}
+</style>
 
 ### 开箱即用
 
