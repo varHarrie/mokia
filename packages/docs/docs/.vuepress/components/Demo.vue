@@ -64,7 +64,7 @@ export default {
 .demo {
   position: relative;
   margin-top: 12px;
-  border: 1px solid #e5e7ee;
+  border: 1px solid #eae5ee;
 
   .head {
     padding: 8px;
@@ -72,19 +72,19 @@ export default {
     align-items: center;
     justify-content: space-between;
     line-height: 32px;
-    border-bottom: 1px solid #e5e7ee;
+    border-bottom: 1px solid #eae5ee;
 
     .title {
       padding: 0 8px;
       display: flex;
       align-items: center;
-      background: #e8edf7;
+      background: #f0e8f7;
       border-radius: 4px;
-      color: #4171ff;
+      color: #7555ff;
     }
 
     .run-btn {
-      color: #4171ff;
+      color: #7555ff;
       cursor: pointer;
       user-select: none;
     }
@@ -97,7 +97,7 @@ export default {
       padding: 12px;
       flex: 1;
       min-width: 0;
-      border-right: 1px dashed #e5e7ee;
+      border-right: 1px dashed #eae5ee;
       overflow: auto;
 
       > div {
