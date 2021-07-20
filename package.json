@@ -30,6 +30,7 @@
     "eslint": "^7.24.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-import": "^2.22.1",
     "execa": "^5.0.0",
     "husky": "^6.0.0",
     "ora": "^5.4.0",
