@@ -1,24 +1,23 @@
-import 'mocha';
 import request from 'supertest';
 import http from 'http';
 import { createServer, ServerConfig } from '../src';
 
-const config: any = {
+const config = {
   host: 'localhost',
   port: 3000,
   prefix: '/api',
   'GET /user': (req: any) => ({ id: req.query.id, name: 'Foo' }),
 };
 
-describe('GET /user', function () {
+describe('GET /user', () => {
   let app: http.Server;
   let destroy: () => void;
 
-  before(async () => {
+  beforeAll(async () => {
     [app, destroy] = await createServer(config as ServerConfig);
   });
 
-  after(() => {
+  afterAll(() => {
     destroy();
   });
 
