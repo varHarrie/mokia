@@ -1,0 +1,43 @@
+{
+  "private": true,
+  "name": "mokia-root",
+  "version": "0.4.0",
+  "engines": {
+    "node": ">=12.0"
+  },
+  "workspaces": [
+    "packages/producer",
+    "packages/decorator",
+    "packages/server",
+    "packages/cli",
+    "packages/mokia"
+  ],
+  "scripts": {
+    "prepare": "husky install",
+    "bootstrap": "npm install && node scripts/bootstrap.js",
+    "lint": "eslint packages/*/src/** --ext .ts",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "release": "node scripts/release.js"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
+    "@types/node": "^14.17.5",
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "chalk": "^4.1.1",
+    "conventional-changelog-cli": "^2.1.1",
+    "eslint": "^7.31.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "execa": "^5.1.1",
+    "husky": "^7.0.1",
+    "ora": "^5.4.1",
+    "prettier": "^2.3.2",
+    "prompts": "^2.4.1",
+    "semver": "^7.3.5",
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
+  }
+}
