@@ -118,9 +118,9 @@ export function string(arg: unknown, n1?: number, n2?: number): string {
 
     if (n2 === undefined) {
       n2 = defaultTo(n1, 10);
-      n1 = defaultTo(n1, 0);
+      n1 = defaultTo(n1, 1);
     } else {
-      n1 = defaultTo(n1, 0);
+      n1 = defaultTo(n1, 1);
       n2 = defaultTo(n2, 10);
     }
   }

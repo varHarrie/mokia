@@ -94,7 +94,7 @@ describe('pick', () => {
     const k = Object.keys(r);
 
     expect(typeof r).toBe('object');
-    expect(k.length).toBeGreaterThan(2);
+    expect(k.length).toBeGreaterThanOrEqual(2);
     expect(k.length).toBeLessThanOrEqual(3);
     expect(keys).toEqual(expect.arrayContaining(k));
   });
