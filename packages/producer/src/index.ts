@@ -8,3 +8,4 @@ export * from './image';
 export * from './person';
 export * from './text';
 export * from './web';
+export * as zhCN from './zhCN';

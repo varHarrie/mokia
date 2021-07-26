@@ -8,6 +8,7 @@
     "lib"
   ],
   "scripts": {
+    "fetch": "node scripts/fetch.js",
     "test": "jest",
     "clean": "rimraf lib",
     "build": "npm run clean && tsc -p tsconfig.build.json"
