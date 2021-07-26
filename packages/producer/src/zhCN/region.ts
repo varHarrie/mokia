@@ -81,8 +81,8 @@ export function region(): Region[] {
 /**
  * Returns a detailed region name
  */
-export function regionName(separator = ''): string {
+export function regionName(separator?: string): string {
   return region()
     .map((r) => r.name)
-    .join(separator);
+    .join(separator ?? '');
 }
