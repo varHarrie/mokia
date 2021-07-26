@@ -669,3 +669,195 @@ email('gmail.com');
 ```
 
 :::
+
+## [zh-CN] Person
+
+### firstName 名
+
+:::demo zhCN.firstName()
+
+```javascript
+zhCN.firstName();
+```
+
+:::
+
+### lastName 姓
+
+:::demo zhCN.lastName()
+
+```javascript
+zhCN.lastName();
+```
+
+:::
+
+### fullName 姓名
+
+:::demo zhCN.fullName()
+
+```javascript
+zhCN.fullName();
+```
+
+:::
+
+### phoneNumber 手机号码
+
+:::demo zhCN.phoneNumber()
+
+```javascript
+zhCN.phoneNumber();
+```
+
+:::
+
+### idNumber 身份证号码
+
+:::demo zhCN.idNumber()
+
+```javascript
+zhCN.idNumber();
+```
+
+:::
+
+## [zh-CN] Region
+
+### provinceName 省
+
+:::demo zhCN.provinceName()
+
+```javascript
+zhCN.provinceName();
+```
+
+:::
+
+### cityName 市
+
+:::demo zhCN.cityName()
+
+```javascript
+zhCN.cityName();
+```
+
+:::
+
+### countyName 县
+
+:::demo zhCN.countyName()
+
+```javascript
+zhCN.countyName();
+```
+
+:::
+
+### regionName 地区
+
+:::demo zhCN.regionName(separator?: string)
+
+```javascript
+zhCN.regionName();
+zhCN.regionName('，');
+```
+
+:::
+
+## [zh-CN] Text
+
+### word 字
+
+:::demo zhCN.word(length?: number)
+
+```javascript
+zhCN.word();
+zhCN.word(5);
+```
+
+:::
+
+:::demo zhCN.word(min: number, max: number)
+
+```javascript
+zhCN.word(5, 10);
+```
+
+:::
+
+### title 标题
+
+:::demo zhCN.title(length?: number)
+
+```javascript
+zhCN.title();
+zhCN.title(5);
+```
+
+:::
+
+:::demo zhCN.title(min: number, max: number)
+
+```javascript
+zhCN.title(2, 5);
+```
+
+:::
+
+### sentence 句子
+
+:::demo zhCN.sentence(length?: number)
+
+```javascript
+zhCN.sentence();
+zhCN.sentence(5);
+```
+
+:::
+
+:::demo zhCN.sentence(min: number, max: number)
+
+```javascript
+zhCN.sentence(5, 10);
+```
+
+:::
+
+### paragraph 段落
+
+:::demo zhCN.paragraph(length?: number)
+
+```javascript
+zhCN.paragraph();
+zhCN.paragraph(5);
+```
+
+:::
+
+:::demo zhCN.paragraph(min: number, max: number)
+
+```javascript
+zhCN.paragraph(3, 5);
+```
+
+:::
+
+### passage 文章
+
+:::demo zhCN.passage(length?: number)
+
+```javascript
+zhCN.passage();
+zhCN.passage(5);
+```
+
+:::
+
+:::demo zhCN.passage(min: number, max: number)
+
+```javascript
+zhCN.passage(3, 5);
+```
+
+:::
