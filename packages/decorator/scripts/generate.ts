@@ -2,39 +2,48 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as ts from 'typescript';
 
-const src = path.resolve(__dirname, '../../producer/src');
-const dest = path.resolve(__dirname, '../src');
+const srcRoot = path.resolve(__dirname, '../../producer/src');
+const destRoot = path.resolve(__dirname, '../src');
 
-const program = ts.createProgram([path.join(src, 'index.ts')], { module: ts.ModuleKind.ESNext });
-const printer = ts.createPrinter();
+const entries = ['', 'zhCN'];
 
-if (!fs.existsSync(dest)) fs.mkdirSync(dest);
+entries.forEach((dir) => generate(dir));
 
-const indexFile = program.getSourceFile(path.join(src, 'index.ts'));
-if (!indexFile) throw new Error('Missing index.ts');
-const producerFiles = getProducerFiles(indexFile);
+function generate(dir: string) {
+  const src = path.join(srcRoot, dir);
+  const dest = path.join(destRoot, dir);
 
-producerFiles.forEach((file) => {
-  const result = ts.transform(file, [decoratorTransformer, importTransformer]);
-  fs.writeFileSync(path.join(dest, path.basename(file.fileName)), printer.printFile(result.transformed[0] as ts.SourceFile));
-});
+  const program = ts.createProgram([path.join(src, 'index.ts')], { module: ts.ModuleKind.ESNext });
+  const printer = ts.createPrinter();
 
-function getProducerFiles(entryFile: ts.SourceFile) {
-  const files: ts.SourceFile[] = [];
+  if (!fs.existsSync(dest)) fs.mkdirSync(dest);
 
-  function visitor(node: ts.Node) {
-    if (ts.isExportDeclaration(node) && node.moduleSpecifier && ts.isStringLiteral(node.moduleSpecifier)) {
-      const fileName = node.moduleSpecifier.text;
-      const file = program.getSourceFile(path.join(src, `${fileName}.ts`));
-      if (file) files.push(file);
+  const indexFile = program.getSourceFile(path.join(src, 'index.ts'));
+  if (!indexFile) throw new Error('Missing index.ts');
+  const producerFiles = getProducerFiles(indexFile);
+
+  producerFiles.forEach((file) => {
+    const result = ts.transform(file, [decoratorTransformer, importTransformer]);
+    fs.writeFileSync(path.join(dest, path.basename(file.fileName)), printer.printFile(result.transformed[0] as ts.SourceFile));
+  });
+
+  function getProducerFiles(entryFile: ts.SourceFile) {
+    const files: ts.SourceFile[] = [];
+
+    function visitor(node: ts.Node) {
+      if (ts.isExportDeclaration(node) && node.moduleSpecifier && ts.isStringLiteral(node.moduleSpecifier)) {
+        const fileName = node.moduleSpecifier.text;
+        const file = program.getSourceFile(path.join(src, `${fileName}.ts`));
+        if (file) files.push(file);
+      }
+
+      node.forEachChild(visitor);
     }
 
-    node.forEachChild(visitor);
+    visitor(entryFile);
+
+    return files;
   }
-
-  visitor(entryFile);
-
-  return files;
 }
 
 function decoratorTransformer(context: ts.TransformationContext) {
@@ -53,6 +62,12 @@ function decoratorTransformer(context: ts.TransformationContext) {
         );
 
         if (node.body) {
+          const dirName = path.relative(srcRoot, path.dirname(sourceFile.fileName));
+
+          const propertyAccess = dirName
+            ? ts.factory.createPropertyAccessExpression(ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier('producer'), dirName), node.name!)
+            : ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier('producer'), node.name!);
+
           const anyArgsFunction = ts.factory.createFunctionDeclaration(
             undefined,
             node.modifiers,
@@ -74,10 +89,7 @@ function decoratorTransformer(context: ts.TransformationContext) {
             ts.factory.createBlock(
               [
                 ts.factory.createReturnStatement(
-                  ts.factory.createCallExpression(ts.factory.createIdentifier('createDecorator'), undefined, [
-                    ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier('producer'), node.name!),
-                    ts.factory.createIdentifier('args'),
-                  ]),
+                  ts.factory.createCallExpression(ts.factory.createIdentifier('createDecorator'), undefined, [propertyAccess, ts.factory.createIdentifier('args')]),
                 ),
               ],
               true,
@@ -108,6 +120,8 @@ function importTransformer(context: ts.TransformationContext) {
       ts.factory.createStringLiteral('@mokia/producer'),
     );
 
+    const relativePath = getRelativePath(path.dirname(sourceFile.fileName), path.join(srcRoot, 'utils'));
+
     const utilsImportDeclaration = ts.factory.createImportDeclaration(
       undefined,
       undefined,
@@ -119,7 +133,7 @@ function importTransformer(context: ts.TransformationContext) {
           ts.factory.createImportSpecifier(undefined, ts.factory.createIdentifier('Decorator')),
         ]),
       ),
-      ts.factory.createStringLiteral('./utils'),
+      ts.factory.createStringLiteral(relativePath),
     );
 
     const visitor = (node: ts.Node): ts.Node | undefined => {
@@ -147,4 +161,9 @@ function isExportFunction(node: ts.Node): node is ts.FunctionDeclaration {
 
 function isTypesImport(node: ts.ImportDeclaration): boolean {
   return ts.isStringLiteral(node.moduleSpecifier) && node.moduleSpecifier.text === './types';
+}
+
+function getRelativePath(from: string, to: string): string {
+  const p = path.relative(from, to);
+  return p.startsWith('..') ? p : `./${p}`;
 }
