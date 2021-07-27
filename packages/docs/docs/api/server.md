@@ -46,6 +46,7 @@ export type BaseConfig = {
   port?: string | number;
   prefix?: string;
   silent?: boolean;
+  delay?: number | [number, number];
   preferredUrl?: string;
   fallbackUrl?: string;
   bodyWrapper?: BodyWrapper;
@@ -68,6 +69,7 @@ export type ServerConfig = BaseConfig | RouteConfig;
 | port             | `string` \| `number`                      | 端口号                                                           |
 | prefix           | `string`                                  | 路由前缀                                                         |
 | silent           | `boolean`                                 | 静默模式，禁用日志输出                                           |
+| deploy           | `number` \| `[number, number]`            | 模拟延迟时间（ms）                                               |
 | preferredUrl     | `string`                                  | 优先地址，请求会先转发到该前缀地址，若 404，再由本服务器路由处理 |
 | fallbackUrl      | `string`                                  | 回退地址，若没有匹配的地址，则转发到该前缀地址                   |
 | bodyWrapper      | `(body: unknown) => unknown`              | 用于响应体包装处理                                               |
