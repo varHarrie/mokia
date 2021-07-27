@@ -32,6 +32,19 @@ export function logMiddleware(silent: boolean): express.RequestHandler {
   };
 }
 
+function random(a: number, b: number): number {
+  const min = Math.min(a, b);
+  const max = Math.max(a, b);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+export function delayMiddleware(ms: number | [number, number]): express.RequestHandler {
+  return (_request, _response, next) => {
+    const timeout = Array.isArray(ms) ? random(ms[0], ms[1]) : ms;
+    setTimeout(next, timeout);
+  };
+}
+
 function redirectTo(method: string, redirectUrl: string, callback: (error: Error | undefined, response?: http.IncomingMessage) => void) {
   const client = redirectUrl.startsWith('https') ? https : http;
 

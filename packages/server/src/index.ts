@@ -4,7 +4,7 @@ import Debug from 'debug';
 import express, { RequestHandler, ErrorRequestHandler } from 'express';
 import { Socket } from 'net';
 import { BodyWrapper, createRouter, Routes, RouteValue } from './router';
-import { fallbackMiddleware, logMiddleware, preferredMiddleware } from './middlewares';
+import { delayMiddleware, fallbackMiddleware, logMiddleware, preferredMiddleware } from './middlewares';
 
 const debug = Debug('mokia:server');
 
@@ -13,6 +13,7 @@ export type BaseConfig = {
   port?: string | number;
   prefix?: string;
   silent?: boolean;
+  delay?: number | [number, number];
   preferredUrl?: string;
   fallbackUrl?: string;
   bodyWrapper?: BodyWrapper;
@@ -33,6 +34,7 @@ export function createServer(config: ServerConfig): Promise<[server: http.Server
       port = 8080,
       prefix = '',
       silent = false,
+      delay,
       preferredUrl,
       fallbackUrl,
       bodyWrapper,
@@ -55,6 +57,8 @@ export function createServer(config: ServerConfig): Promise<[server: http.Server
       .use(express.json())
       .use(express.urlencoded({ extended: false }))
       .use(logMiddleware(silent));
+
+    if (delay) app.use(delayMiddleware(delay));
 
     if (prefixMiddleware) app.use(prefixMiddleware);
     if (preferredUrl) app.use(preferredMiddleware(preferredUrl));
