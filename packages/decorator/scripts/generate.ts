@@ -104,6 +104,11 @@ function decoratorTransformer(context: ts.TransformationContext) {
 
       if (ts.isImportDeclaration(node)) return node;
 
+      if (ts.isTypeAliasDeclaration(node)) {
+        const hasExportKeyword = node.modifiers?.some((m) => m.kind === ts.SyntaxKind.ExportKeyword);
+        if (hasExportKeyword) return node;
+      }
+
       return undefined;
     };
 
