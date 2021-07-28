@@ -5,6 +5,7 @@ export * from './date';
 export * from './generate';
 export * from './id';
 export * from './image';
+export * from './misc';
 export * from './person';
 export * from './text';
 export * from './web';

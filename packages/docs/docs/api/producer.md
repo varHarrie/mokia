@@ -420,6 +420,38 @@ $('#image5').src = imageDataURL('200x100', 'Custom Color', 'white', 'black');
 
 :::
 
+## Misc
+
+### pagination 分页
+
+:::demo pagination(schema: any)
+
+```javascript
+pagination({ foo: 1 });
+```
+
+:::
+
+:::demo pagination(schema: any, options: PaginationOptions)
+
+```javascript
+pagination({ foo: 1 }, { page: 1, pageSize: 5, total: 25 });
+pagination(
+  { foo: 1 },
+  {
+    fields: {
+      list: 'data',
+      page: 'current',
+      pageSize: 'size',
+      total: 'count',
+      totalPages: 'pageCount',
+    },
+  },
+);
+```
+
+:::
+
 ## Person
 
 ### age 年龄
