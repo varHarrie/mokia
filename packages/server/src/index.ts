@@ -3,7 +3,7 @@ import cors from 'cors';
 import Debug from 'debug';
 import express, { RequestHandler, ErrorRequestHandler } from 'express';
 import { Socket } from 'net';
-import { BodyWrapper, createRouter, Routes, RouteValue } from './router';
+import { BodyWrapper, createRouter, RouteMethod, Routes, RouteValue } from './router';
 import { delayMiddleware, fallbackMiddleware, logMiddleware, preferredMiddleware } from './middlewares';
 
 const debug = Debug('mokia:server');
@@ -22,7 +22,7 @@ export type BaseConfig = {
 };
 
 export type RouteConfig = {
-  [key in string]: key extends keyof BaseConfig ? BaseConfig[key] : RouteValue;
+  [key: `${Uppercase<RouteMethod>} /${string}`]: RouteValue;
 };
 
 export type ServerConfig = BaseConfig | RouteConfig;
@@ -41,7 +41,7 @@ export function createServer(config: ServerConfig): Promise<[server: http.Server
       prefixMiddleware,
       suffixMiddleware,
       ...routes
-    } = config as BaseConfig;
+    }: BaseConfig = config;
 
     debug('host:', host);
     debug('port:', port);

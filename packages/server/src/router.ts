@@ -13,17 +13,17 @@ export type BodyWrapper = (body: unknown) => unknown;
 
 export const defaultBodyWrapper: BodyWrapper = (body) => body;
 
-const methods = ['get', 'post', 'put', 'patch', 'delete', 'options'] as const;
+export type RouteMethod = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'options';
 
-type Method = typeof methods[number];
+const methods: Array<RouteMethod> = ['get', 'post', 'put', 'patch', 'delete', 'options'];
 
 function getMethodAndPath(raw: string) {
   const [method, path] = raw.split(' ');
-  return [method.toLowerCase(), path || '/'];
+  return [method.toLocaleLowerCase(), path || '/'];
 }
 
-function isValidMethod(method: string): method is Method {
-  return (methods as readonly string[]).includes(method);
+function isValidMethod(method: string): method is RouteMethod {
+  return (methods as string[]).includes(method);
 }
 
 function createRouteHandler(route: RouteValue, bodyWrapper: BodyWrapper): express.RequestHandler {
