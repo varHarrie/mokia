@@ -5,5 +5,5 @@
     "outDir": "lib",
     "target": "ES2015"
   },
-  "exclude": ["test"]
+  "exclude": ["__tests__"]
 }
