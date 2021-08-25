@@ -4,9 +4,15 @@ import Debug from 'debug';
 import express, { RequestHandler, ErrorRequestHandler } from 'express';
 import { Socket } from 'net';
 import { BodyWrapper, createRouter, RouteMethod, Routes, RouteValue } from './router';
-import { delayMiddleware, fallbackMiddleware, logMiddleware, preferredMiddleware } from './middlewares';
+import { delayMiddleware, logMiddleware } from './middlewares';
+import { createProxyHandles, ProxyOptions, ProxyHandler } from './proxy';
 
 const debug = Debug('mokia:server');
+
+export type Middlewares = {
+  prefix?: Array<RequestHandler | ErrorRequestHandler>;
+  suffix?: Array<RequestHandler | ErrorRequestHandler>;
+};
 
 export type BaseConfig = {
   host?: string;
@@ -14,59 +20,47 @@ export type BaseConfig = {
   prefix?: string;
   silent?: boolean;
   delay?: number | [number, number];
-  preferredUrl?: string;
-  fallbackUrl?: string;
   bodyWrapper?: BodyWrapper;
-  prefixMiddleware?: RequestHandler | ErrorRequestHandler;
-  suffixMiddleware?: RequestHandler | ErrorRequestHandler;
+  middlewares?: Middlewares;
+  proxy?: ProxyOptions;
 };
 
 export type RouteConfig = {
   [key: `${Uppercase<RouteMethod>} /${string}`]: RouteValue;
 };
 
-export type ServerConfig = BaseConfig | RouteConfig;
+export type ServerConfig = BaseConfig & RouteConfig;
 
 export function createServer(config: ServerConfig): Promise<[server: http.Server, destroy: () => Promise<void>]> {
   return new Promise<[http.Server, () => Promise<void>]>((resolve, reject) => {
-    const {
-      host = 'localhost',
-      port = 8080,
-      prefix = '',
-      silent = false,
-      delay,
-      preferredUrl,
-      fallbackUrl,
-      bodyWrapper,
-      prefixMiddleware,
-      suffixMiddleware,
-      ...routes
-    }: BaseConfig = config;
+    const { host = 'localhost', port = 8080, prefix = '', silent = false, delay, bodyWrapper, middlewares = {}, proxy, ...routes }: BaseConfig = config;
 
     debug('host:', host);
     debug('port:', port);
     debug('prefix:', prefix);
     debug('silent:', silent);
-    debug('preferredUrl:', preferredUrl);
-    debug('fallbackUrl:', fallbackUrl);
-    debug('prefixMiddleware:', prefixMiddleware);
-    debug('suffixMiddleware:', suffixMiddleware);
+    debug('middlewares:', middlewares);
+    debug('proxy:', proxy);
 
-    const app = express()
-      .use(cors())
-      .use(express.json())
-      .use(express.urlencoded({ extended: false }))
-      .use(logMiddleware(silent));
+    const app = express();
 
     if (delay) app.use(delayMiddleware(delay));
 
-    if (prefixMiddleware) app.use(prefixMiddleware);
-    if (preferredUrl) app.use(preferredMiddleware(preferredUrl));
+    app.use(cors());
+    app.use(logMiddleware(silent));
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: false }));
 
+    middlewares.prefix?.forEach((m) => app.use(m));
     app.use(prefix, createRouter(routes as Routes, bodyWrapper));
+    middlewares.suffix?.forEach((m) => app.use(m));
 
-    if (fallbackUrl) app.use(fallbackMiddleware(fallbackUrl));
-    if (suffixMiddleware) app.use(suffixMiddleware);
+    let proxyHandlers: ProxyHandler[] = [];
+
+    if (proxy) {
+      proxyHandlers = createProxyHandles(proxy);
+      proxyHandlers.forEach((handler) => app.use(handler));
+    }
 
     app.on('error', reject);
 
@@ -76,6 +70,10 @@ export function createServer(config: ServerConfig): Promise<[server: http.Server
     server.on('connection', (con) => {
       connections.add(con);
       con.on('close', () => connections.delete(con));
+    });
+
+    proxyHandlers.forEach((handler) => {
+      if (handler.ws && handler.upgrade) server.on('upgrade', handler.upgrade);
     });
 
     function destroy() {

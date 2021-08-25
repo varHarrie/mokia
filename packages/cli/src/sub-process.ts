@@ -70,9 +70,8 @@ async function start(): Promise<(() => Promise<void>) | undefined> {
   if (options.host) config.host = options.host;
   if (options.port) config.port = options.port;
   if (options.prefix) config.prefix = options.prefix;
-  if (options.preferredUrl) config.preferredUrl = options.preferredUrl;
-  if (options.fallbackUrl) config.fallbackUrl = options.fallbackUrl;
   if (options.silent) config.silent = options.silent;
+  if (options.proxy) config.proxy = options.proxy;
 
   config.bodyWrapper = config.bodyWrapper ?? generate;
 
