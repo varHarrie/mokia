@@ -10,7 +10,7 @@
   "scripts": {
     "test": "jest",
     "clean": "rimraf lib",
-    "build": "npm run clean && tsc -p tsconfig.build.json"
+    "build": "yarn run clean && tsc -p tsconfig.build.json"
   },
   "homepage": "https://github.com/varHarrie/mokia#readme",
   "author": "varharrie <varharrie@gmail.com>",

@@ -11,7 +11,7 @@
     "test": "echo \"No test specified\" && exit 0",
     "clean": "rimraf lib",
     "prebuild": "ts-node ./scripts/generate.ts",
-    "build": "npm run clean && tsc -p tsconfig.build.json"
+    "build": "yarn run clean && tsc -p tsconfig.build.json"
   },
   "homepage": "https://github.com/varHarrie/mokia#readme",
   "author": "varharrie <varharrie@gmail.com>",
@@ -28,6 +28,6 @@
   },
   "devDependencies": {
     "rimraf": "^3.0.2",
-    "typescript": "^4.3.5"
+    "typescript": "^4.4.1-rc"
   }
 }

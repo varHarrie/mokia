@@ -1,20 +1,24 @@
 const fs = require('fs');
 const path = require('path');
-const pkg = require('../package.json');
+const rootPkg = require('../package.json');
 
-function getPackageName(pkgPath) {
+function getPackage(pkgPath) {
   const json = fs.readFileSync(path.resolve(pkgPath, 'package.json'), 'utf-8');
-  return JSON.parse(json).name;
+  return JSON.parse(json);
 }
 
-const packages = pkg.workspaces.map((dir) => {
-  const fullPath = path.resolve(__dirname, '..', dir);
+const packages = rootPkg.workspaces
+  .map((dir) => {
+    const fullPath = path.resolve(__dirname, '..', dir);
+    const pkg = getPackage(fullPath);
 
-  return {
-    name: getPackageName(fullPath),
-    dir: path.basename(dir),
-    path: fullPath,
-  };
-});
+    return {
+      name: pkg.name,
+      private: pkg.private,
+      dir: path.basename(dir),
+      path: fullPath,
+    };
+  })
+  .filter((pkg) => !pkg.private);
 
 module.exports = packages;

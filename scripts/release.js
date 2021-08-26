@@ -84,7 +84,7 @@ async function release() {
 
   spinner.start('Building packages...\n');
 
-  await run('npm', ['run', 'build', '--workspaces']);
+  await run('yarn', ['workspaces', 'run', 'build']);
 
   spinner.succeed('packages built');
 
@@ -92,7 +92,7 @@ async function release() {
 
   spinner.start('Running tests...\n');
 
-  await run('npm', ['run', 'test', '--workspaces']);
+  await run('yarn', ['workspaces', 'run', 'test']);
 
   spinner.succeed('Tests passed');
 
@@ -101,7 +101,7 @@ async function release() {
   spinner.start('Generating changelog...\n');
 
   if (releaseTag === 'latest') {
-    await run('npm', ['run', 'changelog']);
+    await run('yarn', ['run', 'changelog']);
     spinner.succeed('changelog generated');
   } else {
     spinner.info('Skipped to generate changelog');
@@ -155,7 +155,7 @@ async function publishPackage(pkgRoot, version, tag) {
 
   spinner.start(`Publishing ${chalk.yellow(`${pkg.name}@${version}`)} on ${chalk.yellow(tag)}\n`);
 
-  await run('npm', ['publish', '--access', 'public', '--tag', tag], { cwd: pkgRoot });
+  await run('yarn', ['publish', '--access', 'public', '--tag', tag], { cwd: pkgRoot });
 
   spinner.succeed(`Successfully published ${chalk.yellow(`${pkg.name}@${version}`)} on ${chalk.yellow(tag)}`);
 }
