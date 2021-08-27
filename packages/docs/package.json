@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@mokia/docs",
-  "version": "1.0.0",
+  "version": "0.5.0-alpha.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -23,9 +23,9 @@
     "@babel/parser": "^7.14.1",
     "@babel/traverse": "^7.14.0",
     "@babel/types": "^7.14.1",
-    "@mokia/decorator": "0.4.0",
-    "@mokia/producer": "0.4.0",
-    "mokia": "0.4.0",
+    "@mokia/decorator": "0.5.0-alpha.3",
+    "@mokia/producer": "0.5.0-alpha.3",
+    "mokia": "0.5.0-alpha.3",
     "run-my-code": "^1.0.0"
   }
 }
