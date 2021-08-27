@@ -8,6 +8,7 @@
     "mokia": "bin/index.js"
   },
   "files": [
+    "bin",
     "lib"
   ],
   "scripts": {
