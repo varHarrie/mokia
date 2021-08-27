@@ -87,7 +87,7 @@ describe('float', () => {
     const r = producer.float();
     const [i, f] = r.toString().split('.');
 
-    expect(r).toBeGreaterThan(0);
+    expect(r).toBeGreaterThanOrEqual(0);
     expect(r).toBeLessThanOrEqual(101);
     expect(i.length).toBeGreaterThanOrEqual(1);
     expect(f.length).toBeGreaterThanOrEqual(1);
@@ -98,7 +98,7 @@ describe('float', () => {
     const r = producer.float(10);
     const [i, f] = r.toString().split('.');
 
-    expect(r).toBeGreaterThan(0);
+    expect(r).toBeGreaterThanOrEqual(0);
     expect(r).toBeLessThanOrEqual(11);
     expect(i.length).toBeGreaterThanOrEqual(1);
     expect(f.length).toBeGreaterThanOrEqual(1);
@@ -109,7 +109,7 @@ describe('float', () => {
     const r = producer.float(5, 10);
     const [i, f] = r.toString().split('.');
 
-    expect(r).toBeGreaterThan(5);
+    expect(r).toBeGreaterThanOrEqual(5);
     expect(r).toBeLessThanOrEqual(11);
     expect(i.length).toBeGreaterThanOrEqual(1);
     expect(f.length).toBeGreaterThanOrEqual(1);
@@ -120,7 +120,7 @@ describe('float', () => {
     const r = producer.float(5, 10, 5);
     const [i, f] = r.toString().split('.');
 
-    expect(r).toBeGreaterThan(5);
+    expect(r).toBeGreaterThanOrEqual(5);
     expect(r).toBeLessThanOrEqual(11);
     expect(i.length).toBeGreaterThanOrEqual(1);
     expect(f.length).toBe(5);
@@ -130,7 +130,7 @@ describe('float', () => {
     const r = producer.float(5, 10, 0);
     const [i, f] = r.toString().split('.');
 
-    expect(r).toBeGreaterThan(5);
+    expect(r).toBeGreaterThanOrEqual(5);
     expect(r).toBeLessThanOrEqual(11);
     expect(i.length).toBeGreaterThanOrEqual(1);
     expect(f).toBe(undefined);
@@ -140,7 +140,7 @@ describe('float', () => {
     const r = producer.float(5, 10, 5, 10);
     const [i, f] = r.toString().split('.');
 
-    expect(r).toBeGreaterThan(5);
+    expect(r).toBeGreaterThanOrEqual(5);
     expect(r).toBeLessThanOrEqual(11);
     expect(i.length).toBeGreaterThanOrEqual(1);
     expect(f.length).toBeGreaterThanOrEqual(5);
