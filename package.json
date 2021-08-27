@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "mokia-root",
-  "version": "0.5.0-alpha.3",
+  "version": "0.5.0-alpha.4",
   "engines": {
     "node": ">=12.0"
   },
