@@ -12,8 +12,7 @@ const cli = meow(
     --host, -h      Set host, default to "localhost"
     --port, -p      Set port, default to 8080
     --prefix        Set route prefix
-    --preferredUrl  Set preferred url
-    --fallbackUrl   Set fallback url
+    --proxy         Set Proxy target
     --silent, -s    Hide request logs
     --watch, -w     Watch input files
     --debug         Enable debug mode
@@ -27,8 +26,7 @@ const cli = meow(
       host: { type: 'string', alias: 'h' },
       port: { type: 'string', alias: 'p' },
       prefix: { type: 'string' },
-      preferredUrl: { type: 'string' },
-      fallbackUrl: { type: 'string' },
+      proxy: { type: 'string' },
       silent: { type: 'boolean', alias: 's' },
       watch: { type: 'boolean', alias: 'w' },
       debug: { type: 'boolean' },

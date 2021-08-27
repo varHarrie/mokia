@@ -8,7 +8,7 @@ const prompts = require('prompts');
 const currentVersion = require('../package.json').version;
 const packages = require('./packages');
 
-const dryRun = (...args) => console.log(chalk.yellow('dry-run'), ...args);
+const dryRun = (...args) => Promise.resolve(console.log(chalk.yellow('dry-run'), ...args));
 const realRun = (...args) => execa(...args);
 const run = process.argv.includes('--dry-run') ? dryRun : realRun;
 
@@ -84,7 +84,7 @@ async function release() {
 
   spinner.start('Building packages...\n');
 
-  await run('npm', ['run', 'build', '--workspaces']);
+  await run('yarn', ['workspaces', 'run', 'build']);
 
   spinner.succeed('packages built');
 
@@ -92,7 +92,7 @@ async function release() {
 
   spinner.start('Running tests...\n');
 
-  await run('npm', ['run', 'test', '--workspaces']);
+  await run('yarn', ['workspaces', 'run', 'test']);
 
   spinner.succeed('Tests passed');
 
@@ -101,13 +101,13 @@ async function release() {
   spinner.start('Generating changelog...\n');
 
   if (releaseTag === 'latest') {
-    await run('npm', ['run', 'changelog']);
+    await run('yarn', ['run', 'changelog']);
     spinner.succeed('changelog generated');
   } else {
     spinner.info('Skipped to generate changelog');
   }
 
-  const diff = await run('git', ['diff']).then((result) => result.stdout);
+  const diff = await realRun('git', ['diff']).then((result) => result.stdout);
 
   if (diff) {
     await run('git', ['add', '-A']);
@@ -116,7 +116,7 @@ async function release() {
 
   // ----- Publish packages -----
 
-  await Promise.all(packages.map((pkg) => publishPackage(pkg.path, releaseVersion, releaseTag)));
+  await Promise.all(packages.filter((pkg) => !pkg.private).map((pkg) => publishPackage(pkg.path, releaseVersion, releaseTag)));
 
   // ----- Push to Github -----
 
@@ -155,7 +155,7 @@ async function publishPackage(pkgRoot, version, tag) {
 
   spinner.start(`Publishing ${chalk.yellow(`${pkg.name}@${version}`)} on ${chalk.yellow(tag)}\n`);
 
-  await run('npm', ['publish', '--access', 'public', '--tag', tag], { cwd: pkgRoot });
+  await run('yarn', ['publish', '--access', 'public', '--tag', tag], { cwd: pkgRoot });
 
   spinner.succeed(`Successfully published ${chalk.yellow(`${pkg.name}@${version}`)} on ${chalk.yellow(tag)}`);
 }

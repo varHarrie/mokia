@@ -3,11 +3,11 @@ import childProcess from 'child_process';
 import Debug from 'debug';
 import kill from 'tree-kill';
 import chokidar from 'chokidar';
-import { ServerConfig } from '@mokia/server';
+import { BaseConfig } from '@mokia/server';
 
 const log = Debug('mokia:cli');
 
-type CliOptions = ServerConfig & {
+type CliOptions = BaseConfig & {
   watch?: boolean;
   debug?: boolean;
 };

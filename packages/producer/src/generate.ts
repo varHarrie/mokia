@@ -14,8 +14,11 @@ export type MockResult<T> = T extends (...args: unknown[]) => infer R
 
 const create = (Constructor: new (...args: unknown[]) => unknown) => new Constructor();
 
-const hasToJson = <T>(obj: T): obj is T & { toJSON: () => unknown } => 'toJSON' in obj && typeof ((obj as unknown) as { toJSON: unknown }).toJSON === 'function';
+const hasToJson = <T>(obj: T): obj is T & { toJSON: () => unknown } => 'toJSON' in obj && typeof (obj as unknown as { toJSON: unknown }).toJSON === 'function';
 
+/**
+ * Returns the generated result according to schema
+ */
 export function generate<T>(schema: T): MockResult<T> {
   if (isClass(schema)) {
     return generate(create(schema) as T);
@@ -44,6 +47,9 @@ export function generate<T>(schema: T): MockResult<T> {
   return schema as MockResult<T>;
 }
 
+/**
+ * Returns the generated list according to schema
+ */
 export function list<T>(schema: T, length?: number): Array<MockResult<T>>;
 export function list<T>(schema: T, min: number, max: number): Array<MockResult<T>>;
 export function list<T>(schema: T, n1?: number, n2?: number): Array<MockResult<T>> {

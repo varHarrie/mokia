@@ -3,66 +3,65 @@ import cors from 'cors';
 import Debug from 'debug';
 import express, { RequestHandler, ErrorRequestHandler } from 'express';
 import { Socket } from 'net';
-import { BodyWrapper, createRouter, Routes, RouteValue } from './router';
-import { fallbackMiddleware, logMiddleware, preferredMiddleware } from './middlewares';
+import { BodyWrapper, createRouter, RouteMethod, Routes, RouteValue } from './router';
+import { delayMiddleware, logMiddleware } from './middlewares';
+import { createProxyHandles, ProxyOptions, ProxyHandler } from './proxy';
 
 const debug = Debug('mokia:server');
 
-export type BaseConfig = {
+export type Middlewares = {
+  prefix?: Array<RequestHandler | ErrorRequestHandler>;
+  suffix?: Array<RequestHandler | ErrorRequestHandler>;
+};
+
+export type BaseConfig<C = undefined> = {
   host?: string;
   port?: string | number;
   prefix?: string;
   silent?: boolean;
-  preferredUrl?: string;
-  fallbackUrl?: string;
+  delay?: number | [number, number];
   bodyWrapper?: BodyWrapper;
-  prefixMiddleware?: RequestHandler | ErrorRequestHandler;
-  suffixMiddleware?: RequestHandler | ErrorRequestHandler;
+  middlewares?: Middlewares;
+  proxy?: ProxyOptions;
+  context?: C;
 };
 
-export type RouteConfig = {
-  [key in string]: key extends keyof BaseConfig ? BaseConfig[key] : RouteValue;
+export type RouteConfig<T = undefined> = {
+  [key: `${Uppercase<RouteMethod>} /${string}`]: RouteValue<T>;
 };
 
-export type ServerConfig = BaseConfig | RouteConfig;
+export type ServerConfig<T = undefined> = BaseConfig<T> & RouteConfig<T>;
 
 export function createServer(config: ServerConfig): Promise<[server: http.Server, destroy: () => Promise<void>]> {
   return new Promise<[http.Server, () => Promise<void>]>((resolve, reject) => {
-    const {
-      host = 'localhost',
-      port = 8080,
-      prefix = '',
-      silent = false,
-      preferredUrl,
-      fallbackUrl,
-      bodyWrapper,
-      prefixMiddleware,
-      suffixMiddleware,
-      ...routes
-    } = config as BaseConfig;
+    const { host = 'localhost', port = 8080, prefix = '', silent = false, delay, bodyWrapper, middlewares = {}, proxy, context, ...routes } = config;
 
     debug('host:', host);
     debug('port:', port);
     debug('prefix:', prefix);
     debug('silent:', silent);
-    debug('preferredUrl:', preferredUrl);
-    debug('fallbackUrl:', fallbackUrl);
-    debug('prefixMiddleware:', prefixMiddleware);
-    debug('suffixMiddleware:', suffixMiddleware);
+    debug('middlewares:', middlewares);
+    debug('proxy:', proxy);
 
-    const app = express()
-      .use(cors())
-      .use(express.json())
-      .use(express.urlencoded({ extended: false }))
-      .use(logMiddleware(silent));
+    const app = express();
 
-    if (prefixMiddleware) app.use(prefixMiddleware);
-    if (preferredUrl) app.use(preferredMiddleware(preferredUrl));
+    if (delay) app.use(delayMiddleware(delay));
 
-    app.use(prefix, createRouter(routes as Routes, bodyWrapper));
+    app.use(cors());
+    app.use(logMiddleware(silent));
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: false }));
 
-    if (fallbackUrl) app.use(fallbackMiddleware(fallbackUrl));
-    if (suffixMiddleware) app.use(suffixMiddleware);
+    middlewares.prefix?.forEach((m) => app.use(m));
+    app.use(prefix, createRouter(routes as Routes, bodyWrapper, context));
+    middlewares.suffix?.forEach((m) => app.use(m));
+
+    let proxyHandlers: ProxyHandler[] = [];
+
+    if (proxy) {
+      proxyHandlers = createProxyHandles(proxy);
+      proxyHandlers.forEach((handler) => app.use(handler));
+    }
 
     app.on('error', reject);
 
@@ -72,6 +71,10 @@ export function createServer(config: ServerConfig): Promise<[server: http.Server
     server.on('connection', (con) => {
       connections.add(con);
       con.on('close', () => connections.delete(con));
+    });
+
+    proxyHandlers.forEach((handler) => {
+      if (handler.ws && handler.upgrade) server.on('upgrade', handler.upgrade);
     });
 
     function destroy() {

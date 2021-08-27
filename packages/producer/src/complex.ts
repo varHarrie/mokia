@@ -3,6 +3,9 @@ import { defaultTo } from './utils';
 import { integer } from './basic';
 import { AnyFunction } from './types';
 
+/**
+ * Returns the generated list according to iterator
+ */
 export function iterate<T>(iterator: AnyFunction<T>, length?: number): T[];
 export function iterate<T>(iterator: AnyFunction<T>, min?: number, max?: number): T[];
 export function iterate<T>(iterator: AnyFunction<T>, n1?: number, n2?: number): T[] {
@@ -16,11 +19,17 @@ export function iterate<T>(iterator: AnyFunction<T>, n1?: number, n2?: number): 
   return result;
 }
 
+/**
+ * Picks a item from the list
+ */
 export function oneOf<T>(list: T[]): T {
   const index = integer(0, list.length - 1);
   return list[index];
 }
 
+/**
+ * Picks multiple items from the list
+ */
 export function manyOf<T>(list: T[], length?: number): T[];
 export function manyOf<T>(list: T[], min: number, max: number): T[];
 export function manyOf<T>(list: T[], n1?: number, n2?: number): T[] {
@@ -31,6 +40,9 @@ export function manyOf<T>(list: T[], n1?: number, n2?: number): T[] {
     .slice(0, count);
 }
 
+/**
+ * Picks a property from the object
+ */
 export function pick<T extends Record<string, unknown>>(obj: T, length?: number): Partial<T>;
 export function pick<T extends Record<string, unknown>>(obj: T, min: number, max: number): Partial<T>;
 export function pick<T extends Record<string, unknown>>(obj: T, props: string[]): Partial<T>;

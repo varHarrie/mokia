@@ -1,6 +1,3 @@
-import http from 'http';
-import https from 'https';
-import path from 'path';
 import chalk from 'chalk';
 import express from 'express';
 
@@ -32,39 +29,15 @@ export function logMiddleware(silent: boolean): express.RequestHandler {
   };
 }
 
-function redirectTo(method: string, redirectUrl: string, callback: (error: Error | undefined, response?: http.IncomingMessage) => void) {
-  const client = redirectUrl.startsWith('https') ? https : http;
-
-  client
-    .request(redirectUrl, { method })
-    .on('response', (res) => callback(undefined, res))
-    .on('error', (err) => callback(err))
-    .end();
+function random(a: number, b: number): number {
+  const min = Math.min(a, b);
+  const max = Math.max(a, b);
+  return Math.floor(Math.random() * (max - min)) + min;
 }
 
-export function preferredMiddleware(url: string): express.RequestHandler {
-  return (request, response, next) => {
-    const redirectUrl = path.join(url, request.url);
-
-    logRequest(request.method, request.url, redirectUrl);
-    redirectTo(request.method, redirectUrl, (err, res) => {
-      if (err || !res) return next(err || new Error());
-      if (res.statusCode === 404) return next();
-      res.pipe(response);
-      response.statusCode = res.statusCode ?? 200;
-    });
-  };
-}
-
-export function fallbackMiddleware(url: string): express.RequestHandler {
-  return (request, response, next) => {
-    const redirectUrl = path.join(url, request.url);
-
-    logRequest(request.method, request.url, redirectUrl);
-    redirectTo(request.method, redirectUrl, (err, res) => {
-      if (err || !res) return next(err || new Error());
-      res.pipe(response);
-      response.statusCode = res.statusCode ?? 200;
-    });
+export function delayMiddleware(ms: number | [number, number]): express.RequestHandler {
+  return (_request, _response, next) => {
+    const timeout = Array.isArray(ms) ? random(ms[0], ms[1]) : ms;
+    setTimeout(next, timeout);
   };
 }

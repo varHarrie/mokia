@@ -1,7 +1,11 @@
 import dayjs from 'dayjs';
 import { integer } from './basic';
 import { MAX_DATE, MIN_DATE, TEMPLATE_DATE, TEMPLATE_DATETIME, TEMPLATE_TIME } from './constants';
-import { DateLike } from './types';
+
+/**
+ * Date like type
+ */
+export type DateLike = number | string | Date;
 
 /**
  * Formats the date as a string

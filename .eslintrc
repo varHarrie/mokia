@@ -24,6 +24,8 @@
     "no-use-before-define": "off",
     "import/extensions": "off",
     "import/export": "off",
+    "import/namespace": "off",
+    "import/no-unresolved": "off",
     "import/prefer-default-export": "off",
     "@typescript-eslint/no-shadow": ["error"],
     "@typescript-eslint/no-inferrable-types": "off"

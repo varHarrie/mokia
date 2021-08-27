@@ -8,10 +8,10 @@
     "lib"
   ],
   "scripts": {
-    "test": "mocha",
-    "coverage": "nyc npm run test",
+    "fetch": "node scripts/fetch.js",
+    "test": "jest",
     "clean": "rimraf lib",
-    "build": "npm run clean && tsc -p tsconfig.build.json"
+    "build": "yarn run clean && tsc -p tsconfig.build.json"
   },
   "homepage": "https://github.com/varHarrie/mokia#readme",
   "author": "varharrie <varharrie@gmail.com>",
@@ -24,16 +24,15 @@
     "url": "https://github.com/varHarrie/mokia/issues"
   },
   "dependencies": {
-    "@types/lodash": "^4.14.168",
-    "dayjs": "^1.10.4",
+    "@types/lodash": "^4.14.172",
+    "dayjs": "^1.10.6",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@types/chai": "^4.2.16",
-    "@types/mocha": "^8.2.2",
-    "chai": "^4.3.4",
-    "mocha": "^8.3.2",
-    "nyc": "^15.1.0",
-    "rimraf": "^3.0.2"
+    "@types/jest": "^27.0.1",
+    "jest": "^27.0.6",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.0.5",
+    "typescript": "^4.4.2"
   }
 }
