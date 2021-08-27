@@ -5,6 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "echo \"No test specified\" && exit 0",
     "dev": "vuepress dev docs --no-cache",
     "build": "vuepress build docs"
   },

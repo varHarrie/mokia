@@ -8,7 +8,7 @@ const prompts = require('prompts');
 const currentVersion = require('../package.json').version;
 const packages = require('./packages');
 
-const dryRun = (...args) => console.log(chalk.yellow('dry-run'), ...args);
+const dryRun = (...args) => Promise.resolve(console.log(chalk.yellow('dry-run'), ...args));
 const realRun = (...args) => execa(...args);
 const run = process.argv.includes('--dry-run') ? dryRun : realRun;
 
@@ -107,7 +107,7 @@ async function release() {
     spinner.info('Skipped to generate changelog');
   }
 
-  const diff = await run('git', ['diff']).then((result) => result.stdout);
+  const diff = await realRun('git', ['diff']).then((result) => result.stdout);
 
   if (diff) {
     await run('git', ['add', '-A']);
@@ -116,7 +116,7 @@ async function release() {
 
   // ----- Publish packages -----
 
-  await Promise.all(packages.map((pkg) => publishPackage(pkg.path, releaseVersion, releaseTag)));
+  await Promise.all(packages.filter((pkg) => !pkg.private).map((pkg) => publishPackage(pkg.path, releaseVersion, releaseTag)));
 
   // ----- Push to Github -----
 

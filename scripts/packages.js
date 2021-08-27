@@ -7,18 +7,15 @@ function getPackage(pkgPath) {
   return JSON.parse(json);
 }
 
-const packages = rootPkg.workspaces
-  .map((dir) => {
-    const fullPath = path.resolve(__dirname, '..', dir);
-    const pkg = getPackage(fullPath);
+const packages = rootPkg.workspaces.map((dir) => {
+  const fullPath = path.resolve(__dirname, '..', dir);
+  const pkg = getPackage(fullPath);
 
-    return {
-      name: pkg.name,
-      private: pkg.private,
-      dir: path.basename(dir),
-      path: fullPath,
-    };
-  })
-  .filter((pkg) => !pkg.private);
-
+  return {
+    name: pkg.name,
+    private: pkg.private,
+    dir: path.basename(dir),
+    path: fullPath,
+  };
+});
 module.exports = packages;
