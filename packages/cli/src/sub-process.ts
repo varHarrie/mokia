@@ -5,7 +5,7 @@ import { AddressInfo } from 'net';
 import { register } from 'ts-node';
 import { addHook } from 'pirates';
 import { createServer, ServerConfig } from '@mokia/server';
-import { generate } from '@mokia/producer';
+import * as producer from '@mokia/producer';
 
 register({
   compilerOptions: {
@@ -73,7 +73,8 @@ async function start(): Promise<(() => Promise<void>) | undefined> {
   if (options.silent) config.silent = options.silent;
   if (options.proxy) config.proxy = options.proxy;
 
-  config.bodyWrapper = config.bodyWrapper ?? generate;
+  config.bodyWrapper = config.bodyWrapper ?? producer.generate;
+  config.context = config.context ?? producer;
 
   [app, destroy] = await createServer(config);
   const { port } = app.address() as AddressInfo;

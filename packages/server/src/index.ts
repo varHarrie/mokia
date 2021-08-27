@@ -14,7 +14,7 @@ export type Middlewares = {
   suffix?: Array<RequestHandler | ErrorRequestHandler>;
 };
 
-export type BaseConfig = {
+export type BaseConfig<C = undefined> = {
   host?: string;
   port?: string | number;
   prefix?: string;
@@ -23,17 +23,18 @@ export type BaseConfig = {
   bodyWrapper?: BodyWrapper;
   middlewares?: Middlewares;
   proxy?: ProxyOptions;
+  context?: C;
 };
 
-export type RouteConfig = {
-  [key: `${Uppercase<RouteMethod>} /${string}`]: RouteValue;
+export type RouteConfig<T = undefined> = {
+  [key: `${Uppercase<RouteMethod>} /${string}`]: RouteValue<T>;
 };
 
-export type ServerConfig = BaseConfig & RouteConfig;
+export type ServerConfig<T = undefined> = BaseConfig<T> & RouteConfig<T>;
 
 export function createServer(config: ServerConfig): Promise<[server: http.Server, destroy: () => Promise<void>]> {
   return new Promise<[http.Server, () => Promise<void>]>((resolve, reject) => {
-    const { host = 'localhost', port = 8080, prefix = '', silent = false, delay, bodyWrapper, middlewares = {}, proxy, ...routes }: BaseConfig = config;
+    const { host = 'localhost', port = 8080, prefix = '', silent = false, delay, bodyWrapper, middlewares = {}, proxy, context, ...routes } = config;
 
     debug('host:', host);
     debug('port:', port);
@@ -52,7 +53,7 @@ export function createServer(config: ServerConfig): Promise<[server: http.Server
     app.use(express.urlencoded({ extended: false }));
 
     middlewares.prefix?.forEach((m) => app.use(m));
-    app.use(prefix, createRouter(routes as Routes, bodyWrapper));
+    app.use(prefix, createRouter(routes as Routes, bodyWrapper, context));
     middlewares.suffix?.forEach((m) => app.use(m));
 
     let proxyHandlers: ProxyHandler[] = [];
