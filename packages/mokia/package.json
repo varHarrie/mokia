@@ -27,6 +27,7 @@
     "url": "https://github.com/varHarrie/mokia/issues"
   },
   "dependencies": {
+    "@mokia/cli": "0.4.0",
     "@mokia/decorator": "0.4.0",
     "@mokia/producer": "0.4.0",
     "@mokia/server": "0.4.0",
