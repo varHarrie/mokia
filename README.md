@@ -50,11 +50,7 @@ module.exports = {
 Start local http server:
 
 ```bash
-npx @mokia/cli index.js
-
-# Or install it globally
-npm i -g @mokia/cli
-mokia index.js
+npx mokia index.js
 ```
 
 ## Advanced Usage

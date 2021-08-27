@@ -25,6 +25,8 @@ footer: MIT Licensed | Copyright © 2019-present varHarrie
 
 ```bash
 npm install --save mokia
+# or
+yarn add mokia
 ```
 
 创建入口文件（index.js）：
@@ -42,5 +44,5 @@ module.exports = {
 启动服务器
 
 ```bash
-npx @mokia/cli index.js
+npx mokia index.js
 ```

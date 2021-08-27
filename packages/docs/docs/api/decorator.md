@@ -22,7 +22,7 @@ import * as producer from '@mokia/producer';
 
 const foo = decorator.integer(max);
 // 等价于
-const foo = (max) => producer.integer(max);
+const foo = () => producer.integer(max);
 ```
 
 也可以作为 ES 装饰器使用：
