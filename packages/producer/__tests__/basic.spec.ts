@@ -76,7 +76,7 @@ describe('natural', () => {
     const r = producer.natural(10, 20);
     const i = Math.floor(r);
 
-    expect(r).toBeGreaterThan(10);
+    expect(r).toBeGreaterThanOrEqual(10);
     expect(r).toBeLessThanOrEqual(20);
     expect(r).toBe(i);
   });
