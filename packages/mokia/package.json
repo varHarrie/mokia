@@ -1,0 +1,41 @@
+{
+  "name": "mokia",
+  "version": "0.4.0",
+  "description": "mokia",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "bin": {
+    "mokia": "bin/index.js"
+  },
+  "files": [
+    "bin",
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 0",
+    "clean": "rimraf lib",
+    "build": "yarn run clean && tsc -p tsconfig.build.json"
+  },
+  "homepage": "https://github.com/varHarrie/mokia#readme",
+  "author": "varharrie <varharrie@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/varHarrie/mokia.git"
+  },
+  "bugs": {
+    "url": "https://github.com/varHarrie/mokia/issues"
+  },
+  "dependencies": {
+    "@mokia/cli": "0.4.0",
+    "@mokia/decorator": "0.4.0",
+    "@mokia/producer": "0.4.0",
+    "@mokia/server": "0.4.0",
+    "@types/lodash": "^4.14.168",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "typescript": "^4.4.2"
+  }
+}
