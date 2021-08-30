@@ -1,6 +1,6 @@
 {
   "name": "@mokia/server",
-  "version": "0.4.0",
+  "version": "0.5.0-beta.0",
   "description": "@mokia/server",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
