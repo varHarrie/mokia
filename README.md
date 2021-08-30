@@ -21,7 +21,7 @@
 
 # Mokia
 
-🐒 A data mocking library.
+🐒 An out of the box mock API server to help quickly create back-end prototype and data simulations.
 
 Documentation: [中文](https://varharrie.github.io/mokia/)
 
@@ -47,11 +47,23 @@ module.exports = {
 };
 ```
 
+Add to scripts in package.json:
+
+```json
+{
+  "scripts": {
+    "mock": "mokia index.js"
+  }
+}
+```
+
 Start local http server:
 
 ```bash
-npx mokia index.js
+npm run mock
 ```
+
+Open browser and go to http://localhost:3000/users, you will get the response.
 
 ## Advanced Usage
 

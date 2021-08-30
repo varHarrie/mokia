@@ -7,7 +7,7 @@ module.exports = {
     '/': {
       lang: 'zh-CN',
       title: 'Mokia',
-      description: '一个开箱即用的数据模拟工具。',
+      description: '一个开箱即用的API模拟服务器，帮助快速创建后端原型和数据模拟。',
     },
   },
   themeConfig: {

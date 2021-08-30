@@ -25,8 +25,6 @@ footer: MIT Licensed | Copyright © 2019-present varHarrie
 
 ```bash
 npm install --save mokia
-# or
-yarn add mokia
 ```
 
 创建入口文件（index.js）：
@@ -41,8 +39,18 @@ module.exports = {
 };
 ```
 
+添加到 package.json 的 scripts 中：
+
+```json
+{
+  "scripts": {
+    "mock": "mokia index.js"
+  }
+}
+```
+
 启动服务器
 
 ```bash
-npx mokia index.js
+npm run mock
 ```
