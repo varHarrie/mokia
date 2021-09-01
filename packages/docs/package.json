@@ -2,7 +2,7 @@
   "private": true,
   "name": "@mokia/docs",
   "version": "1.0.0",
-  "description": "",
+  "description": "Documentation of mokia.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"No test specified\" && exit 0",

@@ -1,7 +1,7 @@
 {
   "name": "@mokia/decorator",
   "version": "0.4.0",
-  "description": "@mokia/decorator",
+  "description": "Decorator version of @mokia/producer.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [

@@ -5,14 +5,14 @@
 </p>
 
 <p align="center">
-  <a href="https://npmcharts.com/compare/mokia?minimal=true">
-    <img src="https://img.shields.io/npm/dm/mokia.svg" alt="Downloads">
+  <a href="https://github.com/varharrie/mokia/blob/master/LICENSE">
+    <img src="https://img.shields.io/npm/l/mokia.svg" alt="License">
   </a>
   <a href="https://www.npmjs.com/package/mokia">
     <img src="https://img.shields.io/npm/v/mokia.svg" alt="Version">
   </a>
-  <a href="https://github.com/varharrie/mokia/blob/master/LICENSE">
-    <img src="https://img.shields.io/npm/l/mokia.svg" alt="License">
+  <a href="https://npmcharts.com/compare/mokia?minimal=true">
+    <img src="https://img.shields.io/npm/dm/mokia.svg" alt="Downloads">
   </a>
   <a href="https://github.com/varHarrie/mokia/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc">
     <img src="https://img.shields.io/github/issues/varharrie/mokia.svg" alt="Issues">
@@ -38,12 +38,12 @@ Create entry file (e.g. index.js):
 ```javascript
 // index.js
 
-const mock = require('mokia');
+const mokia = require('mokia');
 
 module.exports = {
   port: 3000,
-  'GET /users': mock.list({ id: mock.uuid(), name: mock.fullName() }),
-  'GET /users/:id': (req) => ({ id: req.params.id, name: mock.fullName() }),
+  'GET /users': mokia.list({ id: mokia.uuid(), name: mokia.fullName() }),
+  'GET /users/:id': (req) => ({ id: req.params.id, name: mokia.fullName() }),
 };
 ```
 
@@ -72,13 +72,13 @@ TypeScript Support and Class-style mock schema:
 ```typescript
 // index.ts
 
-import mock from 'mokia';
+import mokia from 'mokia';
 
 class User {
-  @mock.uuid()
+  @mokia.uuid()
   id: string;
 
-  @mock.fullName()
+  @mokia.fullName()
   name: string;
 
   constructor(id?: string) {
@@ -87,13 +87,13 @@ class User {
 }
 
 class Article {
-  @mock.uuid()
+  @mokia.uuid()
   id: string;
 
-  @mock.generate(User)
+  @mokia.generate(User)
   author: User;
 
-  @mock.passage()
+  @mokia.passage()
   content: string;
 
   constructor(id?: string) {
@@ -101,13 +101,13 @@ class Article {
   }
 }
 
-export default {
+export default mokia.defineConfig({
   port: 3000,
-  'GET /users': mock.list(User),
+  'GET /users': mokia.list(User),
   'GET /users/:id': (req) => new User(req.params.id),
-  'GET /articles': mock.list(Article),
+  'GET /articles': mokia.list(Article),
   'GET /articles/:id': (req) => new Article(req.params.id),
-};
+});
 ```
 
 ### License
