@@ -15,6 +15,7 @@ module.exports = {
     locales: {
       '/': {
         label: '简体中文',
+        selectText: '选择语言',
         nav: [
           { text: '指南', link: '/guide/' },
           { text: 'API', link: '/api/' },
@@ -22,7 +23,24 @@ module.exports = {
           { text: 'GitHub', link: 'https://github.com/varHarrie/mokia' },
         ],
         sidebar: {
-          '/guide/': 'auto',
+          '/guide/': [
+            {
+              title: '基础',
+              collapsable: false,
+              children: [
+                { title: '介绍', path: '/guide/' },
+                { title: '概念', path: '/guide/concepts' },
+              ],
+            },
+            {
+              title: '进阶',
+              collapsable: false,
+              children: [
+                { title: '服务器配置', path: '/guide/config' },
+                { title: '命令行交互程序', path: '/guide/cli' },
+              ],
+            },
+          ],
           '/api/': ['', 'producer', 'decorator', 'server', 'mokia'],
         },
       },

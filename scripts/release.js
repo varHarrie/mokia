@@ -122,7 +122,7 @@ async function release() {
 
   await run('git', ['tag', `v${releaseVersion}`]);
   await run('git', ['push', '--tag']);
-  await run('git', ['push']);
+  await run('git', ['push', '--set-upstream', 'origin']);
 
   spinner.succeed(`v${releaseVersion} Released`);
 }
