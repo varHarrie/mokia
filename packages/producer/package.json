@@ -1,6 +1,6 @@
 {
   "name": "@mokia/producer",
-  "version": "0.5.0-beta.0",
+  "version": "0.5.0-beta.1",
   "description": "A data simulation library for mokia.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
