@@ -21,36 +21,22 @@ footer: MIT Licensed | Copyright © 2019-present varHarrie
 
 ### 开箱即用
 
-安装`mokia`
-
-```bash
-npm install --save mokia
-```
-
 创建入口文件（index.js）：
 
 ```javascript
-const mock = require('mokia');
-
 module.exports = {
   port: 3000,
-  'GET /users': mock.list({ id: mock.uuid(), name: mock.fullName() }),
-  'GET /users/:id': (req) => ({ id: req.params.id, name: mock.fullName() }),
+  'GET /users'() {
+    return this.list(() => ({ id: this.uuid(), name: this.fullName() }));
+  },
+  'GET /users/:id'(req) {
+    return { id: req.params.id, name: this.fullName() };
+  },
 };
 ```
 
-添加到 package.json 的 scripts 中：
-
-```json
-{
-  "scripts": {
-    "mock": "mokia index.js"
-  }
-}
-```
-
-启动服务器
+启动本地服务器：
 
 ```bash
-npm run mock
+npx mokia index.js --watch
 ```

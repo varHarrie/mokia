@@ -27,40 +27,25 @@ Documentation: [中文](https://varharrie.github.io/mokia/)
 
 ## Basic Usage
 
-Install `mokia`:
-
-```bash
-npm install --save mokia
-```
-
 Create entry file (e.g. index.js):
 
 ```javascript
 // index.js
-
-const mokia = require('mokia');
-
 module.exports = {
   port: 3000,
-  'GET /users': mokia.list({ id: mokia.uuid(), name: mokia.fullName() }),
-  'GET /users/:id': (req) => ({ id: req.params.id, name: mokia.fullName() }),
+  'GET /users'() {
+    return this.list(() => ({ id: this.uuid(), name: this.fullName() }));
+  },
+  'GET /users/:id'(req) {
+    return { id: req.params.id, name: this.fullName() };
+  },
 };
-```
-
-Add to scripts in package.json:
-
-```json
-{
-  "scripts": {
-    "mock": "mokia index.js"
-  }
-}
 ```
 
 Start local http server:
 
 ```bash
-npm run mock
+npx mokia index.js --watch
 ```
 
 Open browser and go to http://localhost:3000/users, you will get the response.

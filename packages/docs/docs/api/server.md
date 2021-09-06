@@ -61,13 +61,4 @@ export type ServerConfig = BaseConfig & RouteConfig;
 
 **属性**
 
-| 属性        | 类型                           | 描述                   |
-| ----------- | ------------------------------ | ---------------------- |
-| host        | `string`                       | 主机                   |
-| port        | `string` \| `number`           | 端口号                 |
-| prefix      | `string`                       | 路由前缀               |
-| silent      | `boolean`                      | 静默模式，禁用日志输出 |
-| deploy      | `number` \| `[number, number]` | 模拟延迟时间（ms）     |
-| bodyWrapper | `(body: unknown) => unknown`   | 用于响应体包装处理     |
-| middlewares | `Middlewares`                  | 自定义中间件           |
-| proxy       | `ProxyOptions`                 | 代理配置               |
+具体用法查阅[服务器配置](/mokia/guide/config.html#基本配置)。
