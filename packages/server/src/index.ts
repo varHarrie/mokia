@@ -65,7 +65,7 @@ export function createServer(config: ServerConfig): Promise<[server: http.Server
 
     app.on('error', reject);
 
-    const server = app.listen(Number(port), () => resolve([server, destroy]));
+    const server = app.listen(Number(port), host, () => resolve([server, destroy]));
     const connections = new Set<Socket>();
 
     server.on('connection', (con) => {
