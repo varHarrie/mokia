@@ -101,7 +101,7 @@ async function release() {
   spinner.start('Generating changelog...\n');
 
   if (releaseTag === 'latest') {
-    await run('yarn', ['run', 'changelog']);
+    await realRun('yarn', ['run', 'changelog']);
     spinner.succeed('changelog generated');
   } else {
     spinner.info('Skipped to generate changelog');
