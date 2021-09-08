@@ -1,0 +1,38 @@
+{
+  "name": "@mokia/producer",
+  "version": "0.4.0",
+  "description": "A data simulation library for mokia.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "fetch": "node scripts/fetch.js",
+    "test": "jest",
+    "clean": "rimraf lib",
+    "build": "yarn run clean && tsc -p tsconfig.build.json"
+  },
+  "homepage": "https://github.com/varHarrie/mokia#readme",
+  "author": "varharrie <varharrie@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/varHarrie/mokia.git"
+  },
+  "bugs": {
+    "url": "https://github.com/varHarrie/mokia/issues"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.172",
+    "dayjs": "^1.10.6",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.0.1",
+    "jest": "^27.0.6",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.0.5",
+    "typescript": "^4.4.2"
+  }
+}

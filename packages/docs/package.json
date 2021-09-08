@@ -1,0 +1,31 @@
+{
+  "private": true,
+  "name": "@mokia/docs",
+  "version": "1.0.0",
+  "description": "Documentation of mokia.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No test specified\" && exit 0",
+    "dev": "vuepress dev docs --no-cache",
+    "build": "vuepress build docs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "less": "^4.1.1",
+    "less-loader": "^7.3.0",
+    "vuepress": "^1.8.2",
+    "vuepress-plugin-container": "^2.1.5"
+  },
+  "dependencies": {
+    "@babel/generator": "^7.14.1",
+    "@babel/parser": "^7.14.1",
+    "@babel/traverse": "^7.14.0",
+    "@babel/types": "^7.14.1",
+    "@mokia/decorator": "0.4.0",
+    "@mokia/producer": "0.4.0",
+    "mokia": "0.4.0",
+    "run-my-code": "^1.0.0"
+  }
+}
